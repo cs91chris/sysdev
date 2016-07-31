@@ -1,5 +1,4 @@
 
-alias bibles='cd ~/bibles'
 alias desktop='cd ~/Desktop'
 alias project='cd ~/Desktop/project'
 alias download='cd ~/Download'
