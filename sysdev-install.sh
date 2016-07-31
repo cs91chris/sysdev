@@ -43,6 +43,7 @@ cp sysdev/script/* ~/.script/ && chmod -R +x ~/.script/
 
 if [ ! -d ~/develop ]; then
 	echo -e "${green}develop${reset} dir created"
+	mkdir ~/develop
 	mkdir ~/develop/lib
 	mkdir ~/develop/include
 fi
