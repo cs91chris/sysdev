@@ -1,0 +1,42 @@
+# init bash
+
+# add script/ to PATH
+export PATH=$PATH:~/.script
+
+# add extern headers
+export CPATH=~/develop/include
+
+# add extern dynamic library
+export LD_LIBRARY_PATH=~/develop/lib
+
+
+# color definitions  
+if [ -f ~/.bash_conf/bash_color ]; then
+    . ~/.bash_conf/bash_color
+fi
+
+# alias definitions	
+if [ -f ~/.bash_conf/bash_aliases ]; then
+    . ~/.bash_conf/bash_aliases
+fi
+	
+# load personal aliases
+if [ -f ~/.bash_conf/bash_personal_aliases ]; then
+	. ~/.bash_conf/bash_personal_aliases
+fi
+
+# load tools aliases
+if [ -f ~/.bash_conf/bash_tool_aliases ]; then
+	. ~/.bash_conf/bash_tool_aliases
+fi
+
+# function definitions
+if [ -f ~/.bash_conf/bash_function ]; then
+	. ~/.bash_conf/bash_function
+fi
+
+# load bashrc
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+

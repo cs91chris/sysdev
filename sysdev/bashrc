@@ -1,0 +1,67 @@
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+set -o noclobber
+
+# set ctrl+l behavior to clear screen
+bind -m vi-insert \C-l:clear-screen
+
+# setting editor variable for general editing vim
+export EDITOR=vim
+
+# don't put duplicate lines or lines starting with space in the history
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# setting history length
+HISTSIZE=20
+HISTFILESIZE=50
+
+# check the window size after each command
+shopt -s checkwinsize
+
+# make less more friendly
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+case "$TERM" in
+    xterm-color) color_prompt=yes;;
+esac
+
+force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+		color_prompt=yes
+    else
+		color_prompt=
+    fi
+fi
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in screen*)
+ 	PS1="\n\[$txtwht\]\w\n\\
+${debian_chroot:+($debian_chroot)}\\
+┌────[\[$txtblu\]\u\[$txtwht\]@\[$txtgrn\]\h\[$txtwht\]]──[\[$txtylw\]\W\[$txtwht\]] \n\\
+\[$bakwht\] \[$txtwht\]\$(if [[ \$? == 0 ]] 
+	then echo \" \[$bakgrn\] \";
+	else echo \" \[$bakred\] \";
+fi) \[$txtwht\]\n\\
+└─────\[$txtrst\]>>> ";;
+esac
+
+# init bash
+if [ -f ~/.bash_conf/bash_init ]; then
+	. ~/.bash_conf/bash_init
+fi
+

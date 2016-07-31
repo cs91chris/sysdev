@@ -1,0 +1,23 @@
+
+# apt aliases
+ 
+alias apt-search='sudo apt-cache search'
+alias apt-install='sudo apt-get install'
+alias apt-remove='sudo apt-get --purge remove'
+alias apt-autoremove='sudo apt-get autoremove'
+alias sysupgrade='sudo apt-get update && sudo apt-get upgrade && vim +PluginUpdate +qall'
+
+
+# git aliases
+
+alias gitadd='git add'
+alias gitinit='git init'
+alias gitpull='git pull'
+alias gitpush='git push'
+alias gitclone='git clone'
+alias gitcommit='git commit -m'
+
+
+# add alias for your tools
+
+

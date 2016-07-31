@@ -1,0 +1,95 @@
+
+# enable color support of ls and also add handy aliases
+
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    
+    alias dir='dir --color=auto'
+    alias ls='ls --color=auto -F'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+
+# more alias
+
+alias sl='ls'
+alias mroe='more'
+alias moer='more'
+alias omre='more'
+alias mdkir='mkdir'
+
+alias a='alias'
+alias clr='clear'
+alias h='history'
+alias more='less'
+alias ping='ping -c5'
+alias funct='declare -F'
+alias asearch='alias | grep' 
+
+
+# interactive and verbose mode
+
+alias rm='rm -vI'
+alias cp='cp -vi'
+alias mv='mv -vi'
+alias rmd='rm -rf'
+alias mkdir='mkdir -vp'
+
+
+# more info alias 
+
+alias df='pydf -aH'
+alias freeh='free -h'
+alias cpuinfo='cat /proc/cpuinfo'
+alias meminfo='cat /proc/meminfo'
+
+
+# more ls aliases
+
+alias l='ls -C'
+alias la='ls -A'
+alias lr='ll -R'
+alias ll='ls -lh'
+alias tree='tree -Cs'
+alias ld='ls -lv --group-directories-first'
+
+
+# more cd aliases
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+
+alias home='cd ~'
+alias etc='cd /etc'
+alias usr='cd /usr'
+alias opt='cd /opt'
+alias script='cd ~/.script'
+alias localhost='cd /var/www'
+
+
+# more ps alias 
+
+alias ps='ps auxf'
+alias psroot='ps | grep root'
+alias psuser='ps | grep $USER'
+alias psearch='ps auxf | grep -v grep | grep -i -e VSZ -e'
+
+
+# search installed package
+
+alias listpkg='dpkg -l | more'
+alias pkgsearch='dpkg -l | grep'
+
+
+# more tar alias
+
+alias mktar='tar -cf'
+alias compress='tar --auto-detect -cf'
+

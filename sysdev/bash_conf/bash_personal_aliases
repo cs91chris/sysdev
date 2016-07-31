@@ -1,0 +1,9 @@
+
+alias bibles='cd ~/bibles'
+alias desktop='cd ~/Desktop'
+alias project='cd ~/Desktop/project'
+alias download='cd ~/Download'
+
+alias compile='gcc -O -Wall -pedantic -ansi -std=c11 -o'
+alias ping-gateway='ping -c5 192.168.1.1'
+
