@@ -36,10 +36,10 @@ cd - > /dev/null
 #===============================================================================
 
 echo -e "${green}templates${reset} copied"
-cp --recursive olb/Models ~
+cp --recursive sysdev/Models ~
 
 echo -e "${green}scripts${reset} copied"
-cp olb/script/* ~/.script/ && chmod -R +x ~/.script/
+cp sysdev/script/* ~/.script/ && chmod -R +x ~/.script/
 
 if [ ! -d ~/develop ]; then
 	echo -e "${green}develop${reset} dir created"
@@ -51,20 +51,20 @@ fi
 
 echo -e "\n${green}copying${reset} configuration files:"
 echo -e "${orange}bash conf.${reset}"
-cp olb/bashrc  ~/.bashrc
-cp olb/profile ~/.profile
-cp olb/bash_logout ~/.bash_logout
-cp olb/bash_conf/* ~/.bash_conf
+cp sysdev/bashrc  ~/.bashrc
+cp sysdev/profile ~/.profile
+cp sysdev/bash_logout ~/.bash_logout
+cp sysdev/bash_conf/* ~/.bash_conf
 
 echo -e "${orange}ranger conf.${reset}"
-sudo cp olb/config/ranger/rc.conf ${dir_ranger_conf}
+sudo cp sysdev/config/ranger/rc.conf ${dir_ranger_conf}
 
 echo -e "${orange}htop conf.${reset}"
-cp olb/config/htop/htoprc ~/.config/htop/htoprc
+cp sysdev/config/htop/htoprc ~/.config/htop/htoprc
 
 echo -e "${orange}vim conf.${reset}"
 rm -rf ~/.vim && mkdir ~/.vim
-cp olb/vim/* ~/.vim
+cp sysdev/vim/* ~/.vim
 
 echo -e "${orange}installation plugins...${reset}"
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
