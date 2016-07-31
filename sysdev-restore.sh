@@ -2,6 +2,7 @@
 
 source script/color.conf
 
+# FIXME
 if [ -f ~/.conf.old.tar ]
 	then
 		cd ~ > /dev/null

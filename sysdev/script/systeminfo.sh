@@ -21,13 +21,12 @@ echo -e " - ${orange}HOSTNAME${reset}: ${green}`uname -n`${reset}"
 echo -e " - ${orange}DATE${reset}: ${green}`date "+%a %e %b %Y %H:%M"`${reset}"
 
 
-echo "\n - ${orange}UPTIME${reset}: `uptime`"
+echo -e "\n - ${orange}UPTIME${reset}: `uptime`"
 echo -e "\n - ${orange}CONNECTED-USERS${reset}:"; w -s -i -h
 echo -e "\n - ${orange}DISK-INFO${reset}:"; pydf -H
 echo -e "\n- ${orange}MEM-INFO${reset}:"; free -m
 
 echo -e "\n- ${orange}CPU-INFO${reset}:"
-sudo lshw -C cpu | awk '/version/ || /product/'
+sudo lshw -C cpu | awk '/product/ || /version/ || /size/ || /capacity/ || /width/ || /capabilities/' | head -n6 
 
-sudo lshw -C cpu | awk '{if ($0 ~ "logical"){skip = 1}; if(skip == 1){next};if($0 ~ "product|version|width"){sub("[]*","",$0); print $0}}' 
 
