@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source olb/script/color.conf
+source sysdev/script/color.conf
 
 # fix this path if does not work
 dir_ranger_conf=/usr/lib/python2.7/dist-packages/ranger/config/ 
