@@ -71,7 +71,7 @@ if [ $1 == "install" ]; then
 	cp sysdev/bashrc  ~/.bashrc
 	cp sysdev/profile ~/.profile
 	cp sysdev/bash_logout ~/.bash_logout
-	cp --recursively sysdev/bash_conf/ ~/.bash_conf
+	cp --recursive sysdev/bash_conf/ ~/.bash_conf
 	cp sysdev/config/ranger/rc.conf ~/.config/rc.conf
 	cp sysdev/config/htop/htoprc ~/.config/htop/htoprc
 
