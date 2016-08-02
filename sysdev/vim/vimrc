@@ -12,32 +12,65 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 " add others plugin if you want
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'Raimondi/delimitMate'
 Plugin 'kevinw/pyflakes-vim'
-
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'flazz/vim-colorschemes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()    " required
 
+
 " airline plugin settings
 set laststatus=2
 let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#left_sep=' '
+let g:airline#extensions#tabline#left_alt_sep='|'
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+
+" sintastic plugin settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 " plugin NERDtree 
 map <C-n> :NERDTreeToggle <CR>
 
- 
+
+" vim options
 set number
+set showcmd
+set showmode
+set hlsearch
+set expandtab
+set autoindent
+set wrap
+set linebreak
+set hidden
+set ignorecase
+set smartcase
+
 set t_Co=256
+set history=1000
+set softtabstop=4
 set tabstop=4
 set shiftwidth=4
-set nocompatible
 
 syntax enable
 colorscheme desert
-filetype plugin indent on
+filetype plugin on
+filetype indent on
+
 
