@@ -91,5 +91,5 @@ alias pkgsearch='dpkg -l | grep'
 # more tar alias
 
 alias mktar='tar -cf'
-alias compress='tar --auto-detect -cf'
+alias compress='tar --auto-compress -cf'
 
