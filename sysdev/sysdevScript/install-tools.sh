@@ -2,7 +2,6 @@
 
 source ~/.script/color.conf
 
-
 if [ $(id -u) -eq 0 ]
 
 	then
@@ -23,9 +22,9 @@ if [ $(id -u) -eq 0 ]
 			hddtemp \
 			tcpdump \
 			valgrind \
-			lm-sensors
+			lm-sensors\
+			screenfetch
 	else
 		echo -e "you are not root: ${red}permission denied${reset}"
-
 fi
 

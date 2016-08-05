@@ -4,9 +4,9 @@ source sysdev/sysdevScript/color.conf
 
 conf_file=(
 	.config/htop/htoprc .config/ranger/rc.conf
-	.profile 		.bash_conf 	.bash_logout
-	.bash_profile	.vim
-	sysdevModels	sysdevDevelop .sysdevScript
+	.profile 		.bash_conf 		.bash_logout
+	.bash_profile	.bashrc 		.vim
+	sysdevModels	sysdevDevelop 	sysdevScript
 )
 
 #===============================================================================
@@ -24,55 +24,51 @@ fi
 #===============================================================================
 
 if [ $1 == "install" ]; then
-
 	if [ ! -e ~/.conf.old.tar ]; then
-		cd ~ > /dev/null
-
 		echo -e "${green}archive${reset} old configuration files"
-		tar --create -af .conf.old.tar .bashrc
 
-		for element in $(seq 0 $((${#conf_file[@]} - 1))); do
-			if [ -f ${conf_file[$element]} ]; then
-				tar --append -f .conf.old.tar ${conf_file[$element]}
-			fi
-		done
+		cd ~ > /dev/null
+		tar --create -f .conf.old.tar \
+			--atime-preserve --numeric-owner --preserve-permissions \
+			--absolute-names --same-owner 	 --ignore-failed-read \
+			${conf_file[@]} 2> .sysdev.log
+
+		rm -rf ${conf_file[@]} 
 		cd - > /dev/null
 	fi
 
 	echo -e "${green}templates${reset} directory installed"
 	echo -e "${green}scripts${reset} directory installed"
+	echo -e "${green}develop's${reset} directories created"
 
 	cp -r sysdev/sysdevModels ~
-	mkdir ~/.sysdevScript 2> /dev/null
-	cp sysdev/sysdevScript/* ~/.sysdevScript
-	chmod -R +x ~/.sysdevScript
+	cp -r sysdev/sysdevScript ~
+	chmod -R +x ~/sysdevScript
 
-	echo -e "${green}develop's${reset} directories created"
-	mkdir ~/sysdevDevelop 2> /dev/null
-	mkdir ~/sysdevDevelop/lib 2> /dev/null
-	mkdir ~/sysdevDevelop/include 2> /dev/null
+	mkdir -v ~/sysdevDevelop
+	mkdir -v ~/sysdevDevelop/lib
+	mkdir -v ~/sysdevDevelop/include
 
 	echo
 	echo -e "${green}installing${reset} configuration files:"
 	echo -e "${orange}bash${reset} configuration"
+	cp -v sysdev/bashrc  ~/.bashrc
+	cp -v sysdev/profile ~/.profile
+	cp -v sysdev/bash_logout ~/.bash_logout
+	cp -r sysdev/bash_conf ~
+	mv ~/bash_conf ~/.bash_conf
+
 	echo -e "${orange}ranger${reset} configuration"
+	cp -v sysdev/config/ranger/rc.conf ~/.config/ranger/rc.conf
 	echo -e "${orange}htop${reset} configuration"
+	cp -v sysdev/config/htop/htoprc ~/.config/htop/htoprc
 
-	mkdir .bash_conf 2> /dev/null
-	cp sysdev/bash_conf/* ~/.bash_conf
-
-	cp sysdev/bashrc  ~/.bashrc
-	cp sysdev/profile ~/.profile
-	cp sysdev/bash_logout ~/.bash_logout
-
-	cp sysdev/config/ranger/rc.conf ~/.config/ranger/rc.conf
-	cp sysdev/config/htop/htoprc ~/.config/htop/htoprc
-
-	echo -e "${orange}vim conf.${reset}"
-	cp sysdev/vim/* ~/.vim 2> /dev/null
+	echo -e "${orange}vim configuration${reset}"
+	cp -r sysdev/vim ~
+	mv ~/vim ~/.vim
 
 	echo -e "${green}installation${reset} plugins..."
-	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> /dev/null
+	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> .sysdev.log
 	vim +PluginUpdate +PluginInstall +qall
 fi
 
@@ -82,17 +78,13 @@ if [ $1 == "restore" ]; then
 	if [ -f ~/.conf.old.tar ]; then
 		echo -e "${green}deleting${reset} new configuration files..."
 		cd ~ > /dev/null
-
-		for element in $(seq 0 $((${#conf_file[@]} - 1))); do
-			if [ -f ${conf_file[$element]} ]; then
-				rm -rf ${conf_file[$element]}
-			fi
-		done
-		cd - > /dev/null
+		rm -rf ${conf_file[@]}
 
 		echo -e "${green}restoring${reset} old configuration files"
-		tar --extract -f ~/.conf.old.tar
-		rm ~/.conf.old.tar
+		tar -xf .conf.old.tar 2> .sysdev.log
+		rm -v .conf.old.tar
+		rm -v .sysdev.log
+		cd - > /dev/null
 
 	else
 		echo -e "old configuration files does ${red}not exists${reset}"
