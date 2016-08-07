@@ -71,7 +71,8 @@ if [ $1 == "install" ]; then
 
 	echo -e "${green}installation${reset} plugins..."
 	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> .sysdev.log
-	vim +PluginUpdate +PluginInstall +qall
+	vim +PluginInstall +qall 2> .sysdev.log
+	echo "colorscheme thor" >> ~/.vim/vimrc
 fi
 
 #===============================================================================

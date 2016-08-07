@@ -72,10 +72,3 @@ syntax enable
 filetype plugin on
 filetype indent on
 
-
-if isdirectory("~/.vim/bundle/vim-colorschemes")
-	colorscheme thor
-else
-	colorscheme default
-endif
-
