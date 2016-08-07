@@ -24,20 +24,22 @@ fi
 #===============================================================================
 
 if [ $1 == "install" ]; then
+
+	cd ~ > /dev/null
+
 	if [ ! -e ~/.conf.old.tar ]; then
 		echo -e "${green}archive${reset} old configuration files"
 
-		cd ~ > /dev/null
 		tar --create -f .conf.old.tar \
 			--atime-preserve --numeric-owner --preserve-permissions \
 			--absolute-names --same-owner 	 --ignore-failed-read \
 			${conf_file[@]} 2> .sysdev.log
-
-		rm -rf ${conf_file[@]} 
-		cd - > /dev/null
 	fi
 
-	echo -e "${green}templates${reset} directory installed"
+	rm -rf ${conf_file[@]}
+	cd - > /dev/null
+
+    echo -e "${green}templates${reset} directory installed"
 	echo -e "${green}scripts${reset} directory installed"
 	echo -e "${green}develop's${reset} directories created"
 
@@ -81,7 +83,7 @@ if [ $1 == "restore" ]; then
 		rm -rf ${conf_file[@]}
 
 		echo -e "${green}restoring${reset} old configuration files"
-		tar -xf .conf.old.tar 2> .sysdev.log
+		tar -xf .conf.old.tar 2> /dev/null 
 		rm -v .conf.old.tar
 		rm -v .sysdev.log
 		cd - > /dev/null

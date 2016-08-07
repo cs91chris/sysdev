@@ -48,13 +48,14 @@ let g:syntastic_check_on_wq = 0
 " plugin NERDtree 
 map <C-n> :NERDTreeToggle <CR>
 
+" next buffer
+nnoremap bn :bn<Return>
 
 " vim options
 set number
 set showcmd
 set showmode
 set hlsearch
-set expandtab
 set autoindent
 set wrap
 set linebreak
@@ -62,15 +63,19 @@ set hidden
 set ignorecase
 set smartcase
 
-set t_Co=256
+set t_Co=512
 set history=1000
-set softtabstop=4
 set tabstop=4
 set shiftwidth=4
 
 syntax enable
-colorscheme desert
 filetype plugin on
 filetype indent on
 
+
+if isdirectory("~/.vim/bundle/vim-colorschemes")
+	colorscheme thor
+else
+	colorscheme default
+endif
 

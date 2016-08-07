@@ -1,13 +1,13 @@
 # init bash
 
 # add script/ to PATH
-export PATH=$PATH:~/.script
+export PATH=$PATH:~/sysdevScript
 
 # add extern headers
-export CPATH=~/develop/include
+export CPATH=~/sysdevDevelop/include
 
 # add extern dynamic library
-export LD_LIBRARY_PATH=~/develop/lib
+export LD_LIBRARY_PATH=~/sysDevelop/lib
 
 
 # color definitions  

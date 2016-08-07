@@ -53,8 +53,8 @@ case "$TERM" in screen*)
  	PS1="\n\[$txtwht\]\w\n\\
 ${debian_chroot:+($debian_chroot)}\\
 ┌────[\[$txtblu\]\u\[$txtwht\]@\[$txtgrn\]\h\[$txtwht\]]──[\[$txtylw\]\W\[$txtwht\]] \n\\
-\[$bakwht\] \[$txtwht\]\$([[ \$? == 0 ]] && echo \" \[$bakgrn\] \" || echo \" \[$bakred\] \") 
-\[$txtwht\]\n\\
+\[$bakwht\] \[$txtwht\]\ echo $([[ \$? == 0 ]] && \" \[$bakgrn\] \" || \" \[$bakred\] \") 
+\[$txtwht\]\\
 └─────\[$txtrst\]>>> ";;
 esac
 
