@@ -15,7 +15,7 @@ if [ -f ~/.bash_conf/bash_color ]; then
     . ~/.bash_conf/bash_color
 fi
 
-# alias definitions	
+# alias definitions
 if [ -f ~/.bash_conf/bash_aliases ]; then
     . ~/.bash_conf/bash_aliases
 fi

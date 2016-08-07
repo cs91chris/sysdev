@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source ~/sysdevScript/color.conf
+
+
 if [ -f $1 ]; then
 	case $1 in
 		*.zip)			unzip $1		;;
@@ -13,9 +16,9 @@ if [ -f $1 ]; then
 		*.7z)			7z x $1			;;
 		*.tgz)			tar xvzf $1		;;
 		*.Z)			uncompress $1	;;
-		*)	echo "'$1' can not be extracted via 'extract'" ;;
+		*)	echo "'$1' ${red}can not be extracted${reset} via 'extract'" ;;
 	esac
 else
-	echo "'$1' is not a valid file!"
+	echo "'$1' ${red}is not a valid file${reset}!"
 fi
 

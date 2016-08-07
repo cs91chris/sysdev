@@ -1,17 +1,19 @@
 #!/bin/bash
 
-if [ -f ~/Models/*.$1 ]
-	then
-		cp ~/Models/$1 ./$2
-		echo -e "$2 created"
+source ~/sysdevScript/color.conf
 
-	else if [ -f ~/Models/$1 ]
-			then
-				cp ~/Models/$1 ./$2
-				echo -e "$2 created"
+
+if [ -f ~/sysdevModels/*.$1 ]; then
+		cp ~/sysdevModels/$1 ./$2
+		echo -e "$2 ${green}created${reset}"
+
+	else 
+		if [ -f ~/sysdevModels/$1 ]; then
+			cp ~/sysdevModels/$1 ./$2
+			echo -e "$2 ${green}created${reset}"
+
 		else
-			echo -e "template does not exist!"
-
+			echo -e "template does ${red}not exist${reset}!"
 		fi
 fi
 

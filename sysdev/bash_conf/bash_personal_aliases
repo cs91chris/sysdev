@@ -6,3 +6,5 @@ alias download='cd ~/Download'
 alias compile='gcc -O -Wall -pedantic -ansi -std=c11 -o'
 alias ping-gateway='ping -c5 192.168.1.1'
 
+alias cups-config='elinks http://localhost:631'
+
