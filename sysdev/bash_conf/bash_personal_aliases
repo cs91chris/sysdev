@@ -1,3 +1,5 @@
+# replace this aliases with your personal aliases
+
 
 alias desktop='cd ~/Desktop'
 alias project='cd ~/Desktop/project'
