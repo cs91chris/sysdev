@@ -2,10 +2,11 @@
 
 source sysdev/sysdevScript/color.conf
 
+
 conf_file=(
 	.config/htop/htoprc .config/ranger/rc.conf
 	.profile 		.bash_conf 		.bash_logout
-	.bash_profile	.bashrc 		.vim
+	.bash_profile	.bashrc 		.vim .pyrc
 	sysdevModels	sysdevDevelop 	sysdevScript
 )
 
@@ -26,7 +27,6 @@ fi
 if [ $1 == "install" ]; then
 
 	cd ~ > /dev/null
-
 	if [ ! -e ~/.conf.old.tar ]; then
 		echo -e "${green}archive${reset} old configuration files"
 
@@ -35,7 +35,6 @@ if [ $1 == "install" ]; then
 			--absolute-names --same-owner 	 --ignore-failed-read \
 			${conf_file[@]} 2> .sysdev.log
 	fi
-
 	rm -rf ${conf_file[@]}
 	cd - > /dev/null
 
@@ -64,8 +63,9 @@ if [ $1 == "install" ]; then
 	cp -v sysdev/config/ranger/rc.conf ~/.config/ranger/rc.conf
 	echo -e "${orange}htop${reset} configuration"
 	cp -v sysdev/config/htop/htoprc ~/.config/htop/htoprc
-
-	echo -e "${orange}vim configuration${reset}"
+	echo -e "${orange}python${reset} configuration"
+	cp -v sysdev/pyrc ~/.pyrc
+	echo -e "${orange}vim${reset} configuration"
 	cp -r sysdev/vim ~
 	mv ~/vim ~/.vim
 
@@ -91,6 +91,7 @@ if [ $1 == "restore" ]; then
 
 	else
 		echo -e "old configuration files does ${red}not exists${reset}"
+		exit 1
 	fi
 fi
 
