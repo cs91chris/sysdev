@@ -28,7 +28,7 @@ if [ $(id -u) -eq 0 ]; then
 		screenfetch
 
 	addgroup $USER sudo
-	logout
+	logout 2> /dev/null
 
 	else
 		echo -e "you are not root: ${red}permission denied${reset}"

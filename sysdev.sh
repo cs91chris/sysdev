@@ -5,7 +5,7 @@ source sysdev/sysdevScript/color.conf
 conf_file=(
 	.config/htop/htoprc .config/ranger/rc.conf
 	.profile 		.bash_conf 		.bash_logout
-	.bash_profile	.bashrc 		.vim
+	.bash_profile	.bashrc 		
 	sysdevModels	sysdevDevelop 	sysdevScript
 )
 
@@ -70,9 +70,9 @@ if [ $1 == "install" ]; then
 	mv ~/vim ~/.vim
 
 	echo -e "${green}installation${reset} plugins..."
-	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> .sysdev.log
-	vim +PluginInstall +qall 2> .sysdev.log
-	echo "colorscheme thor" >> ~/.vim/vimrc
+#	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> .sysdev.log
+#	vim +PluginInstall +qall 2> .sysdev.log
+#	echo "colorscheme thor" >> ~/.vim/vimrc
 fi
 
 #===============================================================================
