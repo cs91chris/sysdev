@@ -2,6 +2,7 @@
 
 source sysdev/sysdevScript/color.conf
 
+LOG_FILE=~/.sysdev.log
 
 conf_file=(
 	.config/htop/htoprc .config/ranger/rc.conf
@@ -26,6 +27,8 @@ fi
 
 if [ $1 == "install" ]; then
 
+	./sysdev/sysdevScript/install-tools.sh
+
 	cd ~ > /dev/null
 	if [ ! -e ~/.conf.old.tar ]; then
 		echo -e "${green}archive${reset} old configuration files"
@@ -33,7 +36,7 @@ if [ $1 == "install" ]; then
 		tar --create -f .conf.old.tar \
 			--atime-preserve --numeric-owner --preserve-permissions \
 			--absolute-names --same-owner 	 --ignore-failed-read \
-			${conf_file[@]} 2> .sysdev.log
+			${conf_file[@]} 2> $LOG_FILE
 	fi
 	rm -rf ${conf_file[@]}
 	cd - > /dev/null
@@ -70,9 +73,9 @@ if [ $1 == "install" ]; then
 	mv ~/vim ~/.vim
 
 	echo -e "${green}installation${reset} plugins..."
-	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> .sysdev.log
-	vim +PluginInstall +qall 2> .sysdev.log
-	echo "colorscheme thor" >> .vim/vimrc
+	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> $LOG_FILE
+	vim +PluginInstall +qall 2> $LOG_FILE
+	echo "colorscheme thor" >> ~/.vim/vimrc
 fi
 
 #===============================================================================
@@ -86,7 +89,7 @@ if [ $1 == "restore" ]; then
 		echo -e "${green}restoring${reset} old configuration files"
 		tar -xf .conf.old.tar 2> /dev/null 
 		rm -v .conf.old.tar
-		rm -v .sysdev.log
+		rm -v $LOG_FILE
 		cd - > /dev/null
 
 	else
