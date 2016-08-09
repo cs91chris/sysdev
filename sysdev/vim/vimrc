@@ -2,7 +2,7 @@
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
+ 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -43,18 +43,32 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 
-" plugin NERDtree 
+
+" plugin NERDtree (Ctrl-n) 
 map <C-n> :NERDTreeToggle <CR>
+
+" space for search
+map <space> /
+
+" toggle spell checking
+nnoremap sc :setlocal spell!<CR>
+
+"fast saving (Ctrl-s)
+nnoremap <c-s> :w<CR>
+inoremap <c-s> <Esc>:w<CR>
 
 " next buffer
 nnoremap bn :bn<Return>
 
+
 " vim options
+set hid
 set number
 set showcmd
 set showmode
+set showmatch
 set hlsearch
 set autoindent
 set wrap
@@ -62,13 +76,23 @@ set linebreak
 set hidden
 set ignorecase
 set smartcase
+set noswapfile
+set hlsearch
 
 set t_Co=512
 set history=1000
 set tabstop=4
 set shiftwidth=4
+set foldcolumn=2
+set tw=255
+
 
 syntax enable
 filetype plugin on
 filetype indent on
+
+try
+	coloscheme thor
+catch
+endtry
 

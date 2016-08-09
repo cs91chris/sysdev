@@ -1,5 +1,19 @@
 # bash funtions
 
+function edit()
+{
+	echo "write on $1 (Ctrl-D for EOF)"
+	tee >> $1
+}
+
+function vim()
+{
+	local STTYOPTS="$(stty --save)"
+	stty stop '' -ixoff
+	command vim "$@"
+	stty "$STTYOPTS"
+}
+
 function calc()
 {
 	echo "$1" | bc --mathlib --warn --standard
