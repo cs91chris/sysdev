@@ -26,9 +26,6 @@ fi
 #===============================================================================
 
 if [ $1 == "install" ]; then
-
-	./sysdev/sysdevScript/install-tools.sh
-
 	cd ~ > /dev/null
 	if [ ! -e ~/.conf.old.tar ]; then
 		echo -e "${green}archive${reset} old configuration files"
