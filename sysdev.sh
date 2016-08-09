@@ -88,6 +88,7 @@ if [ $1 == "restore" ]; then
 		rm -v .conf.old.tar
 		rm -v $LOG_FILE
 		cd - > /dev/null
+		echo -e "${reset}"
 
 	else
 		echo -e "old configuration files does ${red}not exists${reset}"

@@ -57,7 +57,7 @@ nnoremap sc :setlocal spell!<CR>
 
 "fast saving (Ctrl-s)
 nnoremap <c-s> :w<CR>
-inoremap <c-s> <Esc>:w<CR>
+inoremap <c-s> <Esc>:w<CR>i
 
 " next buffer
 nnoremap bn :bn<Return>
