@@ -1,5 +1,6 @@
 # init bash
 
+
 # add script/ to PATH
 export PATH=$PATH:~/sysdevScript
 
@@ -9,6 +10,11 @@ export CPATH=~/sysdevDevelop/include
 # add extern dynamic library
 export LD_LIBRARY_PATH=~/sysDevelop/lib
 
+# add python init file 
+export PYTHONSTARTUP=~/.pyrc
+
+
+#==================================================
 
 # color definitions  
 if [ -f ~/.bash_conf/bash_color ]; then
