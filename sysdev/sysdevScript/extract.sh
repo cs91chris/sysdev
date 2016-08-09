@@ -16,9 +16,10 @@ if [ -f $1 ]; then
 		*.7z)			7z x $1			;;
 		*.tgz)			tar xvzf $1		;;
 		*.Z)			uncompress $1	;;
-		*)	echo "'$1' ${red}can not be extracted${reset} via 'extract'" ;;
+		*)	echo "'$1' ${red}can not be extracted${reset} via 'extract'" ; exit 1 ;;
 	esac
 else
 	echo "'$1' ${red}is not a valid file${reset}!"
+    exit 1
 fi
 

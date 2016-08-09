@@ -63,21 +63,16 @@ if [ $1 == "install" ]; then
 	cp -v sysdev/config/ranger/rc.conf ~/.config/ranger/rc.conf
 	echo -e "${orange}htop${reset} configuration"
 	cp -v sysdev/config/htop/htoprc ~/.config/htop/htoprc
-<<<<<<< HEAD
     echo -e "${orange}python${reset} configuration"
-	echo -e "${orange}vim configuration${reset}"
-=======
-	echo -e "${orange}python${reset} configuration"
 	cp -v sysdev/pyrc ~/.pyrc
 	echo -e "${orange}vim${reset} configuration"
->>>>>>> ae3ca0e51e4865a2124950606e374b8024240b43
 	cp -r sysdev/vim ~
 	mv ~/vim ~/.vim
 
 	echo -e "${green}installation${reset} plugins..."
-#	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> .sysdev.log
-#	vim +PluginInstall +qall 2> .sysdev.log
-#	echo "colorscheme thor" >> ~/.vim/vimrc
+	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> .sysdev.log
+	vim +PluginInstall +qall 2> .sysdev.log
+	echo "colorscheme thor" >> ~/.vim/vimrc
 fi
 
 #===============================================================================

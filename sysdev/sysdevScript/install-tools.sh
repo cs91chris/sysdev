@@ -20,6 +20,9 @@ if [ $(id -u) -eq 0 ]; then
 		figlet \
 		ranger \
 		elinks \
+        python \
+        pyflakes \
+        ipython \
 		glances \
 		hddtemp \
 		tcpdump \
