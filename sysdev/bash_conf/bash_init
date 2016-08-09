@@ -18,5 +18,5 @@ fi
 clear
 
 # welcome message
-echo -e "${txtcyn}"; figlet "Welcome $USER"
+echo -e "${txtcyn}"; figlet "Welcome $USER ${txtrst}"
 
