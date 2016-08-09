@@ -5,7 +5,7 @@ source sysdev/sysdevScript/color.conf
 conf_file=(
 	.config/htop/htoprc .config/ranger/rc.conf
 	.profile 		.bash_conf 		.bash_logout
-	.bash_profile	.bashrc 		
+	.bash_profile	.bashrc 		.vim .pyrc
 	sysdevModels	sysdevDevelop 	sysdevScript
 )
 
@@ -64,7 +64,7 @@ if [ $1 == "install" ]; then
 	cp -v sysdev/config/ranger/rc.conf ~/.config/ranger/rc.conf
 	echo -e "${orange}htop${reset} configuration"
 	cp -v sysdev/config/htop/htoprc ~/.config/htop/htoprc
-
+    echo -e "${orange}python${reset} configuration"
 	echo -e "${orange}vim configuration${reset}"
 	cp -r sysdev/vim ~
 	mv ~/vim ~/.vim
