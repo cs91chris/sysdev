@@ -1,3 +1,10 @@
+# ~/.bashrc: executed by bash(1) for non-login shells
+
+if [ -d $HOME/.bash_conf ]; then
+	. "$HOME/.bash_conf/bash_color"
+	. "$HOME/.bash_conf/bash_aliases"
+	. "$HOME/.bash_conf/bash_function"
+fi
 
 # If not running interactively, don't do anything
 case $- in
@@ -10,18 +17,14 @@ set -o noclobber
 # set ctrl+l behavior to clear screen
 bind -m vi-insert \C-l:clear-screen
 
-# setting editor variable for general editing vim
 export EDITOR=vim
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# don't put duplicate lines or lines starting with space in the history
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# setting history length
+# setting history
 HISTSIZE=1000
 HISTFILESIZE=2000
+HISTCONTROL=ignoreboth
+shopt -s histappend
 
 # check the window size after each command
 shopt -s checkwinsize
@@ -48,17 +51,25 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-case "$TERM" in screen*)
- 	PS1="\n\[$txtwht\]\w\n\\
-${debian_chroot:+($debian_chroot)}\\
-┌────[\[$txtblu\]\u\[$txtwht\]@\[$txtgrn\]\h\[$txtwht\]]──[\[$txtylw\]\W\[$txtwht\]] \n\\
+PS1="\[$txtwht\]\w\n${debian_chroot:+($debian_chroot)}\\
+┌────[\[$txtgrn\]\u@\h\[$txtwht\]]──[\[$txtylw\]\W\[$txtwht\]] \n\\
 \[$bakwht\] \[$txtwht\]\$([[ \$? == 0 ]] && echo \" \[$bakgrn\] \" || echo \" \[$bakred\] \") \\
 \[$txtwht\]\n\\
-└─────\[$txtrst\]>>> ";;
-esac
+└─────\[$txtrst\]>>> "
 
-# init bash
-if [ -f ~/.bash_conf/bash_init ]; then
-	. ~/.bash_conf/bash_init
+
+# enable programmable completion features
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
 fi
+
+# welcome message
+clear
+echo -e "${txtcyn}"
+figlet "Welcome $USER"
+echo -e "${txtrst}"
 

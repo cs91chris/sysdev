@@ -1,6 +1,6 @@
 # bash funtions
 
-function edit()
+function e()
 {
 	echo "write on $1 (Ctrl-D for EOF)"
 	tee >> $1
@@ -10,7 +10,7 @@ function vim()
 {
 	local STTYOPTS="$(stty --save)"
 	stty stop '' -ixoff
-	command vim "$@"
+	command vim +NERDTreeToggle "$@"
 	stty "$STTYOPTS"
 }
 

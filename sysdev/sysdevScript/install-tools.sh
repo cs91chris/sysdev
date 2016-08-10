@@ -3,8 +3,7 @@
 source ~/sysdevScript/color.conf 2> /dev/null
 
 
-if [ $(id -u) -eq 0 ]
-	then
+if [ $(id -u) -eq 0 ]; then
 		echo -e "${green}installing tool...${reset}"
 		apt-get update
 

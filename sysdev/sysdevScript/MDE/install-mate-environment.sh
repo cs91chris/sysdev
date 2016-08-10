@@ -3,10 +3,8 @@
 source ~/sysdevScript/color.conf 2> /dev/null
 
 
-if [ $(id -u) -eq 0 ]
-	then
+if [ $(id -u) -eq 0 ]; then
 		apt-get update
-
 
 		# basic environment
 		apt-get install \
@@ -15,7 +13,7 @@ if [ $(id -u) -eq 0 ]
 		# printer manager
 		apt-get install \
 			cups system-config-printer simple-scan
-		
+
 		# disk manager
 		apt-get install \
 			gparted gpart
@@ -27,6 +25,18 @@ if [ $(id -u) -eq 0 ]
 		# other application
 		apt-get install \
 			dia vlc gpaint bleachbit
+
+		cp -i user-dirs.dirs ~/.config 
+		cp -i -R themes ~
+		mv ~/themes ~/.themes
+
+		mkdir -v ~/Desktop
+		mkdir -v ~/Documents
+		mkdir -v ~/Download
+		mkdir -v ~/Pictures
+		mkdir -v ~/Public
+		mkdir -v ~/Music
+		mkdir -v ~/Videos
 
 	else
 		echo -e "you are not root: ${red}permission denied${reset}"

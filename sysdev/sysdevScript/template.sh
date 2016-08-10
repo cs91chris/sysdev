@@ -16,14 +16,12 @@ if [ -f ~/sysdevModels/$1.$1 ]; then
 	cp ~/sysdevModels/$1.$1 ./$2.$1
 	vim $2.$1
 
-else
-	if [ -f ~/sysdevModels/$1 ]; then
-		cp ~/sysdevModels/$1 ./$2
-		vim $2
+elif [ -f ~/sysdevModels/$1 ]; then
+	cp ~/sysdevModels/$1 ./$2
+	vim $2
 
-	else
-		echo -e "template does ${red}not exist${reset}!"
-        exit 1
-    fi
+else
+	echo -e "template does ${red}not exist${reset}!"
+	exit 1
 fi
 

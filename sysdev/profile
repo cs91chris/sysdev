@@ -1,4 +1,9 @@
-# init bash
+# ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
 
 
 # add script/ to PATH
@@ -8,41 +13,17 @@ export PATH=$PATH:~/sysdevScript
 export CPATH=~/sysdevDevelop/include
 
 # add extern dynamic library
-export LD_LIBRARY_PATH=~/sysDevelop/lib
+export LD_LIBRARY_PATH=~/sysdevDevelop/lib
 
-# add python init file 
-export PYTHONSTARTUP=~/.pyrc
+# add python init file
+export PYTHONSTARTUP=~/.conf/python/pyrc
 
 
-#==================================================
 
-# color definitions  
-if [ -f ~/.bash_conf/bash_color ]; then
-    . ~/.bash_conf/bash_color
-fi
-
-# alias definitions
-if [ -f ~/.bash_conf/bash_aliases ]; then
-    . ~/.bash_conf/bash_aliases
-fi
-
-# load tools aliases
-if [ -f ~/.bash_conf/bash_tool_aliases ]; then
-	. ~/.bash_conf/bash_tool_aliases
-fi
-
-# function definitions
-if [ -f ~/.bash_conf/bash_function ]; then
-	. ~/.bash_conf/bash_function
-fi
-
-# load personal aliases
-if [ -f ~/.bash_conf/bash_personal_aliases ]; then
-	. ~/.bash_conf/bash_personal_aliases
-fi
-
-# load bashrc
-if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+	if [ -f "$HOME/.bashrc" ]; then
+		. "$HOME/.bashrc"
+	fi
 fi
 

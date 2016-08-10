@@ -1,4 +1,3 @@
-
 # enable color support of ls and also add handy aliases
 
 if [ -x /usr/bin/dircolors ]; then
@@ -93,4 +92,40 @@ alias pkgsearch='dpkg -l | grep'
 alias mktar='tar -cf'
 alias listar='tar -tvf'
 alias compress='tar --auto-compress -cf'
+
+
+# apt aliases
+ 
+alias apt-search='sudo apt-cache search'
+alias apt-install='sudo apt-get install'
+alias apt-remove='sudo apt-get --purge remove'
+alias apt-autoremove='sudo apt-get autoremove'
+alias sysupgrade='sudo apt-get update && sudo apt-get upgrade'
+
+
+# git aliases
+
+alias gadd='git add'
+alias ginit='git init'
+alias gpull='git pull'
+alias gpush='git push'
+alias gclone='git clone'
+alias gcommit='git commit -m'
+
+
+# add alias for your personal tools
+
+#
+
+
+# replace this aliases with your personal aliases
+
+alias desktop='cd ~/Desktop'
+alias project='cd ~/Desktop/project'
+alias download='cd ~/Download'
+
+alias compile='gcc -O -Wall -pedantic -ansi -std=c11 -o'
+alias ping-gateway='ping -c5 192.168.1.1'
+
+alias cups-config='elinks http://localhost:631'
 
