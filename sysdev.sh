@@ -72,7 +72,7 @@ if [ $1 == "install" ]; then
 	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> $LOG_FILE
 	vim +PluginInstall +qall 2> $LOG_FILE
 	echo "colorscheme thor" >> ~/.vim/vimrc
-	
+
 	echo -e "${orange}sysdev log file:${reset}"
 	cat $LOG_FILE
 	rm -i $LOG_FILE
@@ -88,7 +88,7 @@ if [ $1 == "restore" ]; then
 		rm -rf ${conf_file[@]} 2> $LOG_FILE
 
 		echo -e "${green}restoring${reset} old configuration files"
-		tar -xf .conf.old.tar 2> $LOGFILE 
+		tar -xf .conf.old.tar 2> $LOGFILE
 		rm -v .conf.old.tar
 		echo -e "${orange}sysdev log file:${reset}"
 		cat $LOG_FILE

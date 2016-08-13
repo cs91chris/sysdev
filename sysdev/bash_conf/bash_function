@@ -32,7 +32,7 @@ function decode64()
 function secrm()
 {
 	LIST="$@"
-	shred -xn7 --zero --remove $LIST & 
+	shred -xn7 --zero --remove $LIST &
 }
 
 function swap_filename()

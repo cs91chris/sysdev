@@ -24,9 +24,9 @@ if [ $(id -u) -eq 0 ]; then
 
 		# other application
 		apt-get install \
-			dia vlc gpaint bleachbit
+			dia vlc gpaint bleachbit fslint
 
-		cp -i user-dirs.dirs ~/.config 
+		cp -i user-dirs.dirs ~/.config
 		cp -i -R themes ~
 		mv ~/themes ~/.themes
 

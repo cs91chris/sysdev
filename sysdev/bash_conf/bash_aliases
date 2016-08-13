@@ -2,7 +2,7 @@
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    
+
     alias dir='dir --color=auto'
     alias ls='ls --color=auto -F'
     alias vdir='vdir --color=auto'
@@ -27,7 +27,7 @@ alias h='history'
 alias more='less'
 alias ping='ping -c5'
 alias funct='declare -F'
-alias asearch='alias | grep' 
+alias asearch='alias | grep'
 
 
 # interactive and verbose mode
@@ -39,7 +39,7 @@ alias rmd='rm -rf'
 alias mkdir='mkdir -vp'
 
 
-# more info alias 
+# more info alias
 
 alias df='pydf -aH'
 alias freeh='free -h'
@@ -73,7 +73,7 @@ alias script='cd ~/.script'
 alias localhost='cd /var/www'
 
 
-# more ps alias 
+# more ps alias
 
 alias ps='ps auxf'
 alias psroot='ps | grep root'
@@ -95,7 +95,7 @@ alias compress='tar --auto-compress -cf'
 
 
 # apt aliases
- 
+
 alias apt-search='sudo apt-cache search'
 alias apt-install='sudo apt-get install'
 alias apt-remove='sudo apt-get --purge remove'

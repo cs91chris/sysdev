@@ -17,7 +17,8 @@ if [ $(id -u) -eq 0 ]; then
 			ranger \
 			figlet \
 			cryptsetup \
-			poppler-utils
+			poppler-utils \
+			secure-delete
 
 		# system
 		apt-get install \
@@ -39,7 +40,7 @@ if [ $(id -u) -eq 0 ]; then
 			git \
 			ipython \
 			valgrind \
-			pyflakes 
+			pyflakes
 
 		addgroup $USER sudo
 		echo -e "${orange}you must logout${reset}"
