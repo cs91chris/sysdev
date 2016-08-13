@@ -1,0 +1,15 @@
+# author: Christian Sannino
+# license: GPL v3
+
+0) make sure you are connected to the internet
+1) first of all run install-tools.sh
+2) if you want mate desktop environment run mde.sh
+3) run sysdev.sh install for install the configuration
+4) if you want remove sysdev configuration run sysdev.sh restore
+
+- add your bash aliases in sysdev/bash_conf/bash_aliases
+- add your bash function in sysdev/bash_conf/bash_function
+- add your script in sysdev/sysdevScript
+- add your template in sysdev/sysdevModels
+- add your library in sysdev/sysdevDevelop
+

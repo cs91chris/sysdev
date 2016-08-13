@@ -4,7 +4,6 @@ source ~/sysdevScript/color.conf 2> /dev/null
 
 
 if [ $(id -u) -eq 0 ]; then
-		echo -e "${green}installing tool...${reset}"
 		apt-get update
 
 		# utils
@@ -16,7 +15,9 @@ if [ $(id -u) -eq 0 ]; then
 			tree \
 			elinks \
 			ranger \
-			figlet
+			figlet \
+			cryptsetup \
+			poppler-utils
 
 		# system
 		apt-get install \
@@ -41,7 +42,7 @@ if [ $(id -u) -eq 0 ]; then
 			pyflakes 
 
 		addgroup $USER sudo
-		logout 2> /dev/null
+		echo -e "${orange}you must logout${reset}"
 
 	else
 		echo -e "you are not root: ${red}permission denied${reset}"

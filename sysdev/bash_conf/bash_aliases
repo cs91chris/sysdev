@@ -83,14 +83,14 @@ alias psearch='ps auxf | grep -v grep | grep -i -e VSZ -e'
 
 # search installed package
 
-alias listpkg='dpkg -l | more'
+alias pkglist='dpkg -l | more'
 alias pkgsearch='dpkg -l | grep'
 
 
 # more tar alias
 
 alias mktar='tar -cf'
-alias listar='tar -tvf'
+alias tarlist='tar -tvf'
 alias compress='tar --auto-compress -cf'
 
 

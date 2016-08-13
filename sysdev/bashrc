@@ -1,5 +1,8 @@
 # ~/.bashrc: executed by bash(1) for non-login shells
 
+# add script/ to PATH
+export PATH=$PATH:~/sysdevScript
+
 if [ -d $HOME/.bash_conf ]; then
 	. "$HOME/.bash_conf/bash_color"
 	. "$HOME/.bash_conf/bash_aliases"
@@ -60,11 +63,11 @@ PS1="\[$txtwht\]\w\n${debian_chroot:+($debian_chroot)}\\
 
 # enable programmable completion features
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+	if [ -f /usr/share/bash-completion/bash_completion ]; then
+		. /usr/share/bash-completion/bash_completion
+	elif [ -f /etc/bash_completion ]; then
+		. /etc/bash_completion
+	fi
 fi
 
 # welcome message
