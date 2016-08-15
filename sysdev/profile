@@ -7,13 +7,13 @@
 
 
 # add script/ to PATH
-export PATH=$PATH:~/sysdevScript
+export PATH=$PATH:~/Script
 
 # add extern headers
-export CPATH=~/sysdevDevelop/include
+export CPATH=~/Develop/include
 
 # add extern dynamic library
-export LD_LIBRARY_PATH=~/sysdevDevelop/lib
+export LD_LIBRARY_PATH=~/Develop/lib
 
 # add python init file
 export PYTHONSTARTUP=~/.conf/python/pyrc

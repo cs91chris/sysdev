@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/sysdevScript/color.conf 2> /dev/null
+source ~/Script/color.conf 2> /dev/null
 
 
 if [ -f $1 ]; then

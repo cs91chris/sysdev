@@ -1,9 +1,12 @@
-# bash funtions
 
-function e()
+function typing()
 {
-	echo "write on $1 (Ctrl-D for EOF)"
-	tee >> $1
+	if [ -n "$1" ]; then
+		echo "write on $1 (Ctrl-D for EOF)"
+		tee >> $1
+	else
+		echo "enter a file name"
+	fi
 }
 
 function vim()

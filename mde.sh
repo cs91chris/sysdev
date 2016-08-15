@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/sysdevScript/color.conf 2> /dev/null
+source ~/Script/color.conf 2> /dev/null
 
 
 cd MDE/ > /dev/null

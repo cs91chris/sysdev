@@ -1,7 +1,7 @@
 #!/bin/bash
 
 clear
-source ~/sysdevScript/color.conf 2> /dev/null
+source ~/Script/color.conf 2> /dev/null
 
 
 echo -e " - ${orange}KERNEL${reset}: ${green}`uname -s` `uname -m`${reset}"

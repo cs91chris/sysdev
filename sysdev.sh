@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source sysdev/sysdevScript/color.conf
+source sysdev/Script/color.conf
 
 
 LOG_FILE=~/.sysdev.log
@@ -8,7 +8,7 @@ LOG_FILE=~/.sysdev.log
 conf_file=(	.config/htop/htoprc .config/ranger/rc.conf .config/python
 	.profile 		.bash_conf 		.bash_logout
 	.bash_profile	.bashrc 		.vim
-	sysdevModels	sysdevDevelop 	sysdevScript
+	Models			Develop 		Script
 )
 
 #===============================================================================
@@ -40,17 +40,17 @@ if [ $1 == "install" ]; then
 
     echo -e "${green}templates${reset} directory installed"
 	echo -e "${green}scripts${reset} directory installed"
-	cp -r sysdev/sysdevModels ~
-	cp -r sysdev/sysdevScript ~
-	chmod -R +x ~/sysdevScript
+	cp -r sysdev/Models ~
+	cp -r sysdev/Script ~
+	chmod -R +x ~/Script
 
 	echo -e "${green}develop's${reset} directories created"
-	mkdir -v ~/sysdevDevelop
-	mkdir -v ~/sysdevDevelop/lib
-	mkdir -v ~/sysdevDevelop/include
+	mkdir -v ~/Bin
+	mkdir -v ~/Develop
+	mkdir -v ~/Develop/lib
+	mkdir -v ~/Develop/include
 
-	echo
-	echo -e "${green}installing${reset} configuration files:"
+	echo -e "\n${green}installing${reset} configuration files:"
 	echo -e "\t${orange}bash${reset} configuration"
 	cp -v sysdev/profile ~/.profile
 	cp -v sysdev/bashrc ~/.bashrc
@@ -59,24 +59,19 @@ if [ $1 == "install" ]; then
 	mv ~/bash_conf ~/.bash_conf
 
 	echo -e "\t${orange}ranger${reset} configuration"
-		cp -v sysdev/config/ranger/rc.conf ~/.config/ranger/rc.conf
+	cp -v sysdev/config/ranger/rc.conf ~/.config/ranger/rc.conf
 	echo -e "\t${orange}htop${reset} configuration"
-		cp -v sysdev/config/htop/htoprc ~/.config/htop/htoprc
-    echo -e "\t${orange}python${reset} configuration"
-		cp -vR sysdev/config/python/ ~/.config/python/
+	cp -v sysdev/config/htop/htoprc ~/.config/htop/htoprc
+	echo -e "\t${orange}python${reset} configuration"
+	cp -vR sysdev/config/python/ ~/.config/python/
 	echo -e "\t${orange}vim${reset} configuration"
-		cp -r sysdev/vim ~
-		mv ~/vim ~/.vim
+	cp -r sysdev/vim ~
+	mv ~/vim ~/.vim
 
 	echo -e "${green}installation${reset} plugins..."
 	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> $LOG_FILE
 	vim +PluginInstall +qall 2> $LOG_FILE
 	echo "colorscheme thor" >> ~/.vim/vimrc
-
-	echo -e "${orange}sysdev log file:${reset}"
-	cat $LOG_FILE
-	rm -i $LOG_FILE
-	echo -e "${reset}"
 fi
 
 #===============================================================================
@@ -90,10 +85,7 @@ if [ $1 == "restore" ]; then
 		echo -e "${green}restoring${reset} old configuration files"
 		tar -xf .conf.old.tar 2> $LOGFILE
 		rm -v .conf.old.tar
-		echo -e "${orange}sysdev log file:${reset}"
-		cat $LOG_FILE
-		rm -i $LOG_FILE
-		echo -e "${reset}"
+
 	else
 		echo -e "old configuration files does ${red}not exists${reset}"
 		exit 1
