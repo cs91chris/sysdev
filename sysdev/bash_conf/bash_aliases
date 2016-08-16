@@ -35,7 +35,7 @@ alias asearch='alias | grep'
 alias rm='rm -vI'
 alias cp='cp -vi'
 alias mv='mv -vi'
-alias rmd='rm -rf'
+alias rmd='rm -rvf'
 alias mkdir='mkdir -vp'
 
 
@@ -124,8 +124,9 @@ alias desktop='cd ~/Desktop'
 alias project='cd ~/Desktop/project'
 alias download='cd ~/Download'
 
-alias compile='gcc -O -Wall -pedantic -ansi -std=c11 -o'
+alias gcc='gcc -O -Wall -pedantic -std=c11 -o'
 alias ping-gateway='ping -c5 192.168.1.1'
 
 alias cups-config='elinks http://localhost:631'
+alias backup='rsync -avuz'
 

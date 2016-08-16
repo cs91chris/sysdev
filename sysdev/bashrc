@@ -1,7 +1,7 @@
 # ~/.bashrc: executed by bash(1) for non-login shells
 
 # add script/ to PATH
-export PATH=$PATH:~/Script
+export PATH=$PATH:~/Script:~/Bin
 
 if [ -d $HOME/.bash_conf ]; then
 	. "$HOME/.bash_conf/bash_color"

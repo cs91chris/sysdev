@@ -42,8 +42,7 @@ if [ $(id -u) -eq 0 ]; then
 			valgrind \
 			pyflakes
 
-		addgroup $USER sudo
-		echo -e "${orange}you must logout${reset}"
+		echo -e "${orange}you must add your user to sudo group. Then logout${reset}"
 
 	else
 		echo -e "you are not root: ${red}permission denied${reset}"

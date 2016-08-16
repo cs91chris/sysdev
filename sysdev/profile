@@ -7,7 +7,7 @@
 
 
 # add script/ to PATH
-export PATH=$PATH:~/Script
+export PATH=$PATH:~/Script:~/Bin
 
 # add extern headers
 export CPATH=~/Develop/include
