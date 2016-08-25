@@ -1,4 +1,9 @@
 
+function say()
+{
+	echo "$@" | festival --tts
+}
+
 function typing()
 {
 	if [ -n "$1" ]; then
