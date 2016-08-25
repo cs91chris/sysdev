@@ -24,20 +24,11 @@ if [ $(id -u) -eq 0 ]; then
 
 		# other application
 		apt-get install \
-			dia vlc gpaint bleachbit fslint grsync
+			dia vlc gpaint bleachbit fslint grsync gdebi
 
-
-		cp -i user-dirs.dirs ~/.config
-		cp -i -R themes ~
-		mv ~/themes ~/.themes
-
-		mkdir -v ~/Desktop
-		mkdir -v ~/Documents
-		mkdir -v ~/Download
-		mkdir -v ~/Pictures
-		mkdir -v ~/Public
-		mkdir -v ~/Music
-		mkdir -v ~/Videos
+		# libreoffice
+		apt-get install \
+			libreoffice libreoffice-gnome
 
 	else
 		echo -e "you are not root: ${red}permission denied${reset}"

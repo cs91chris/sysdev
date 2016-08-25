@@ -16,6 +16,8 @@ if [ $(id -u) -eq 0 ]; then
 			elinks \
 			ranger \
 			figlet \
+			festival \
+			acpi-tools \
 			cryptsetup \
 			poppler-utils \
 			secure-delete
@@ -38,6 +40,7 @@ if [ $(id -u) -eq 0 ]; then
 			gcc \
 			g++ \
 			git \
+			indent \
 			ipython \
 			valgrind \
 			pyflakes
