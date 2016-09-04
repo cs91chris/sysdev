@@ -1,15 +1,25 @@
 # author: Christian Sannino
 # license: GPL v3
 
+
 0) make sure you are connected to the internet
+
 1) first of all run ./install-tools.sh as root
-2) if you want mate desktop environment run ./mde.sh (with sudo)
+   this script accept one parameter:
+    - full: install all tools
+    - sys:  install only tools for system administration
+    - dev:  install only tools for develop with c and python
+
+2) if you want mate desktop environment run ./install-mate-environment.sh as root
+
 3) run ./sysdev.sh install for install the configuration
+
 4) if you want remove sysdev configuration run ./sysdev.sh restore
 
-- add your bash aliases in ~/.bash_conf/bash_aliases
-- add your bash function in ~/.bash_conf/bash_function
-- add your script in ~/Script
-- add your template in ~/Models
-- add your library in ~/Develop
+5) if you want add some personal features:
+	- add your bash aliases in ~/.bash_conf/bash_aliases
+	- add your bash function in ~/.bash_conf/bash_function
+	- add your script in ~/Script
+	- add your template in ~/Models
+	- add your library in ~/Develop
 

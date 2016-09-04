@@ -53,7 +53,7 @@ alias l='ls -C'
 alias la='ls -A'
 alias lr='ll -R'
 alias ll='ls -lh'
-alias tree='tree -Cs'
+alias tree='tree -Csh'
 alias ld='ls -lv --group-directories-first'
 
 

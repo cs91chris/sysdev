@@ -59,11 +59,14 @@ if [ $1 == "install" ]; then
 	mv ~/bash_conf ~/.bash_conf
 
 	echo -e "\t${orange}ranger${reset} configuration"
-	cp -v sysdev/config/ranger/rc.conf ~/.config/ranger/rc.conf
 	echo -e "\t${orange}htop${reset} configuration"
-	cp -v sysdev/config/htop/htoprc ~/.config/htop/htoprc
 	echo -e "\t${orange}python${reset} configuration"
+	mkdir ~/.config/ranger
+	mkdir ~/.config/htop
+	cp -v sysdev/config/ranger/rc.conf ~/.config/ranger/rc.conf
+	cp -v sysdev/config/htop/htoprc ~/.config/htop/htoprc
 	cp -vR sysdev/config/python/ ~/.config/python/
+
 	echo -e "\t${orange}vim${reset} configuration"
 	cp -r sysdev/vim ~
 	mv ~/vim ~/.vim
