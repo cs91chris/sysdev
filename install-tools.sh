@@ -19,6 +19,7 @@ if [ $(id -u) -eq 0 ]; then
 
 	# utils
 	apt-get install \
+		vim \
 		sudo \
 		pydf \
 		tree \
@@ -31,7 +32,6 @@ if [ $(id -u) -eq 0 ]; then
 	# system tools
 	if [[ $1 == "full" || $1 == "sys" ]]; then
 		apt-get install \
-			vim \
 			lshw \
 			htop \
 			tmux \
@@ -52,7 +52,6 @@ if [ $(id -u) -eq 0 ]; then
 	# develop tools
 	if [[ $1 == "full" || $1 == "dev" ]]; then
 		apt-get install \
-			vim \
 			gcc \
 			gdb \
 			g++ \

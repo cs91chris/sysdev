@@ -45,7 +45,8 @@ alias df='pydf -aH'
 alias freeh='free -h'
 alias cpuinfo='cat /proc/cpuinfo'
 alias meminfo='cat /proc/meminfo'
-
+alias lastmsg='dmesg | tail'
+alias dirsize='du -sh'
 
 # more ls aliases
 
@@ -69,7 +70,8 @@ alias home='cd ~'
 alias etc='cd /etc'
 alias usr='cd /usr'
 alias opt='cd /opt'
-alias script='cd ~/.script'
+alias Script='cd ~/Script'
+alias Bin='cd ~/Bin'
 alias localhost='cd /var/www'
 
 
@@ -108,14 +110,14 @@ alias sysupgrade='sudo apt-get update && sudo apt-get upgrade'
 alias gadd='git add'
 alias ginit='git init'
 alias gpull='git pull'
-alias gpush='git push'
+alias gpom='git push origin master'
 alias gclone='git clone'
 alias gcommit='git commit -m'
 
 
-# add alias for your personal tools
+# other aliases
 
-#
+alias scanme='nmap localhost'
 
 
 # replace this aliases with your personal aliases
@@ -123,10 +125,12 @@ alias gcommit='git commit -m'
 alias desktop='cd ~/Desktop'
 alias project='cd ~/Desktop/project'
 alias download='cd ~/Download'
+alias laradock='cd ~/Bin/laradock'
 
 alias gcc='gcc -O -Wall -pedantic -std=c11 -o'
 alias ping-gateway='ping -c5 192.168.1.1'
 
 alias cups-config='elinks http://localhost:631'
 alias backup='rsync -avuz'
+alias screenfetch='screenfetch -D debian'
 
