@@ -2,13 +2,13 @@
 
 source sysdev/Script/color.conf
 
-
+PATH=sysdev
 LOG_FILE=~/.sysdev.log
 
-conf_file=(	.config/htop/htoprc .config/ranger/rc.conf .config/python
-	.profile 		.bash_conf 		.bash_logout
-	.bash_profile	.bashrc 		.vim
-	Models			Develop 		Script
+conf_file=(
+	.config/htop/htoprc .config/ranger/rc.conf 	.config/python
+	.profile 			.bash_conf 				.bash_logout
+	.bash_profile		.bashrc 				.vim
 )
 
 #===============================================================================
@@ -40,17 +40,21 @@ if [ $1 == "install" ]; then
 
     echo -e "${green}templates${reset} directory installed"
 	echo -e "${green}scripts${reset} directory installed"
+	echo -e "${green}develop's${reset} directories created"
 
 	cp -r sysdev/Models ~
 	cp -r sysdev/Script ~
 	chmod -R +x ~/Script
 
-	echo -e "${green}develop's${reset} directories created"
-
 	mkdir -v ~/Bin
 	mkdir -v ~/Develop
 	mkdir -v ~/Develop/lib
 	mkdir -v ~/Develop/include
+	mkdir -v ~/Develop/src
+	mkdir -v ~/Develop/build
+
+	echo -e "\n${green}installing${reset} cheatsheets"
+	cp -v -r sysdev/sys-cheat ~/.cheat
 
 	echo -e "\n${green}installing${reset} configuration files:"
 	echo -e "\n${orange}bash${reset} configuration"
@@ -82,25 +86,28 @@ if [ $1 == "install" ]; then
 	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> $LOG_FILE
 	vim +PluginInstall +qall 2> $LOG_FILE
 	echo "colorscheme thor" >> ~/.vim/vimrc
-fi
 
 #===============================================================================
 
-if [ $1 == "restore" ]; then
-	if [ -f ~/.conf.old.tar ]; then
-		echo -e "${green}deleting${reset} new configuration files..."
-	
-		cd ~ > /dev/null
-		rm -rf ${conf_file[@]} 2> $LOG_FILE
+else
+	if [ $1 == "restore" ]; then
+		if [ -f ~/.conf.old.tar ]; then
+			echo -e "${green}deleting${reset} new configuration files..."
 
-		echo -e "${green}restoring${reset} old configuration files"
+			cd ~ > /dev/null
+			rm -rf ${conf_file[@]} 2> $LOG_FILE
 
-		tar -xf .conf.old.tar 2> $LOGFILE
-		rm -v .conf.old.tar
+			echo -e "${green}restoring${reset} old configuration files"
 
+			tar -xf .conf.old.tar 2> $LOGFILE
+			rm -v .conf.old.tar
+
+		else
+			echo -e "old configuration files does ${red}not exists${reset}"
+			exit 1
+		fi
 	else
-		echo -e "old configuration files does ${red}not exists${reset}"
-		exit 1
+		echo -e "${green}too few argument${reset}"
 	fi
 fi
 

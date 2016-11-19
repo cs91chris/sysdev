@@ -19,6 +19,7 @@ if [ $(id -u) -eq 0 ]; then
 
 	# utils
 	apt-get install \
+		git \
 		vim \
 		sudo \
 		pydf \
@@ -28,7 +29,6 @@ if [ $(id -u) -eq 0 ]; then
 		festival \
 		poppler-utils \
 
-
 	# system tools
 	if [[ $1 == "full" || $1 == "sys" ]]; then
 		apt-get install \
@@ -37,16 +37,23 @@ if [ $(id -u) -eq 0 ]; then
 			tmux \
 			nmap \
 			elinks \
-			python \
 			glances \
 			hddtemp \
 			tcpdump \
+			python-pip \
 			cryptsetup \
 			lm-sensors \
 			acpi-tools \
 			screenfetch \
 			secure-delete \
 			smartmontools
+
+		git clone https://github.com/chrisallenlane/cheat.git cheat-repo
+		cd cheat
+		make install
+		chmod -R 755 /usr/share/cheat/sheets/
+		cd -
+		rm -rf cheat-repo
 	fi
 
 	# develop tools
@@ -55,7 +62,6 @@ if [ $(id -u) -eq 0 ]; then
 			gcc \
 			gdb \
 			g++ \
-			git \
 			indent \
 			ipython \
 			valgrind \

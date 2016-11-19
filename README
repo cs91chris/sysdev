@@ -16,8 +16,9 @@
 4) if you want add some personal features, add your:
 	- bash aliases in ~/.bash_conf/bash_aliases
 	- bash function in ~/.bash_conf/bash_function
-	- binary file in ]/Bin
+	- binary file in ~/Bin
 	- script file in ~/Script
 	- template in ~/Models
 	- library in ~/Develop
+	- cheat in ~/.cheat
 
