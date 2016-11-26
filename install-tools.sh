@@ -3,6 +3,11 @@
 source ~/Script/color.conf 2> /dev/null
 
 
+if [ $1 == "" ]; then
+	echo -e "${red}missing${reset} argument try help"
+	exit 1
+fi
+
 if [ $1 == "help" ]; then
 	echo -e "author: ${orange}Christian Sannino${reset}"
 	echo -e "released under ${orange}GPL v3 license${reset}\n"
@@ -48,12 +53,12 @@ if [ $(id -u) -eq 0 ]; then
 			secure-delete \
 			smartmontools
 
-		git clone https://github.com/chrisallenlane/cheat.git cheat-repo
+		git clone https://github.com/jahendrie/cheat.git
 		cd cheat
 		make install
 		chmod -R 755 /usr/share/cheat/sheets/
 		cd -
-		rm -rf cheat-repo
+		rm -rf cheat
 	fi
 
 	# develop tools

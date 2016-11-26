@@ -50,8 +50,11 @@ if [ $1 == "install" ]; then
 	mkdir -v ~/Develop
 	mkdir -v ~/Develop/lib
 	mkdir -v ~/Develop/include
-	mkdir -v ~/Develop/src
-	mkdir -v ~/Develop/build
+	mkdir -v ~/Develop/java
+	mkdir -v ~/Develop/java/class
+	mkdir -v ~/Develop/java/src
+	mkdir -v ~/Develop/java/package
+	mkdir -v ~/Develop/java/jar
 
 	echo -e "\n${green}installing${reset} cheatsheets"
 	cp -v -r sysdev/sys-cheat ~/.cheat

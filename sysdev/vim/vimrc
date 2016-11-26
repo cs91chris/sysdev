@@ -77,7 +77,9 @@ set hidden
 set ignorecase
 set smartcase
 set noswapfile
-set hlsearch
+set nobackup
+set ruler
+set ttyfast
 
 set t_Co=512
 set history=1000
@@ -86,6 +88,12 @@ set shiftwidth=4
 set foldcolumn=2
 set tw=255
 
+set dictionary=/usr/share/dict/italian,/usr/share/dict/american-english
+
+"use <C-L> to clear the highlighting of search
+if maparg('<C-L>', 'n') ==# ''
+	nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
 
 syntax enable
 filetype plugin on
