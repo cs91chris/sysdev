@@ -26,6 +26,8 @@ echo -e "\n - ${orange}CONNECTED-USERS${reset}:"; w -s -i -h
 echo -e "\n - ${orange}DISK-INFO${reset}:"; pydf -H
 echo -e "\n- ${orange}MEM-INFO${reset}:"; free -m
 
+
+
 echo -e "\n- ${orange}CPU-INFO${reset}:"
 lshw -C cpu | awk '/product/ || /version/ || /size/ || /capacity/ || /width/ || /capabilities/' | head -n6
 
