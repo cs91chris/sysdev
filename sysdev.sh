@@ -80,7 +80,7 @@ if [ $1 == "install" ]; then
 	echo -e "${orange}python${reset} configuration"
 
 	mkdir ~/.config
-	cp -v -r $SYSDEV_PATH/config ~/.config
+	cp -v -r $SYSDEV_PATH/config/* ~/.config
 
 	echo -e "\n${orange}vim${reset} configuration"
 	cp -r $SYSDEV_PATH/vim ~/.vim
