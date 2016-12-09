@@ -67,7 +67,7 @@ fi
 
 PS1="\[$txtwht\]\w\n${debian_chroot:+($debian_chroot)}\\
 ┌────[\[$txtgrn\]\u@\h\[$txtwht\]]──[\[$txtylw\]\W\[$txtwht\]] \n\\
-\[$bakwht\] \[$txtwht\]\$([[ \$? == 0 ]] && echo \" \[$bakgrn\] \" || (echo \" \[$bakred\] \" ; echo 'error' | festival --tts)) \\
+\[$bakwht\] \[$txtwht\]\$([[ \$? == 0 ]] && echo \" \[$bakgrn\] \" || (echo \" \[$bakred\] \")) \\
 \[$txtwht\]\n\\
 └─────\[$txtrst\]>>> "
 
@@ -85,6 +85,5 @@ fi
 clear
 echo -e "${txtcyn}"
 figlet "Welcome $USER"
-echo -e "welcome $USER" | festival --tts
 echo -e "${txtrst}"
 

@@ -5,11 +5,11 @@ source ~/Script/color.conf 2> /dev/null
 
 if [ $(id -u) -eq 0 ]; then
 	apt-get update && apt-get install \
-		git vim gcc gdb g++ \
+		vim gcc gdb g++ wget \
 		pydf lshw htop tmux nmap tree \
 		elinks ranger indent figlet \
 		glances ipython hddtemp tcpdump \
-		pyflakes valgrind festival \
+		pyflakes valgrind \
 		python-pip cryptsetup lm-sensors \
 		acpitool screenfetch secure-delete \
 		poppler-utils smartmontools \

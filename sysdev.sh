@@ -13,6 +13,13 @@ CONF_FILE=(
 
 #===============================================================================
 
+if [ $1 == "" ]; then
+	echo -e "${red}missing${reset}argument: try help"
+	exit 1
+fi
+
+#===============================================================================
+
 if [ $1 == "help" ]; then
 	echo -e "author: ${orange}Christian Sannino${reset}"
 	echo -e "released under ${orange}GPL v3 license${reset}\n"
@@ -65,10 +72,10 @@ if [ $1 == "install" ]; then
 	echo -e "${orange}htop${reset} configuration"
 	echo -e "${orange}python${reset} configuration"
 
-	mkdir ~/.config/{ranger,htop}
+	mkdir ~/.config/{ranger,htop,python}
 	cp -v $SYSDEV_PATH/config/ranger/rc.conf ~/.config/ranger/rc.conf
 	cp -v $SYSDEV_PATH/config/htop/htoprc ~/.config/htop/htoprc
-	cp -vR $SYSDEV_PATH/config/python/ ~/.config/python/
+	cp -v $SYSDEV_PATH/config/python/* ~/.config/python/
 
 	echo -e "\n${orange}vim${reset} configuration"
 	cp -r $SYSDEV_PATH/vim ~
