@@ -11,8 +11,9 @@ if [ $(id -u) -eq 0 ]; then
 		glances ipython hddtemp tcpdump \
 		pyflakes valgrind festival \
 		python-pip cryptsetup lm-sensors \
-		acpi-tools screenfetch secure-delete \
-		poppler-utils smartmontools
+		acpitool screenfetch secure-delete \
+		poppler-utils smartmontools \
+	-y
 
 	git clone https://github.com/jahendrie/cheat.git
 	cd cheat >/dev/null

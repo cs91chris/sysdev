@@ -2,10 +2,10 @@
 
 source sysdev/Script/color.conf
 
-PATH=sysdev
+SYSDEV_PATH=sysdev
 LOG_FILE=~/.sysdev.log
 
-conf_file=(
+CONF_FILE=(
 	.config/htop/htoprc .config/ranger/rc.conf 	.config/python
 	.profile 			.bash_conf 				.bash_logout
 	.bash_profile		.bashrc 				.vim
@@ -20,7 +20,7 @@ if [ $1 == "help" ]; then
 	echo -e "./sysdev.sh ${green}help${reset}: for this information"
 	echo -e "./sysdev.sh ${green}install${reset}: for installing sysdev configuration"
 	echo -e "./sysdev.sh ${green}restore${reset}: for restoring the old configuration"
-:	exit 0
+	exit 0
 fi
 
 #===============================================================================
@@ -32,9 +32,9 @@ if [ $1 == "install" ]; then
 		tar --create -f .conf.old.tar \
 			--atime-preserve --numeric-owner --preserve-permissions \
 			--absolute-names --same-owner 	 --ignore-failed-read \
-			${conf_file[@]} 2> $LOG_FILE
+			${CONF_FILE[@]} 2> $LOG_FILE
 	fi
-	rm -rf ${conf_file[@]}
+	rm -rf ${CONF_FILE[@]} > $LOG_FILE
 	cd - > /dev/null
 
     echo -e "${green}templates${reset} directory installed"
@@ -42,23 +42,23 @@ if [ $1 == "install" ]; then
 	echo -e "${green}develop's${reset} directories created"
 
 	mkdir -v ~/Bin ~/Develop/{lib,include,java/{class,src,package,jar}}
-	cp -r sysdev/Models ~
-	cp -r sysdev/Script ~
+ 	cp -r $SYSDEV_PATH/Models ~
+	cp -r $SYSDEV_PATH/Script ~
 	cd ~/Script > /dev/null
 	wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
 	chmod -R +x ~/Script
 	cd - > /dev/null
 
 	echo -e "\n${green}installing${reset} cheatsheets"
-	cp -v -r sysdev/sys-cheat ~/.cheat
+	cp -v -r $SYSDEV_PATH/sys-cheat ~/.cheat
 
 	echo -e "\n${green}installing${reset} configuration files:"
 	echo -e "\n${orange}bash${reset} configuration"
 
-	cp -v sysdev/profile ~/.profile
-	cp -v sysdev/bashrc ~/.bashrc
-	cp -v sysdev/bash_logout ~/.bash_logout
-	cp -r sysdev/bash_conf ~
+	cp -v $SYSDEV_PATH/profile ~/.profile
+	cp -v $SYSDEV_PATH/bashrc ~/.bashrc
+	cp -v $SYSDEV_PATH/bash_logout ~/.bash_logout
+	cp -r $SYSDEV_PATH/bash_conf ~
 	mv ~/bash_conf ~/.bash_conf
 
 	echo -e "${orange}ranger${reset} configuration"
@@ -66,12 +66,12 @@ if [ $1 == "install" ]; then
 	echo -e "${orange}python${reset} configuration"
 
 	mkdir ~/.config/{ranger,htop}
-	cp -v sysdev/config/ranger/rc.conf ~/.config/ranger/rc.conf
-	cp -v sysdev/config/htop/htoprc ~/.config/htop/htoprc
-	cp -vR sysdev/config/python/ ~/.config/python/
+	cp -v $SYSDEV_PATH/config/ranger/rc.conf ~/.config/ranger/rc.conf
+	cp -v $SYSDEV_PATH/config/htop/htoprc ~/.config/htop/htoprc
+	cp -vR $SYSDEV_PATH/config/python/ ~/.config/python/
 
 	echo -e "\n${orange}vim${reset} configuration"
-	cp -r sysdev/vim ~
+	cp -r $SYSDEV_PATH/vim ~
 	mv ~/vim ~/.vim
 
 	echo -e "${green}installation${reset} plugins..."
@@ -86,10 +86,10 @@ else
 		if [ -f ~/.conf.old.tar ]; then
 			echo -e "${green}deleting${reset} new configuration files..."
 			cd ~ > /dev/null
-			rm -rf ${conf_file[@]} 2> $LOG_FILE
+			rm -rf ${CONF_FILE[@]} > $LOG_FILE
 
 			echo -e "${green}restoring${reset} old configuration files"
-			tar -xf .conf.old.tar 2> $LOGFILE
+			tar -xf .conf.old.tar > $LOGFILE
 			rm -v .conf.old.tar
 
 		else
