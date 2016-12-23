@@ -4,15 +4,15 @@
 
 0) make sure you are connected to the internet
 1) first of all run ./install-tools.sh as root
-2) run ./sysdev.sh install to install the configuration
-3) if you want remove sysdev configuration run ./sysdev.sh restore
+2) run ./sysdev.sh to install the configurations
 
-4) if you want add some personal features, add your:
-	- bash aliases in ~/.bash_conf/bash_aliases
-	- bash function in ~/.bash_conf/bash_function
-	- binary file in ~/Bin
-	- script file in ~/Script
-	- template in ~/Models
-	- library in ~/Develop
-	- cheat in ~/.cheat
+3) if you want add some personal features, add your:
+
+	- bash aliases in: 	~/.bash_conf/bash_aliases
+	- bash function in: ~/.bash_conf/bash_function
+	- binary file in:	~/Bin/
+	- script file in:	~/Script/
+	- template in:		~/Models/
+	- C library in:		~/Develop/
+	- cheat sheet in:	~/.cheat/
 

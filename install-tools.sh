@@ -2,6 +2,8 @@
 
 source ~/Script/color.conf 2> /dev/null
 
+CHEAT_REPO=https://github.com/jahendrie/cheat.git
+
 
 if [ $(id -u) -eq 0 ]; then
 	apt-get update && apt-get install \
@@ -15,7 +17,7 @@ if [ $(id -u) -eq 0 ]; then
 		poppler-utils smartmontools \
 	-y
 
-	git clone https://github.com/jahendrie/cheat.git
+	git clone $CHEAT_REPO
 	cd cheat >/dev/null
 	make install
 	chmod -R 755 /usr/share/cheat/sheets/

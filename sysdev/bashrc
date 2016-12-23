@@ -83,7 +83,7 @@ fi
 
 # welcome message
 clear
-echo -e "${txtcyn}"
+echo -e "${txtcyn} "
 figlet "Welcome $USER"
-echo -e "${txtrst}"
+echo -e "${txtrst} "
 
