@@ -6,7 +6,7 @@ CHEAT_REPO=https://github.com/jahendrie/cheat.git
 
 
 if [ $(id -u) -eq 0 ]; then
-	apt-get update && apt-get install \
+	apt update && apt install \
 		vim gcc gdb g++ wget \
 		pydf lshw htop tmux nmap tree \
 		elinks ranger indent figlet \

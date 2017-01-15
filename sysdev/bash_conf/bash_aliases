@@ -48,6 +48,7 @@ alias meminfo='cat /proc/meminfo'
 alias lastmsg='dmesg | tail'
 alias dirsize='du -sh'
 
+
 # more ls aliases
 
 alias l='ls -C'
@@ -70,9 +71,12 @@ alias home='cd ~'
 alias etc='cd /etc'
 alias usr='cd /usr'
 alias opt='cd /opt'
+alias localhost='cd /var/www'
+
 alias Script='cd ~/Script'
 alias Bin='cd ~/Bin'
-alias localhost='cd /var/www'
+alias desktop='cd ~/Desktop'
+alias download='cd ~/Download'
 
 
 # more ps alias
@@ -98,11 +102,11 @@ alias compress='tar --auto-compress -cf'
 
 # apt aliases
 
-alias apt-search='sudo apt-cache search'
-alias apt-install='sudo apt-get install'
-alias apt-remove='sudo apt-get --purge remove'
-alias apt-autoremove='sudo apt-get autoremove'
-alias sysupgrade='sudo apt-get update && sudo apt-get upgrade'
+alias apt-search='sudo apt search'
+alias apt-install='sudo apt install'
+alias apt-remove='sudo apt purge'
+alias apt-autoremove='sudo apt autoremove'
+alias sysupgrade='sudo apt update && sudo apt upgrade && sudo apt dist-upgrade'
 
 
 # git aliases
@@ -118,19 +122,7 @@ alias gcommit='git commit -m'
 # other aliases
 
 alias scanme='nmap localhost'
-
-
-# replace this aliases with your personal aliases
-
-alias desktop='cd ~/Desktop'
-alias project='cd ~/Desktop/project'
-alias download='cd ~/Download'
-alias laradock='cd ~/Bin/laradock'
-
-alias gcc='gcc -O -Wall -pedantic -std=c11 -o'
 alias ping-gateway='ping -c5 192.168.1.1'
-
 alias cups-config='elinks http://localhost:631'
 alias backup='rsync -avuz'
-alias screenfetch='screenfetch -D debian'
 
