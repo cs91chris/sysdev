@@ -12,8 +12,9 @@ if [ $1 == "add" ]; then
 	exit 0
 fi
 
-if [ -f ~/Models/$1.$1 ]; then
-	cp ~/Models/$1.$1 ./$2.$1
+
+if [ -f ~/Models/$1* ]; then
+	cp ~/Models/$1* ./$2.$1
 	vim $2.$1
 
 elif [ -f ~/Models/$1 ]; then

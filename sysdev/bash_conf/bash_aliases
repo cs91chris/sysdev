@@ -41,8 +41,8 @@ alias mkdir='mkdir -vp'
 
 # more info alias
 
-alias df='pydf -aH'
-alias freeh='free -h'
+alias df='pydf -H'
+alias free='free -h'
 alias cpuinfo='cat /proc/cpuinfo'
 alias meminfo='cat /proc/meminfo'
 alias lastmsg='dmesg | tail'
@@ -75,8 +75,6 @@ alias localhost='cd /var/www'
 
 alias Script='cd ~/Script'
 alias Bin='cd ~/Bin'
-alias desktop='cd ~/Desktop'
-alias download='cd ~/Download'
 
 
 # more ps alias
