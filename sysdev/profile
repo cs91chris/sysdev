@@ -6,7 +6,7 @@
 #umask 022
 
 
-# add script/ to PATH
+# add Script and Bin to PATH
 export PATH=$PATH:~/Script:~/Bin
 
 # add extern headers

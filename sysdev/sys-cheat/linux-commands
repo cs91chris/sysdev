@@ -1,0 +1,636 @@
+####
+###   Elenco Comandi Linux -- versione 1.5 (27 agosto 2000)
+###
+###
+##############################################################################
+# I comandi fondamentali per iniziare
+#
+
+# Ottenere ulteriori informazioni:
+man	:	formatta e mostra le pagine della guida in linea.
+info:	sistema di consultazione dei manuali tramite ipertesti.
+help:	richiama l'help per i comandi builtin della shell.
+
+# Lavorare con file e directory:
+cd:		cambia la directory corrente.
+ls:		mostra il contenuto di una directory.
+cp:		copia file e directory.
+mv:		muove o rinomina un file o una directory.
+rm:		cancella file e directory.
+mkdir:	crea una directory.
+ln:		crea link a file e directory.
+pwd:	mostra la directory corrente.
+chmod:	modifica i permessi di accesso di un file.
+chown:	cambia il proprietario di un file.
+cat:	mostra il contenuto di un file.
+find:	cerca un file tra le directory.
+vi:		l'editor di testo. l'unico ed il solo.
+
+# Filesystem e processi
+df:		mostra lo spazio libero sul disco fisso.
+free:	mostra lo stato della memoria.
+mount:	monta un filesystem.
+umount:	disattiva un filesystem.
+ps:		visualizza un elenco dei processi correnti.
+kill:	invia un messaggio (TERM di default) ad un processo.
+
+# Sistema:
+halt:		chiude il sistema.
+reboot:		riavvia il sistema.
+hostname:	mostra e cambia il nome dell'host.
+
+# Vari:
+startx:	avvia l'ambiente grafico (X Window System).
+date:	mostra la data.
+gzip:	comprime e decomprime file .gz.
+tar:	crea backup di file (file .tar).
+more:	separa l'output in piu' pagine (anche less).
+reset:	resetta il terminale alle impostazioni iniziali.
+lynx:	browser web solo testo.
+zip:	comprime file .zip.
+unzip:	decomprime file .zip.
+
+
+##############################################################################
+# Shell builtin: comandi interni alla shell bash
+#
+alias:		definisce alias di comandi.
+bg:			manda un processo sospeso in background.
+cd:			cambia la directory corrente.
+exec:		sistituisce la shell corrente con un nuovo processo.
+exit:		chiude la shell.
+export:		esporta una variabile nelle shell figlie.
+fg:			porta in foreground un processo.
+help:		richiama l'help per i comandi builtin.
+history:	mostra l'history della shell.
+jobs:		mostra i processi fatti partire dalla shell corrente.
+logout:		esce da una shell di login.
+set	:		setta una variabile.
+type:		mostra dove si trova l'eseguibile di un comando.
+ulimit:		controlla le risorse disponibili per la shell.
+umask:		setta i permessi di default per la creazione di nuovi file.
+
+##############################################################################
+# Di seguito vengono presentati i comandi piu' o meno standard di Linux
+# divisi per directory.
+# Ricordo brevemente che le directory /sbin/ e /usr/sbin/ contengono file
+# di solito eseguibili solo dal superutente (root) e di norma non sono
+# inserite nel PATH degli utenti normali (l'elenco di directory in cui
+# si cercano gli eseguibili)
+#
+
+##############################################################################
+# Directory /bin/
+#
+arch:	informazioni sull'architettura del sistema.
+bash:	la shell (interprete di comandi) normalmente usata.
+cat:	mostra il contenuto di un file.
+		-n numera le righe.
+		-b salta le righe vuote.
+chgrp:	cambia il gruppo di appartenenza di un file.
+chmod:	modifica i permessi di accesso di un file.
+		metodo numerico:
+		primo numero (opzionale):
+			4 : set user ID
+			2 : set group ID
+			1 : swappa la text image
+		secondo numero; permessi del proprietario:
+			4 : lettura
+			2 : scrittura
+			1 : esecuzione
+		terzo numero; permessi del gruppo, stessi valori.
+		quarto numero; permessi degli altri, stessi valori.
+		-R ricorsivo.
+chown:	cambia il proprietario di un file o directory.
+		user.group setta il proprietario a user.group
+		-R ricorsivo.
+cp:		copia file e directory.
+		-r ricorsivo.
+		-a mantiene gli attributi.
+		-f forza.
+cpio:	lavora su archivi di file (come i .tar).
+cut:	taglia un file di testo.
+		-b x-y mostra le colonne da x a y del file; conta i byte.
+		-c x-y mostra le colonne da x a y; conta i caratteri.
+		-f x mostra i campi x separati da TAB.
+		-d specifica un altro delimitatore al posto di TAB.
+date:	mostra la data.
+dd:		data duplicator, copia da un dispositivo di input su un output.
+		if=xxx nome del file o device di input.
+		of=yyy nome del file o device di output.
+df:		mostra lo spazio libero sul disco fisso.
+		-h usa un formato piu' "umano".
+dmesg:	riporta i messaggi mostrati durante il boot.
+du:		mostra lo spazio usato da file o directory.
+		-c mostra un totale
+		-h usa un formato piu` leggibile
+		-m dati in megabyte.
+echo:	stampa una stringa.
+		-e interpreta i caratteri speciali.
+		-n non va a capo.
+ed:		editor di testo line-oriented.
+		red edita solo file nella directory corrente.
+false:	ritorna 1 come codice di uscita.
+fuser:	identifica i processi che stanno usando un file.
+grep:	trova testo all'interno di un file.
+		-i ignora Maiuscolo/minuscolo.
+		-r scende le directory in modo ricorsivo.
+		-v inverte il senso della ricerca.
+gzip:	comprime e decomprime file (estensione .gz).
+		-d decomprime.
+		-f forza.
+		-r ricorsivo.
+		-1 piu' veloce.
+		-9 miglior compressione.
+
+hostname:	mostra e cambia il nome dell'host.
+			-f mostra il nome completo (host.dominio).
+
+kill:	invia un messaggio (TERM di default) ad un processo.
+		-s specifica che deve inviare il segnale s.
+		-l lista dei segnali.
+ln:		crea link a file o directory.
+		-s crea un link simbolico.
+
+loadkeys:	carica un layout della tastiera.
+
+ls:		mostra il contenuto di una directory.
+		-a mostra anche i file nascosti (quelli che iniziano per '.').
+		-d mostra le directory (senza elencarne il contenuto).
+		-f disordinato.
+		-i mostra il numero di inode.
+		-k dimensione in Kb.
+		-l formato lungo.
+		--color colora i file secondo il tipo.
+		-F classifica i file a seconda del tipo.
+mkdir:	crea una directory.
+mknod:	crea un device (file speciale) a caratteri o a blocchi.
+more:	separa l'output in piu' pagine.
+mount:	monta un filesystem.
+		-r monta un filesystem in sola lettura.
+		-w monta un filesystem in lettura/scrittura.
+		-t xxx monta un filesystem di tipo xxx (fat, vfat, ext2,...).
+		-a monta tutti i filesystem presenti in /etc/fstab.
+mv:		muove o rinomina un file o una directory.
+		-b crea copie di backup.
+		-i chiede conferma.
+
+netstat:	mostra informazioni sulle connessioni di rete.
+ping:		invia pacchetti ICMP ECHO_REQUEST ad un host.
+
+ps:		visualizza un elenco dei processi correnti.
+		l formato esteso.
+		u nome utente ed ora di avvio.
+		m informazioni sull'utilizzo della memoria.
+		a mostra anche i processi di altri utenti.
+		r mostra solo i processi attivi.
+		x mostra anche i processi che non controllano un terminale.
+pwd:	mostra la directory corrente.
+rm:		cancella file e directory (nota bene: NON esiste undelete!!!).
+		-d anche directory.
+		-i chiede conferma.
+		-f forza.
+		-r ricorsivo.
+rmdir:	rimuove una directory.
+sed:	legge un file e lo processa con determinati comandi.
+
+setserial:	setta la porta seriale.
+sh:			la shell base di unix.
+sleep:		si blocca per x Secondi (s) Minuti (m) Ore (h) Giorni (d).
+stty:		setta il terminale.
+			Esempio: "stty sane < /dev/ttyX" reimposta al default il teminale X.
+
+su:		login come un altro utente (default root).
+		-p preserva l'ambiente.
+sync:	svuota la cache del disco.
+tar:	crea od estrae backup di file.
+		x estrae.
+		c archivia.
+		v verbose.
+		f file (in cui archiviare o da estrarre).
+		z processa prima con gzip (per file .tar.gz o .tgz).
+touch:	cambia la data di un file (se non esiste lo crea).
+		-a ora di accesso.
+		-d cambia la data.
+		-m cambia la data di modifica.
+true:	ritorna 0 come codice di uscita.
+umount:	smonta un filesystem.
+		-a smonta tutti i filesystem inclusi in fstab.
+		-t smonta solo i filesystem di un certo tipo.
+uname:	mostra informazioni sul computer.
+		-m tipo di macchina.
+		-n nome dell'host.
+		-r release dell'OS.
+		-s nome dell'OS.
+		-v versione dell'OS.
+		-a tutte le informazioni.
+zcat:	mostra il contenuto di un file compresso con gzip (file .gz).
+
+##############################################################################
+# Directory /sbin/
+#
+SVGATextMode:	setta parametri avanzati dello schermo.
+badblocks:		controlla la superficie di un disco fisso.
+chattr:			cambia gli attributi di un file.
+				-R ricorsivo.
+				a in scrittura appende al file.
+				i il file non può essere modificato, spostato, eliminato, linkato.
+				s quando il file viene cancellato lo spazio su disco viene azzerato.
+				S il file viene sincronizzato immediatamente.
+
+dosfsck:	controlla un filesystem DOS.
+dumpe2fs:	stampa info sul super block e sui blocks del disco fisso.
+e2fsck:		controlla una partizione ext2fs.
+			-c controlla anche i badblocks.
+			-f forza (anche su filesystem "pulito").
+			-n controlla in modo read-only.
+fdisk:		manutenzione delle partizioni del disco fisso (anche cfdisk).
+fsck:		controlla una partizione.
+fsck.minix:	controlla una partizione minix.
+getty:		apre una porta tty con richiesta di login (anche agetty, mgetty o mingetty).
+halt:		ferma il sistema.
+hwclock:	setta il clock hardware.
+ifconfig:	configura una interfaccia di rete.
+init:		lancia i processi di inittab e cambia il runlevel (e' il primo processo eseguito dal sistema).
+insmod:		installa un modulo nel kernel.
+			-f forza anche se le versioni sono diverse.
+ipfwadm:	amministrazione del firewall IP.
+kbdrate:	cambia l'intervallo di ripetizione della tastiera.
+kerneld:	demone che rimuove/installa automaticamente i moduli non usati/richiesti.
+ldconfig:	aggiorna l'elenco delle librerie.
+lilo:		installa il boot loader che consente di selezionare il sistema operativo all'avvio.
+losetup:	associa dispositivi loop a file.
+lsattr:		elenco degli attributi dei file.
+			-R ricorsivo.
+			-a tutti i file.
+lsmod:		mostra informazioni sui moduli del kernel caricati.
+mkdosfs:	crea una partizione DOS.
+mke2fs:		crea una partizione ext2fs (il filesystem nativo di Linux).
+mkfs:		crea una partizione del tipo specificato.
+mkfs.minix:	crea una partizione minix.
+
+mklost+found:	crea una directory lost+found nella directory corrente.
+mkswap:			crea un dispositivo di swap.
+
+pidof:		mostra il PID di un processo.
+runlevel:	stampa il system runlevel corrente e precedente.
+shutdown:	chiude il sistema.
+			-t x aspetta x secondi.
+			-r dopo la chiusura effettua un riavvio (reboot).
+			-h blocca il sistema (halt).
+			-f effettua un reboot veloce.
+			-c blocca uno shutdown in corso.
+swapon:		attiva un dispositivo o una partizione di swap.
+swapoff:	disattiva un dispositivo o una partizione di swap.
+tune2fs:	setta una partizione ext2fs.
+			-c x nr. di reboot prima di un filesystem check.
+			-g setta il gruppo che puo' beneficiare dei blocchi riservati.
+			-l mostra le impostazioni correnti.
+			-r setta i blocchi riservati.
+			-u setta l'utente beneficiario dei blocchi riservati.
+update:		svuota periodicamente il buffer del filesystem.
+			-S usa il metodo tradizionale (Chiama sync ogni 30 sec.).
+			-s x chiama sync ogni x secondi.
+			-f y svuota il buffer senza chiamere sync ogni y sec (def: 5).
+
+##############################################################################
+# Directory /usr/bin/
+#
+alien:		converte pacchetti da/a vari formati (debian deb, redhat rpm, tgz)
+apropos:	cerca tra i man un determinato argomento.
+apt-cache:	manipola la cache di apt (per Debian).
+apt-config:	configura apt.
+apt-get:	scarica ed installa pacchetti deb (Debian): gestisce le
+			dipendenze e gli aggiornamenti della distribuzione.
+
+ar:		crea, modifica ed estrae file da un archivio.
+arj:	comprime file con arj (file .arj).
+as:		assembler per Linux.
+at:		esegue un programma ad una determinata ora.
+awk:	linguaggio di ricerca ed elaborazione di testo (anche gawk, nawk o mawk).
+
+basename:	elimina directory e suffissi dai nomi dei file.
+batch:		identico ad at, ma viene eseguito solo se il sistema non e' troppo carico.
+bc:			una calcolatrice solo testo.
+biff:		avvisa dell'arrivo di posta.
+bison:		parser generator (anche yacc).
+bunzip2:	decomprime file .bz2
+bzip2:		comprime file .bz2
+
+cal:	mostra un calendario.
+chfn:	cambia le proprie finger information nel file /etc/passwd.
+chsh:	cambia la propria shell di login.
+chvt:	passa ad un altro terminale virtuale.
+clear:	pulisce lo schermo del terminale.
+cmp:	compara due file.
+colrm:	rimuove le colonne da un file.
+column:	crea delle colonne.
+comm:	compara due file ordinati linea per linea.
+
+compress:	comprime un file (estensione .Z).
+cpp:		preprocessore C.
+crontab:	avvia un processo ad una determinata ora.
+csplit:		spezza un file in sezioni predeterminate.
+ddate:		converte la data da gregoriana a discordian.
+dialog:		per creare finestre e dialog box da shell script.
+diff:		visualizza le differenze tra due file.
+			-b ignora gli spazi.
+			-B ignora le linee vuote.
+			-i ignora M/m.
+diff3:		confronta 3 file.
+dircolors:	per settare il colore dei file mostrati da ls.
+dirname:	stampa solo la directory di un riferimento.
+dos:		lancia l'emulatore DOSemu.
+			xdos apre l'emulatore in una finestra in X11.
+
+dpkg:	gestire i pacchetti Debian.
+		-i installa un pacchetto.
+		-r rimuove un pacchetto (--purge rimuove anche i file di configurazione).
+		-s [--info] stampa informazioni su un pacchetto [non] installato.
+		-L [--contents] mostra i file contenuti in un pacchetto [non] installato.
+		-l mostra l'elenco dei pacchetti installati.
+
+dselect:	interfaccia per gestire i pacchetti Debian.
+dumpkeys:	stampa la mappa dei tasti.
+emacs:		editor di testo (e non solo!) anche in ambiente grafico.
+			Se ne esce con ctrl+x ctrl+c.
+env:		esegue un programma in un determinato ambiente.
+expand:		converte le tabulazioni in spazi.
+expr:		valuta espressioni (anche aritmetiche).
+fdforma:	formatta un dischetto.
+			-n non verifica la formattazione.
+fdmount:	monta un dischetto.
+fetchmail:	scarica la posta da host POP3, IMAP o altro.
+file:		determina il tipo di file.
+			-z controlla all'interno dei file compressi.
+filesize:	stampa la dimensione di un file.
+find:		cerca un file tra le directory.
+			-name xxx cerca file di nome xxx.
+			-type X cerca file di tipo X (_d_irectory, _f_ile)
+
+finger:	mostra le finger information di un utente di un sistema.
+flex:	per creare analizzatori lessicali (anche lex).
+free:	mostra lo stato della memoria.
+		-m dati in megabyte.
+
+fromdos:	converte un testo dal formato DOS a quello Unix (anche dos2unix).
+ftp:		client ftp (anche ncftp).
+funzip:		filtro per utilizzare unzip in una pipe.
+g++:		compilatore C++.
+gcc:		compilatore C.
+gdb:		debugger a riga di comando.
+gpm:		demone che controlla il mouse.
+groff:		interfaccia per la compilazione di manuali.
+groups:		stampa il nome del gruppo di un utente.
+gzexe:		crea eseguibili compressi che si decomprimono al volo.
+head:		stampa le prime 10 righe di un file.
+			-c x primi x byte.
+			-n y prime y righe.
+hexdump:	mostra un file in un determinato formato.
+id:			stampa l'ID e l'UID.
+indent:		indenta in vari modi un sorgente C.
+info:		sistema di consultazione dei manuali tramite ipertesti.
+install:	copia dei file ed assegna permessi e proprietario.
+installpkg:	installa un pacchetto Slackware.
+irc:		client irc (anche ircII).
+ispell:		controllo grammaticale su un file.
+kbd_mode:	setta la tastiera.
+killall:	invia un messaggio a tutti i processi con uguale nome.
+			-s specifica che deve inviare il segnale s.
+			-i chiede conferma per ogni processo.
+
+jed:	editor di testo con interfaccia.
+joe:	editor di testo con interfaccia.
+join:	unisce linee di due file in campi comuni.
+last:	stampa informazioni sull'ultimo login.
+ld:		linker.
+ldd:	stampa informazioni sulle librerie condivise.
+less:	visualizza file di testo (anche more).
+locale:	mostra e setta le informazioni sul LOCALE (settaggi internazionali).
+locate:	cerca un file nel database locale.
+logger:	scrive un messaggio nei log di sistema.
+
+logname: 	stampa il nome di login di un utente.
+look:		mostra le linee che cominciano con una certa stringa.
+lpr:		stampa un file.
+lpq:		mostra la coda di stampa.
+lprm:		cancella un lavoro dalla coda di stampa.
+lsdev:		mostra informazioni sul proprio hardware.
+lynx:		browser web solo testo.
+m4:			macro processor.
+make:		GNU make.
+mail:		semplice programma per gestire le email (utile negli script).
+man:		formatta e mostra le pagine di guida in linea.
+mc:			shell Norton Commander-like.
+md5sum:		crea cecksum CRC di un file.
+mesg:		mostra o meno messaggi da altri utenti inviati da talk o write.
+mev:		riporta i mouse-events.
+mkfifo:		crea un file FIFO.
+mkisofs:	crea un filesystem iso9660 (CD-ROM).
+mtools:		collezione di programmi per manipolare file DOS.
+mattrib: 	setta gli attributi msdos di un file.
+mbadblocks: controlla un filesystem FAT.
+mcd: 		cambia la directory corrente.
+mcopy: 		copia file e directory.
+mdel: 		cancella file.
+mdeltree: 	cancella directory.
+mdir:		visualizza il contenuto di una directory.
+mformat:	formatta un dischetto msdos.
+mlabel: 	setta il label di un disco dos.
+mmd: 		cre una directory.
+mmount: 	monta un filesystem msdos.
+mmove: 		sposta file e directory.
+mrd: 		cancella una sottodirectory.
+mren: 		rinomina file e directory.
+mtest: 		visualizza i settaggi degli mtools.
+mtype: 		stampa a schermo il contenuto di un file msdos.
+mutt:		ottimo gestore email in console.
+newgrp:		cambia il proprio gruppo di appartentenza.
+nice:		esegue un programma e ne modifica la priorita' d'esecuzione.
+			-20 : priorita' maggiore (solo root puo' settare valori negativi).
+			19 : minima priorita'.
+
+nl:			numera le righe di un file.
+nohup:		esegue un comandi immune da hangup: continua a girare anche dopo un logout.
+od:			dump di un file in ottale e altri formati.
+open:		apre un comando in un altro terminale.
+passwd:		cambia la password di un utente.
+paste:		unisce linee di files.
+patch:		applica il risultato di un diff (una patch) ad un file.
+pathchk:	controlla se un dato file_name e' valido.
+perl:		interprete per script in linguaggio perl.
+pine:		gestore email in console.
+pkgtool:	gestire pacchetti Slackware.
+printenv:	stampa informazioni sull'ambiente.
+procinfo:	mostra informazioni tratte dal filesystem /proc.
+procmail:	manipola la posta in entrata.
+pstree:		mostra un albero di processi.
+quota:		mostra le percentuali di dischi utilizzabili dagli utenti.
+removepkg:	elimina un pacchetto Slackware.
+renice:		modifica la priorita' di un processo attivo.
+reset:		resetta il terminale alle impostazioni iniziali.
+rev:		inverte le linee di un file.
+
+rpm:	gestire pacchetti RedHat.
+		-i installa un pacchetto.
+		-e rimuove un pacchetto.
+		-qi [-qip] mostra informazioni su un pacchetto [non] installato.
+		-ql [-qlp] mostra i file contenuti in un pacchetto [non] installato.
+		-qa mostra l'elenco dei pacchetti installati.
+
+script:		stampa su un file tutto l'input da tastiera.
+sdiff:		confronta due file ed elimina le differenze.
+setfont:	seleziona il font da usare.
+setleds:	setta i led della tastiera.
+setterm:	setta gli attributi del terminale.
+shar:		crea shell archives.
+showfont:	mostra il font usato.
+showkey:	mostra i codici della tastiera.
+
+size:	mostra dimensione e info di un file obj (e chi ha generato un file core).
+skill:	invia un signal o cambia la priorita' di un programma.
+slrn:	news reader.
+sort:	ordina linee di testo.
+		-b ignora gli spazi all'inizio di riga.
+		-f ignora Maiuscolo/minuscolo.
+		-i ignora i caratteri estesi.
+		-n segue l'ordine numerico.
+		-r inverte l'ordine.
+split:	spezza un file in blocchi di dimensioni date.
+		-l xxx ogni blocco contiente xxx linee.
+		-b xxx [b,k,m] ogni blocco e' di xxx byte, kilo, mega.
+
+strings:	trova linee stampabili in un file.
+strip:		elimina simboli da un obj.
+sudo:		esegue un programma come superutente (root).
+sum:		Crea un CRC di un file.
+
+superformat:	formatta floppy ad alte capacita'.
+
+tail:	mostra la fine di un file.
+		-s solo le ultime s righe.
+		-c x ultimi x byte.
+		-f continua a leggere un file, utile se questo viene modificato.
+tee:	legge da standard input e stampa su stdout e su file.
+		-a append sul file.
+		-i ignora segnali di interruzione.
+telnet:	apre una sessione telnet.
+test:	esegue dei test su file o condizioni.
+time:	esegue un programma e mostra informazioni sul tempo di esecuzione e carico.
+tin:	ottimo news reader in console.
+tload:	rappresenta graficamente il carico medio del sistema.
+todos:	converte un testo da Unix a MSDOS (anche unix2dos).
+top:	mostra i processi che usano piu' tempo CPU o memoria.
+tr:		converte o cancella caratteri.
+troff:	formatta i documenti come le manpage.
+tty:	stampa il nome del file terminale connesso allo standard input.
+tunelp:	setta vari parametri per la stampante.
+unarj:	decomprime file .arj.
+
+uncompress:	decomprime file compressi (file .Z).
+unexpand:	converte spazi in tabulazioni.
+uniq:		rimuove linee indentiche in file ordinati.
+unzip:		decomprime file .zip.
+updatedb:	update di un file database di nomi di file (usato da locate).
+uptime:		mostra da quanto il sistema e' attivo.
+users:		mostra il nome degli utenti correntemente collegati.
+uudecode:	decodifica un file ASCII in un binario.
+uuencode:	codifica un file binario in ASCII.
+
+vi:		l'editor di testo. l'unico ed il solo.
+		Se ne esce (senza salvare) con "ESC :q!" salvando con "ESC :wq".
+vim:	la migliore versione di vi :-).
+vmstat:	riporta statistiche sulla memoria virtuale.
+w:		mostra chi e' loggato e cosa sta facendo.
+wall:	invia un messaggio a tutti i terminali.
+wc:		conta il nr di byte, parole e linee di un file.
+		-c conta i byte.
+		-w conta le parole.
+		-l conta le newline.
+
+wget:		scarica (anche ricorsivamente) pagine web e file da ftp;
+			simile a GetRight (credo).
+whatis:		ricerca nel database della guida per una parola.
+whereis:	indica dove si trova un determinato file.
+which:		indica il percorso completo di un file.
+who:		mostra chi e' loggato.
+whoami:		indica l'username con cui si e' attualmente loggati.
+whois:		interroga un database whois.
+wine:		consente di eseguire programmi Microsoft Windows in
+			Linux; richiede MS Windows.
+wish:		interprete per script in linguaggio Tk.
+workbone:	interfaccia solo testo per ascoltare CD audio.
+write:		invia un messaggio ad un altro utente.
+xargs:		appende ad un comando opzioni prese dallo stdin.
+yes:		emette continuamente una stringa finche' non viene killato (default y).
+zcmp:		usa cmp su file compressi.
+zdiff:		usa diff su file compressi.
+zgrep:		esegue grep su file compressi.
+zgv:		visualizza in un terminale molti formati di immagini.
+zip:		comprime file con zip.
+znew:		ricomprime file da .Z a .gz.
+
+##############################################################################
+# Directory /usr/sbin/
+#
+addgroup:	aggiunge un gruppo (acnhe groupadd).
+adduser:	aggiunge un nuovo utente al sistema (anche useradd).
+cfdisk:		manipola graficamente le partizioni del disco fisso.
+chroot:		cambia la directory root e vi esegue un programma.
+ctrlaltdel:	setta la funzione della combinazione CRTL+ALT+DEL.
+debugfs:	debugga un filesystem ext2.
+groupdel:	elimina un gruppo di utenti.
+hdparm:		mostra e setta molti parametri del disco fisso.
+inetd:		gestore di molti servizi di rete.
+irqtune:	cambia la priorita` degli interrupt; utile per
+			migliorare le prestazioni di un collegamento via modem esterno.
+liloconfig:	script che aiuta a configurare lilo.
+makewhatis:	genera il database per il comando whatis.
+psupdate:	aggiorna il file /etc/psdatabase che rappresenta l'immagine
+			della mappa di sistema attuale (dopo aver ricompilato il kernel).
+rdev:		setta i dispositivi di un kernel (HD, swap, video mode...).
+traceroute:	mostra il percorso per raggiungere un dato host.
+userdel:	elimina un utente del sistema.
+vipw:		edita il file /etc/passwd.
+visudo:		edita il file sudoers.
+
+##############################################################################
+# /usr/X11R6/bin/
+#
+SuperProbe:	identifica la scheda video.
+X:			il sistema a finestra X Window
+			(di norma un link ad un X Server o un wrapper).
+bitmap:		editor di bitmap.
+clock:		un orologio.
+editres:	edita le risorse delle applicazioni Xt.
+ghostview:	visualizza file postscript (anche gv).
+startx:		avvia il sistema a finestre.
+xbiff:		avvisa graficamente se e' arrivata posta.
+xcalc:		piccola calcolatrice.
+xclipboard:	visualizza gli appunti.
+xconsole:	visualizza i messaggi mandati a console.
+xdm:		gestisce il login grafico.
+xedit:		editor di testo base.
+xev:		mostra eventi del mouse e della tastiera.
+xeyes:		occhi che seguono il puntatore.
+xf86config:	configura l'ambiente grafico.
+xfontsel:	seleziona un font.
+xhost:		controlla l'accesso all'X Server da altri host.
+xinit:		inizializza il sistema grafico (chiamato da startx).
+xkill:		uccide una applicazione in finestra.
+xman:		consultare le pagine di manuale graficamente.
+xpaint:		semplice programma di paint.
+xrdb:		setta le risorse X.
+xset:		setta vari parametri (mouse, screensever,...).
+xsetroot:	setta il colore dello sfondo e il puntatore.
+xterm:		apre una finestra terminale.
+xv:			visualizza molti formati di immagini.
+xvidtune:	aggiusta i parametri dello schermo.
+
+##############################################################################
+# /usr/games/
+#
+banner:		crea striscioni.
+fortune:	stampa un detto o una frase famosa.
+xbill:		il piu' grande gioco mai realizzato :-)
+

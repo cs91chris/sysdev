@@ -1,12 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
-ls | while read -r FILE
-do
-	mv -v "$FILE" `echo $FILE 	| \
-	tr ' ' '-' 					| \
-	tr -d '[{}(),\!]' 			| \
-	tr -d "\'" 					| \
-	tr '[A-Z]' '[a-z]' 			| \
-	sed 's/_-_/_/g'` 2> /dev/null
-done
+# replacing ' ' to '-' and UPPERCASE to lowercase 
+
+# FIXME
+
+fix= $(echo "$1" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')
+echo "$fix"
+#mv -vi "$1" "$fix"
 
