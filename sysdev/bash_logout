@@ -1,14 +1,32 @@
 
 # clear history
-
+#
 history -c
 echo -e "\nhistory cleared"
-echo -e "bye bye...\n"
+
+sleep 0.5s
+clear
+
+
+# leaving message
+#
+if [ "$(which figlet)" ]
+then
+	echo -e "${txtcyn} "
+	figlet "Bye Bye..."
+	echo -e "${txtrst} "
+
+else
+	echo -e "Bye Bye...\n"
+fi
+
 sleep 1s
+clear
+
 
 # clear the screen
-
-if [ "$SHLVL" = 1 ]; then
+#
+if [ "$SHLVL" = 1 ] ; then
 	[ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
 fi
 

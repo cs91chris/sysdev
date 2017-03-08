@@ -1,61 +1,61 @@
 # ~/.bashrc: executed by bash(1) for non-login shells
 
 
-if [ -d $HOME/.bash_conf ]; then
-	. "$HOME/.bash_conf/bash_color"
-	. "$HOME/.bash_conf/bash_aliases"
-	. "$HOME/.bash_conf/bash_function"
+if [ -d $HOME/.bash_conf ]
+then
+	for f in $(ls $HOME/.bash_conf) ; do
+		[ -f $HOME/$f ] && . "$HOME/.bash_conf/$f"
+	done
 fi
 
 # If not running interactively, don't do anything
+#
 case $- in
     *i*) ;;
       *) return;;
 esac
 
+
+# do not overwrite file on redirection
+#
 set -o noclobber
 
+
 # set ctrl+l behavior to clear screen
+#
 bind -m vi-insert \C-l:clear-screen
 
-export EDITOR=vim
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# cheat variables
-export CHEATCOLORS=true
-export DEFAULT_CHEAT_DIR=/usr/share/cheat/sheets
-export CHEATPATH=$DEFAULT_CHEAT_DIR:~/.cheat
-export CHEAT_TEXT_VIEWER=more
-#export CHEAT_IMAGE_VIEWER
-#export CHEAT_PDF_VIEWER
-
-# setting history
-HISTSIZE=1000
-HISTFILESIZE=2000
-HISTCONTROL=ignoreboth
-shopt -s histappend
 
 # check the window size after each command
+#
 shopt -s checkwinsize
 
+
 # ignore simple spelling mistakes in the cd command
+#
 shopt -s cdspell
 
+
 # make less more friendly
+#
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+
 # set variable identifying the chroot you work in
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+#
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]
+then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+	xterm-color) color_prompt=yes ;;
 esac
 
 force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
+if [ -n "$force_color_prompt" ]
+then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 		color_prompt=yes
     else
@@ -63,25 +63,38 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+
 PS1="\[$txtwht\]\w\n${debian_chroot:+($debian_chroot)}\\
-┌────[\[$txtgrn\]\u@\h\[$txtwht\]]──[\[$txtylw\]\W\[$txtwht\]] \n\\
-\[$bakwht\] \[$txtwht\]\$([[ \$? == 0 ]] && echo \" \[$bakgrn\] \" || (echo \" \[$bakred\] \")) \\
+┌────[\[$txtgrn\]\u@\h\[$txtwht\]]──[\[$txtylw\]\W\[$txtwht\]] \n\[$bakwht\] \\
+\[$txtwht\]\$([ \$? == 0 ] && echo \" \[$bakgrn\] \" || echo \" \[$bakred\] \") \\
 \[$txtwht\]\n\\
 └─────\[$txtrst\]>>> "
 
+PS2="\t>>> "
+
 
 # enable programmable completion features
+#
 if ! shopt -oq posix; then
-	if [ -f /usr/share/bash-completion/bash_completion ]; then
+	if [ -f /usr/share/bash-completion/bash_completion ]
+	then
 		. /usr/share/bash-completion/bash_completion
-	elif [ -f /etc/bash_completion ]; then
+
+	elif [ -f /etc/bash_completion ]
+	then
 		. /etc/bash_completion
 	fi
 fi
 
+
 # welcome message
+#
 clear
-echo -e "${txtcyn} "
-figlet "Welcome $USER"
-echo -e "${txtrst} "
+
+if [ "$(which figlet)" ]
+then
+	echo -e "${txtcyn} "
+	figlet "Welcome $USER"
+	echo -e "${txtrst} "
+fi
 

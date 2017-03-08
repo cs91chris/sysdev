@@ -3,7 +3,9 @@
 
 
 0) make sure you are connected to the internet
+
 1) first of all run ./install-tools.sh as root
+
 2) run ./sysdev.sh to install the configurations
 
 3) if you want add some personal features, add your:
@@ -13,6 +15,6 @@
 	- binary file in:	~/Bin/
 	- script file in:	~/Script/
 	- template in:		~/Models/
-	- C & java dev in:	~/Develop/
+	- library in:		~/Develop/
 	- cheat sheet in:	~/.cheat/
 

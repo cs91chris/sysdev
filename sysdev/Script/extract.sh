@@ -2,25 +2,40 @@
 
 source ~/Script/color.conf 2> /dev/null
 
+FILE=$1
 
-if [ -f $1 ]; then
-	case $1 in
-		*.zip)			unzip $1		;;
-		*.tar.xz)		tar Jxvf $1		;;
-		*.tar.bz2)		tar xvjf $1		;;
-		*.tar.gz)		tar xvzf $1		;;
-		*.tar)			tar xvf $1		;;
-		*.bz2)			bunzip2 $1		;;
-		*.rar)			unrar x $1		;;
-		*.tbz2)			tar xvjf $1		;;
-		*.gz)			gunzip $1		;;
-		*.7z)			7z x $1			;;
-		*.tgz)			tar xvzf $1		;;
-		*.Z)			uncompress $1	;;
-		*)	echo "'$1' ${red}can not be extracted${reset} via '${orange}extract${reset}'" ; exit 1 ;;
+if [ "$1" == "--help" ]
+then
+	echo "this script supports:"
+	echo "\t${orange}zip, rar, tar, tar.xz, tar.bz2, tar.gz${reset}"
+	echo "\t${orange}tbz2, bz2, gz, 7z, tgz, Z${reset}"
+	exit 0
+fi
+
+
+if [ -f $FILE ]
+then
+	case $FILE in
+		*.Z)			uncompress $FILE	;;
+		*.7z)			7z x $FILE			;;
+		*.gz)			gunzip $FILE		;;
+		*.rar)			unrar x $FILE		;;
+		*.zip)			unzip $FILE			;;
+		*.bz2)			bunzip2 $FILE		;;
+		*.tar)			tar xf $FILE		;;
+		*.tgz)			tar xzf $FILE		;;
+		*.tbz2)			tar xjf $FILE		;;
+		*.tar.xz)		tar Jxf $FILE		;;
+		*.tar.bz2)		tar xjf $FILE		;;
+		*.tar.gz)		tar xzf $FILE		;;
+		*)
+			echo -e "'$FILE' ${red}can not be extracted${reset}"
+			exit 1
+		;;
 	esac
+
 else
-	echo "'$1' ${red}is not a valid file${reset}!"
+	echo -e "'$FILE' ${red}is not a valid file${reset}!"
     exit 1
 fi
 

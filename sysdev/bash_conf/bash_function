@@ -1,12 +1,18 @@
 
 function say()
 {
-	echo "$@" | festival --tts
+	if [ "$(which festival)" ]
+	then
+		echo "$@" | festival --tts
+	else
+		echo "festival not found"
+	fi
 }
 
 function typing()
 {
-	if [ -n "$1" ]; then
+	if [ -n "$1" ]
+	then
 		echo "write on $1 (Ctrl-D for EOF)"
 		tee >> $1
 	else
@@ -29,12 +35,12 @@ function calc()
 
 function encode64()
 {
-	echo "$1" | base64
+	echo "$@" | base64
 }
 
 function decode64()
 {
-	echo "$1" | base64 -d
+	echo "$@" | base64 -d
 }
 
 function secrm()
