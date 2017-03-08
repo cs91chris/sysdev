@@ -1,17 +1,17 @@
 #!/bin/bash
 
 set -o errexit
-source ~/Script/color.conf 2> /dev/null
+source sysdev/Script/color.conf 2> /dev/null
 
 
-LOG_FILE=~/.sysdev.log
+FILE_LOG=~/.sysdev.log
 CHEAT_REPO=https://github.com/jahendrie/cheat.git
 CHEAT_PATH=/usr/share/cheat/sheets/
 
 
 if [ $(id -u) -eq 0 ]
 then
-	apt update 2> $LOG_FILE &&
+	apt update 2>> $FILE_LOG &&
 	{
 		apt install \
 			colorgcc pyflakes valgrind \
@@ -22,16 +22,18 @@ then
 			glances ipython hddtemp tcpdump \
 			python-pip cryptsetup lm-sensors \
 			acpitool screenfetch secure-delete \
-		-y 2> $LOG_FILE
+		-y 2>> $FILE_LOG
 	}
 
-	git clone $CHEAT_REPO 2> $LOG_FILE
-	cd cheat > /dev/null
-	make install 2> $LOG_FILE
-	chmod -R 755 $CHEAT_PATH
-	cd - > /dev/null
-	rm -rf cheat
-
+	if [ "$(which cheat)" == "" ]
+	then
+		git clone $CHEAT_REPO 2>> $FILE_LOG
+		cd cheat > /dev/null
+		make install 2>> $FILE_LOG
+		chmod -R 755 $CHEAT_PATH
+		cd - > /dev/null
+		rm -rf cheat
+	fi
 	echo -e "see ${orange}~/.sysdev.log${reset}"
 
 else
