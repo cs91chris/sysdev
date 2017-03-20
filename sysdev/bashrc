@@ -1,10 +1,10 @@
-# ~/.bashrc: executed by bash(1) for non-login shells
-
+# ~/.bashrc: executed by bash for non-login shells
+#
 
 if [ -d $HOME/.bash_conf ]
 then
 	for f in $(ls $HOME/.bash_conf) ; do
-		[ -f $HOME/$f ] && . "$HOME/.bash_conf/$f"
+		[ -f $HOME/.bash_conf/$f ] && . "$HOME/.bash_conf/$f"
 	done
 fi
 
@@ -12,7 +12,7 @@ fi
 #
 case $- in
     *i*) ;;
-      *) return;;
+      *) return ;;
 esac
 
 
@@ -70,12 +70,14 @@ PS1="\[$txtwht\]\w\n${debian_chroot:+($debian_chroot)}\\
 \[$txtwht\]\n\\
 └─────\[$txtrst\]>>> "
 
-PS2="\t>>> "
+PS2="     └────> "
+PS3="         └────> "
 
 
 # enable programmable completion features
 #
-if ! shopt -oq posix; then
+if ! shopt -oq posix
+then
 	if [ -f /usr/share/bash-completion/bash_completion ]
 	then
 		. /usr/share/bash-completion/bash_completion
@@ -90,11 +92,9 @@ fi
 # welcome message
 #
 clear
+echo -e "${txtcyn}"
+[ "$(which figlet)" ] && figlet "Welcome $USER" || echo -e "Welcome $USER"
+echo -e "${txtrst}"
 
-if [ "$(which figlet)" ]
-then
-	echo -e "${txtcyn} "
-	figlet "Welcome $USER"
-	echo -e "${txtrst} "
-fi
+sleep 0.5
 

@@ -10,15 +10,9 @@ clear
 
 # leaving message
 #
-if [ "$(which figlet)" ]
-then
-	echo -e "${txtcyn} "
-	figlet "Bye Bye..."
-	echo -e "${txtrst} "
-
-else
-	echo -e "Bye Bye...\n"
-fi
+echo -e "${txtcyn} "
+[ "$(which figlet)" ] && figlet "Bye Bye..." || echo -e "Bye Bye..."
+echo -e "${txtrst} "
 
 sleep 1s
 clear

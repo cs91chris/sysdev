@@ -76,10 +76,11 @@ alias home='cd ~'
 alias etc='cd /etc'
 alias usr='cd /usr'
 alias opt='cd /opt'
+alias tmp='cd /tmp'
 alias www='cd /var/www'
 
-alias Script='cd ~/Script'
-alias Bin='cd ~/Bin'
+alias Script='cd ~/.script'
+alias Bin='cd ~/.bin'
 
 
 # more ps alias
@@ -135,4 +136,6 @@ fi
 [ "$(which elinks)" ] && alias cups-config='elinks http://localhost:631'
 
 alias ping-gateway='ping -c5 192.168.1.1'
+
+alias trunc='>'
 
