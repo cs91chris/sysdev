@@ -61,7 +61,7 @@ then
 	git clone $REPO_VUNDLE ~/.vim/bundle/Vundle.vim &>> $FILE_LOG
 	[ $? -ne 0 ] && error=1
 
-	vim +PluginInstall +qall 2>> $FILE_LOG
+	vim +PluginInstall +qall &>> $FILE_LOG
 	[ $? -ne 0 ] && error=1
 	echo "colorscheme thor" >> ~/.vim/vimrc
 fi
