@@ -1,11 +1,12 @@
 
 function say()
 {
-	if [ "$(which festival)" ]
+	if [ -x $(which festival) ]
 	then
-		echo "$@" | festival --tts
+		echo -e "$@" | festival --tts
 	else
-		echo "festival not found"
+		echo -e "festival not found"
+		exit 0
 	fi
 }
 
@@ -13,39 +14,51 @@ function typing()
 {
 	if [ -n "$1" ]
 	then
-		echo "write on $1 (Ctrl-D for EOF)"
+		echo -e "write on $1 (Ctrl-D for EOF)"
 		tee >> $1
 	else
-		echo "enter a file name"
+		echo -e "enter a file name"
 	fi
 }
 
 function vim()
 {
-	local STTYOPTS="$(stty --save)"
-	stty stop '' -ixoff
-	command vim +NERDTreeToggle "$@"
-	stty "$STTYOPTS"
+	if [ -x $(which vim) ]
+	then
+		local STTYOPTS="$(stty --save)"
+		stty stop '' -ixoff
+		command vim +NERDTreeToggle "$@"
+		stty "$STTYOPTS"
+	else
+		echo -e "vim is not installed"
+		exit 0
+	fi
 }
 
 function calc()
 {
-	echo "$1" | bc --mathlib --warn --standard
+	echo -e "$1" | bc --mathlib --warn --standard
 }
 
 function encode64()
 {
-	echo "$@" | base64
+	echo -e "$@" | base64
 }
 
 function decode64()
 {
-	echo "$@" | base64 -d
+	echo -e "$@" | base64 -d
 }
 
 function secrm()
 {
-	shred -xn7 --zero --remove $@ &
+	if [ -x $(which shred) ]
+	then
+		shred -xn7 --zero --remove $@ &
+	else
+		echo -e "shred is not installed"
+		exit 0
+	fi
 }
 
 function swap_filename()

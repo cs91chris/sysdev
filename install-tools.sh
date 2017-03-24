@@ -7,8 +7,10 @@ FILE_LOG=~/.sysdev.log
 CHEAT_REPO=https://github.com/jahendrie/cheat.git
 CHEAT_PATH=/usr/share/cheat/sheets
 
+
 touch ~/.sysdev.log
 chmod 755 ~/.sysdev.log
+
 
 if [ "$1" == "--help" ]; then
 	echo -e "\nAuthor: ${green}Christian Sannino${reset}"
@@ -32,7 +34,7 @@ then
 	apt update 2>> $FILE_LOG &&
 	{
 		apt install \
-			unrar 7z \
+			unrar p7zip \
 			sudo git vim \
 			smartmontools acpitool \
 			lshw hddtemp lm-sensors \

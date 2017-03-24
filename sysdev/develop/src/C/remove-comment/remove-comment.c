@@ -4,13 +4,13 @@
 
 
 void quit_on_error(const char *message)
-{///////////////////////////////////////////////////////////////////
+{
 	fprintf(stderr, "Error: %s\n", message);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 FILE* open_stream(const char* path, const char* mode)
-{///////////////////////////////////////////////////////////////////
+{
 	FILE* stream = fopen(path, mode);
 
     if(stream == NULL)
@@ -20,10 +20,11 @@ FILE* open_stream(const char* path, const char* mode)
 }
 
 char* get_file_content(FILE* stream)
-{///////////////////////////////////////////////////////////////////
-	char* buffer = NULL;
-	int size = 0;
+{
 	char c;
+	size_t size = 0;
+	char* buffer = NULL;
+
 
 	while((c = getc(stream)) != EOF)
  	{
@@ -39,10 +40,11 @@ char* get_file_content(FILE* stream)
 }
 
 char* parse_file(const char* file)
-{///////////////////////////////////////////////////////////////////
-	char* parsed = NULL;
+{
 	int i = -1;
-	int size = 0;
+	size_t size = 0;
+	char* parsed = NULL;
+
 
 	while(file[++i] != '\0')
 	{
@@ -62,16 +64,18 @@ char* parse_file(const char* file)
 						}
 				break;
 			}
+
 		parsed = realloc(parsed, size * sizeof(char));
 		parsed[size] = file[i];
 		size++;
 	}
+
 	return parsed;
 }
 
 
 int main(int argc, char* argv[])
-{///////////////////////////////////////////////////////////////////
+{
 	FILE* input  = NULL;
 	FILE* output = NULL;
 
@@ -79,7 +83,7 @@ int main(int argc, char* argv[])
 	char* parsed  = NULL;
 	char* path    = NULL;
 
-	int size = 0;
+	size_t size = 0;
 
 
 	if(argc > 1 && strcmp(argv[1], "help"))
@@ -91,7 +95,10 @@ int main(int argc, char* argv[])
 	}
 
 	if(argc != 3 || strcmp(argv[1], argv[2]) == 0)
+	{
 		quit_on_error("run ./remove-comment <file-source> <file-destination>\n");
+	}
+
 
 	input  = open_stream(argv[1], "r");
 	output = open_stream(path, "w");
@@ -101,7 +108,9 @@ int main(int argc, char* argv[])
 	size    = strlen(parsed);
 
 	if(fwrite(parsed, 1, size, output) != size)
+	{
 		quit_on_error("can not write on file");
+	}
 
 	fclose(output);
 	fclose(input);

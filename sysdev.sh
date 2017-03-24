@@ -21,6 +21,7 @@ fi
 
 #===============================================================================
 
+
 echo -e "${red}Warning${reset}: this will destroy configuration files in your home!"
 echo -e "Do you want continue? [y/N]: " ; read -r ANS
 

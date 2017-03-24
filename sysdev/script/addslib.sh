@@ -2,29 +2,32 @@
 
 source ~/.script/color.conf 2> /dev/null
 
-DEV_LIB_PAT=~/Develop/lib
+
+DEV_LIB_PATH=~/.develop/lib
+lib=lib$1.a
+
 
 if [ "$1" == "--help" ]
 then
-	echo "this script required 2 arguments:"
-	echo "\t1 ${orange}name of static library${reset}"
-	echo "\t2 ${orange}path where copies library${reset} (optional)"
+	echo -e "\nTwo arguments required:"
+	echo -e "\t1 ${orange}name of static library${reset}"
+	echo -e "\t2 ${orange}path where copies library${reset} (optional)"
+	echo -e "\t  if path is void it was copied in the current directory\n"
 	exit 0
 fi
 
 
-lib=lib$1.a
 [ "$2" != "" ] && TO="$2" || TO="."
 
 
-if [ -f $DEV_LIB_PAT/$lib ]
+if [ -d $DEV_LIB_PATH/$lib ]
 then
 	echo -e "${green}"
-	cp -v $DEV_LIB_PAT/$lib $TO
+	cp -v $DEV_LIB_PATH/$lib $TO
 	echo -e "${reset}"
 
 else
-	echo "~/Develop/lib/$lib does ${red}not exist${reset}"
+	echo "$lib ${red}not found${reset}"
 	exit 1
 fi
 
