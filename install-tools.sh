@@ -9,7 +9,7 @@ CHEAT_PATH=/usr/share/cheat/sheets
 
 
 touch ~/.sysdev.log
-chmod 755 ~/.sysdev.log
+chmod 777 ~/.sysdev.log
 
 
 if [ "$1" == "--help" ]; then
@@ -58,10 +58,6 @@ then
 		rm -rf cheat
 	fi
 	echo -e "see ${orange}~/.sysdev.log${reset}"
-
-else
-	echo -e "you are not root: ${red}permission denied${reset}"
-	exit 1
 fi
 
 

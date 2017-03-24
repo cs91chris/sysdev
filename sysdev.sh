@@ -69,13 +69,14 @@ fi
 
 if [ $error -eq 1 ]
 then
-	msg_color=red
+	echo -e "${red}"
 	msg_text="something went wrong see ~/.sysdev.log"
 else
-	msg_color=green
+	echo -e "${green}"
 	msg_text="ALL DONE"
 fi
 
-echo -e "${$msg_color}$msg_text!${reset} "
+echo -e "$msg_text!${reset} "
 cd - > /dev/null
+
 
