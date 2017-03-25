@@ -15,7 +15,7 @@ fi
 FILE=""
 MODEL=$1
 NAME=$2
-MODELS=~/Models
+MODELS=~/.models
 [ "$2" == "" ] && NAME=$1
 
 
