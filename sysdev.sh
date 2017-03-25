@@ -49,7 +49,7 @@ echo -e "${orange}Copying${reset} scripts..."
 cd ~/.script > /dev/null
 if [ ! -f speedtest-cli ]
 then
-	wget -O speedtest-cli $REPO_SPEEDTEST &>> $FILE_LOG
+	wget -O speedtest-cli $REPO_SPEEDTEST 2>> $FILE_LOG > /dev/null
 	[ $? -ne 0 ] && error=1
 fi
 cd - > /dev/null
@@ -61,7 +61,7 @@ then
 	git clone $REPO_VUNDLE ~/.vim/bundle/Vundle.vim &>> $FILE_LOG
 	[ $? -ne 0 ] && error=1
 
-	vim +PluginInstall +qall &>> $FILE_LOG
+	vim +PluginInstall +qall 2>> $FILE_LOG > /dev/null
 	[ $? -ne 0 ] && error=1
 	echo "colorscheme thor" >> ~/.vim/vimrc
 fi
