@@ -55,7 +55,7 @@ alias dirsize='du -sh'
 
 # more ls aliases
 #
-[ -x $(which tree) ] alias tree='tree -Csh'
+[ -x $(which tree) ] && alias tree='tree -Csh'
 
 alias l='ls -C'
 alias la='ls -A'
