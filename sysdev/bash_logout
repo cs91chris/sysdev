@@ -2,7 +2,7 @@
 # clear history
 #
 history -c
-echo -e "\nhistory cleared"
+echo -e "\nHistory cleared"
 
 sleep 0.5s
 clear
@@ -11,7 +11,12 @@ clear
 # leaving message
 #
 echo -e "${txtcyn} "
-[ "$(which figlet)" ] && figlet "Bye Bye..." || echo -e "Bye Bye..."
+if [ -x $(which figlet) ]
+then
+	figlet "Bye Bye..."
+else
+	echo -e "Bye Bye..."
+fi
 echo -e "${txtrst} "
 
 sleep 1s

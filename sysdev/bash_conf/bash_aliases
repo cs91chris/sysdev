@@ -2,7 +2,7 @@
 #
 if [ -x /usr/bin/dircolors ]
 then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 
     alias dir='dir --color=auto'
     alias ls='ls --color=auto -F'
@@ -79,8 +79,8 @@ alias opt='cd /opt'
 alias tmp='cd /tmp'
 alias www='cd /var/www'
 
-alias Script='cd ~/.script'
-alias Bin='cd ~/.bin'
+[ -d ~/.script ] && alias Script='cd ~/.script'
+[ -d ~/.bin ] && alias Bin='cd ~/.bin'
 
 
 # more ps alias
@@ -93,8 +93,11 @@ alias psearch='ps aux | grep'
 
 # search installed package
 #
-alias pkglist='dpkg -l | more'
-alias pkgsearch='dpkg -l | grep'
+if [ -x $(which dpkg) ]
+then
+	alias pkglist='dpkg -l | more'
+	alias pkgsearch='dpkg -l | grep'
+fi
 
 
 # more tar alias

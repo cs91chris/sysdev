@@ -1,8 +1,7 @@
 # ~/.bashrc: executed by bash for non-login shells
 #
 
-if [ -d $HOME/.bash_conf ]
-then
+if [ -d $HOME/.bash_conf ] ; then
 	for f in $(ls $HOME/.bash_conf) ; do
 		[ -f $HOME/.bash_conf/$f ] && . "$HOME/.bash_conf/$f"
 	done
@@ -14,26 +13,6 @@ case $- in
     *i*) ;;
       *) return ;;
 esac
-
-
-# do not overwrite file on redirection
-#
-set -o noclobber
-
-
-# set ctrl+l behavior to clear screen
-#
-bind -m vi-insert \C-l:clear-screen
-
-
-# check the window size after each command
-#
-shopt -s checkwinsize
-
-
-# ignore simple spelling mistakes in the cd command
-#
-shopt -s cdspell
 
 
 # make less more friendly
@@ -54,9 +33,9 @@ esac
 
 force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]
-then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+if [ -n "$force_color_prompt" ] ; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null
+    then
 		color_prompt=yes
     else
 		color_prompt=
@@ -71,7 +50,7 @@ PS1="\[$txtwht\]\w\n${debian_chroot:+($debian_chroot)}\\
 └─────\[$txtrst\]>>> "
 
 PS2="     └────> "
-PS3="         └────> "
+PS3="     $PS2 "
 
 
 # enable programmable completion features
@@ -89,11 +68,24 @@ then
 fi
 
 
+# do not overwrite file on redirection
+set -o noclobber
+
+# set ctrl+l behavior to clear screen
+bind -m vi-insert \C-l:clear-screen
+
+# check the window size after each command
+shopt -s checkwinsize
+
+# ignore simple spelling mistakes in the cd command
+shopt -s cdspell
+
+
 # welcome message
 #
 clear
 echo -e "${txtcyn}"
-[ "$(which figlet)" ] && figlet "Welcome $USER" || echo -e "Welcome $USER"
+[ -x $(which figlet) ] && figlet "Welcome $USER" || echo -e "Welcome $USER"
 echo -e "${txtrst}"
 
 sleep 0.5

@@ -26,19 +26,19 @@ fi
 # add gcc colorized
 # add default editor
 #
+[ -x $(which vim) ] && export EDITOR=vim
 [ -f ~/.conf/python/pyrc ] && export PYTHONSTARTUP=~/.conf/python/pyrc
-[ "$(which colorgcc)" ] &&	export CC="colorgcc"
-[ "$(which vim)" ] && export EDITOR=vim
 
-
-export PAGER=less
-export LANG=it-IT.utf-8
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+if [ -x $(which colorgcc) ]
+then
+	export CC="colorgcc"
+	export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+fi
 
 
 # cheat variables
 #
-if [ "$(which cheat)" ]
+if [ -x $(which cheat) ]
 then
 	export CHEATCOLORS=true
 	export DEFAULT_CHEAT_DIR=/usr/share/cheat/sheets
@@ -55,6 +55,8 @@ HISTSIZE=1000
 HISTFILESIZE=3000
 HISTCONTROL=ignoreboth
 shopt -s histappend
+
+export PAGER=less
 
 
 # if running bash
