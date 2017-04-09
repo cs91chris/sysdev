@@ -1,0 +1,106 @@
+" vim configuration file
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+" add others plugin if you want
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Raimondi/delimitMate'
+Plugin 'kevinw/pyflakes-vim'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'vimwiki/vimwiki'
+Plugin 'jamessan/vim-gnupg'
+
+" All of your Plugins must be added before the following line
+call vundle#end()    " required
+
+
+" airline plugin settings
+set laststatus=2
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#left_sep=' '
+let g:airline#extensions#tabline#left_alt_sep=' >> '
+
+" sintastic plugin settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+
+
+" plugin NERDtree (Ctrl-n)
+map <C-n> :NERDTreeToggle <CR>
+
+" space for search
+map <space> /
+
+" toggle spell checking
+nnoremap sc :setlocal spell!<CR>
+
+"fast saving (Ctrl-s)
+nnoremap <c-s> :w<CR>
+inoremap <c-s> <Esc>:w<CR>i
+
+" next buffer
+nnoremap bn :bn<Return>
+
+
+" vim options
+set hid
+set number
+set showcmd
+set showmode
+set showmatch
+set hlsearch
+set autoindent
+set wrap
+set linebreak
+set hidden
+set ignorecase
+set smartcase
+set noswapfile
+set nobackup
+set ruler
+set ttyfast
+
+set t_Co=512
+set history=1000
+set tabstop=4
+set shiftwidth=4
+set foldcolumn=2
+set tw=255
+
+set dictionary=/usr/share/dict/italian,/usr/share/dict/american-english
+
+"use <C-L> to clear the highlighting of search
+if maparg('<C-L>', 'n') ==# ''
+	nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
+
+syntax enable
+filetype plugin on
+filetype indent on
+
+try
+	coloscheme thor
+catch
+endtry
+

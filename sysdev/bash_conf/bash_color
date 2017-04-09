@@ -1,0 +1,50 @@
+
+txtrst='\e[0m'    # Text Reset
+
+
+# text color
+
+txtred='\e[0;31m' # red
+txtgrn='\e[0;32m' # green
+txtylw='\e[0;33m' # yellow
+txtblu='\e[0;34m' # blue
+txtvlt='\e[0;35m' # violet
+txtcyn='\e[0;36m' # cyan
+txtwht='\e[0;37m' # white
+
+
+# bold color
+
+bldblk='\e[1;30m' 	# black
+bldred='\e[1;31m' 	# red
+bldgrn='\e[1;32m' 	# green
+bldylw='\e[1;33m' 	# yellow
+bldblu='\e[1;34m' 	# blue
+bldvlt='\e[1;35m' 	# violet
+bldcyn='\e[1;36m' 	# cyan
+bldwht='\e[1;37m' 	# white
+
+
+# underline color
+
+unkblk='\e[4;30m' 	# black
+undred='\e[4;31m' 	# red
+undgrn='\e[4;32m' 	# green
+undylw='\e[4;33m' 	# yellow
+undblu='\e[4;34m' 	# blue
+undvlt='\e[4;35m' 	# violet
+undcyn='\e[4;36m' 	# cyan
+undwht='\e[4;37m' 	# white
+
+
+# background color
+
+bakblk='\e[00m'   	# black
+bakred='\e[41m'   	# red
+bakgrn='\e[42m'   	# green
+bakylw='\e[43m'   	# yellow
+bakblu='\e[44m'   	# blue
+bakvlt='\e[45m'   	# violet
+bakcyn='\e[46m'   	# cyan
+bakwht='\e[47m'   	# white
+

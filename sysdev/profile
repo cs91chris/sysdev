@@ -1,0 +1,66 @@
+# .profile
+#
+
+# only user has permissions on own files
+#
+umask 077
+
+
+# add personal Script and Bin to PATH
+#
+if [[ -d ~/.script && -d ~/.bin ]] ; then
+	export PATH=$PATH:~/.script:~/.bin
+fi
+
+
+# add extern headers
+# add extern dynamic library
+#
+if [ -d ~/.develop ] ; then
+	export CPATH=~/.develop/include
+	export LD_LIBRARY_PATH=~/.develop/lib
+fi
+
+
+# add python init file
+# add gcc colorized
+# add default editor
+#
+[ -x $(which vim) ] && export EDITOR=vim
+[ -f ~/.conf/python/pyrc ] && export PYTHONSTARTUP=~/.conf/python/pyrc
+
+if [ -x $(which colorgcc) ]
+then
+	export CC="colorgcc"
+	export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+fi
+
+
+# cheat variables
+#
+if [ -x $(which cheat) ]
+then
+	export CHEATCOLORS=true
+	export DEFAULT_CHEAT_DIR=/usr/share/cheat/sheets
+	export CHEATPATH=$DEFAULT_CHEAT_DIR:~/.cheat
+	export CHEAT_TEXT_VIEWER=$PAGER
+	#export CHEAT_IMAGE_VIEWER=
+	#export CHEAT_PDF_VIEWER=
+fi
+
+
+# setting history
+#
+HISTSIZE=1000
+HISTFILESIZE=3000
+HISTCONTROL=ignoreboth
+shopt -s histappend
+
+export PAGER=less
+
+
+# if running bash
+#
+[[ -n "$BASH_VERSION" && -f "$HOME/.bashrc" ]] && . "$HOME/.bashrc"
+
+
