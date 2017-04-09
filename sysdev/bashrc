@@ -1,0 +1,96 @@
+# ~/.bashrc: executed by bash for non-login shells
+#
+
+set -o vi
+
+if [ -d $HOME/.bash_conf ] ; then
+	for f in $(ls $HOME/.bash_conf) ; do
+		[ -f $HOME/.bash_conf/$f ] && . "$HOME/.bash_conf/$f"
+	done
+fi
+
+# If not running interactively, don't do anything
+#
+case $- in
+    *i*) ;;
+      *) return ;;
+esac
+
+
+# make less more friendly
+#
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+
+# set variable identifying the chroot you work in
+#
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]
+then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+case "$TERM" in
+	xterm-color) color_prompt=yes ;;
+esac
+
+force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ] ; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null
+    then
+		color_prompt=yes
+    else
+		color_prompt=
+    fi
+fi
+
+
+PS1="\[$txtwht\]\w\n${debian_chroot:+($debian_chroot)}\\
+┌────[\[$txtgrn\]\u@\h\[$txtwht\]]──[\[$txtylw\]\W\[$txtwht\]] \n\[$bakwht\] \\
+\[$txtwht\]\$([ \$? == 0 ] && echo \" \[$bakgrn\] \" || echo \" \[$bakred\] \") \\
+\[$txtwht\]\n\\
+└─────\[$txtrst\]>>> "
+
+PS2="     └────> "
+
+
+# enable programmable completion features
+#
+if ! shopt -oq posix
+then
+	if [ -f /usr/share/bash-completion/bash_completion ]; then
+		source /usr/share/bash-completion/bash_completion
+
+	elif [ -f /etc/bash_completion ]; then
+		source /etc/bash_completion
+	fi
+fi
+
+
+# do not overwrite file on redirection
+set -o noclobber
+
+# set ctrl+l behavior to clear screen
+bind -m vi-insert \C-l:clear-screen
+
+# check the window size after each command
+shopt -s checkwinsize
+
+# ignore simple spelling mistakes in the cd command
+shopt -s cdspell
+
+
+# welcome message
+#
+clear
+echo -e "${txtcyn}"
+
+if [ -x $(which figlet 2> /dev/null) ]
+then
+	figlet "Welcome $USER"
+else
+	echo -e "Welcome $USER"
+fi
+echo -e "${txtrst}"
+
+sleep 0.5

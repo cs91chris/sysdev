@@ -1,0 +1,74 @@
+# .profile
+#
+
+# only user has permissions on own files
+#
+umask 077
+
+
+# add personal Script and Bin to PATH
+#
+if [[ -d $HOME/.script && -d $HOME/.bin ]]; then
+	script=$HOME/.script
+	bin=$HOME/.bin
+
+	case $PATH in
+		*.script*|*.bin*) ;;
+		*) export PATH=$script:$bin:$PATH ;;
+	esac
+fi
+
+
+# add extern headers
+# add extern dynamic library
+#
+if [ -d $HOME/.develop ]; then
+	export CPATH=$HOME/.develop/include/C
+	export LD_LIBRARY_PATH=$HOME/.develop/lib
+	export BASH_LIB=$HOME/.develop/include/bash
+fi
+
+
+# add python init file
+# add gcc colorized
+# add default editor
+#
+if [ -x $(which vim 2> /dev/null) ]; then
+	export EDITOR=vim
+fi
+if [ -f $HOME/.conf/python/pyrc ]; then
+	export PYTHONSTARTUP=$HOME/.conf/python/pyrc
+fi
+if [ -x $(which colorgcc 2> /dev/null) ]; then
+	export CC="colorgcc"
+	export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+fi
+
+
+# cheat variables
+#
+if [ -x $(which cheat 2> /dev/null) ]; then
+	export CHEATCOLORS=true
+	export DEFAULT_CHEAT_DIR=/usr/share/cheat/sheets
+	export CHEATPATH=$DEFAULT_CHEAT_DIR:$HOME/.cheat
+	export CHEAT_TEXT_VIEWER=$PAGER
+	#export CHEAT_IMAGE_VIEWER=
+	#export CHEAT_PDF_VIEWER=
+fi
+
+
+# setting history
+#
+HISTSIZE=1000
+HISTFILESIZE=3000
+HISTCONTROL=ignoreboth
+shopt -s histappend
+
+export PAGER='most'
+
+
+# if running bash
+#
+if [ -n "$BASH_VERSION" ] ; then
+	[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
+fi

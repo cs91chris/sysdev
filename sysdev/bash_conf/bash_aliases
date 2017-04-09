@@ -1,0 +1,146 @@
+#!/bin/bash
+
+# enable color support of ls and also add handy aliases
+#
+if [ -x /usr/bin/dircolors ]
+then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+
+    alias dir='dir --color=auto'
+    alias ls='ls --color=auto -F'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+
+# more alias
+#
+alias sl='ls'
+alias mroe='more'
+alias moer='more'
+alias omre='more'
+alias mdkir='mkdir'
+alias mdkir='mkdir'
+
+alias a='alias'
+alias asearch='alias | grep'
+alias clr='clear'
+alias h='history'
+alias cat='cat -n'
+# alias more='less' # deprecated in Debian 9
+alias ping='ping -c5'
+alias funct='declare -F'
+
+alias REF="source $HOME/.profile"
+
+# interactive and verbose mode
+#
+alias rm='rm -vI'
+alias cp='cp -vi'
+alias mv='mv -vi'
+alias rmd='rm -rvf'
+alias mkdir='mkdir -vp'
+
+
+# more info alias
+#
+[ -x $(which pydf 2> /dev/null) ] && alias pydf='pydf -H'
+
+alias df='df -Th | grep -v tmpfs'
+alias free='free -th'
+alias cpuinfo='cat /proc/cpuinfo'
+alias meminfo='cat /proc/meminfo'
+alias lastmsg='dmesg | tail'
+alias dirsize='du -sh'
+
+
+# more ls aliases
+#
+[ -x $(which tree 2> /dev/null) ] && alias tree='tree -Csh'
+
+alias l='ls -C'
+alias la='ls -A'
+alias ll='ls -Alh'
+alias lrt='ls -lhrt'
+alias ld='ls -lv --group-directories-first'
+
+
+# more cd aliases
+#
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+
+alias .home="cd $HOME"
+alias .etc='cd /etc'
+alias .usr='cd /usr'
+alias .opt='cd /opt'
+alias .tmp='cd /tmp'
+alias .www='cd /var/www'
+
+[ -d $HOME/.script ] && alias .script="cd $HOME/.script"
+[ -d $HOME/.bin ] && alias .bin="cd $HOME/.bin"
+
+
+# more ps alias
+#
+alias ps='ps auxf'
+alias psroot='ps | grep root'
+alias psuser="ps | grep $USER"
+alias psearch='ps aux | grep'
+
+
+# search installed package
+#
+if [ -x $(which dpkg 2> /dev/null) ]
+then
+	alias pkglist='dpkg -l | more'
+	alias pkgsearch='dpkg -l | grep'
+fi
+
+
+# more tar alias
+#
+alias mktar='tar -cf'
+alias tarlist='tar -tvf'
+alias tarcomp='tar --auto-compress -cf'
+
+
+# apt aliases
+#
+if [ -x $(which apt 2> /dev/null) ]
+then
+	alias apt-search='sudo apt search'
+	alias apt-install='sudo apt install'
+	alias apt-remove='sudo apt purge'
+	alias apt-autoremove='sudo apt autoremove'
+	alias sysupgrade='sudo apt update && sudo apt upgrade'
+fi
+
+
+# git aliases
+#
+if [ -x $(which git 2> / dev/null) ]
+then
+	alias gadd='git add'
+	alias ginit='git init'
+	alias gpull='git pull'
+	alias gpom='git push origin master'
+	alias gclone='git clone'
+	alias gcommit='git commit -m'
+fi
+
+
+# other aliases
+#
+[ -x $(which nmap 2> /dev/null) ] && alias scanme='nmap localhost'
+[ -x $(which rsync 2> /dev/null) ] && alias backup='rsync -avuz'
+
+if [[ -x $(which cupsd 2> /dev/null) && -x $(which elinks 2> /dev/null) ]] ; then
+	alias cups-config='elinks http://localhost:631'
+fi
