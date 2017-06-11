@@ -16,7 +16,7 @@ chmod 744 $FILE_LOG
 TOOLS="
 	unrar p7zip
 	sudo git vim
-	hdparm udisks
+	hdparm udisks2
 	smartmontools acpitool
 	lshw hddtemp lm-sensors
 	figlet screenfetch pydf

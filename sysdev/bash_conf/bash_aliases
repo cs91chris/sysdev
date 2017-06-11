@@ -44,9 +44,9 @@ alias mkdir='mkdir -vp'
 
 # more info alias
 #
-[ -x $(which pydf) ] && alias pydf='pydf -H'
+[ -x $(which pydf 2> /dev/null) ] && alias pydf='pydf -H'
 
-alias df='df -Th'
+alias df='df -Th | grep -v tmpfs'
 alias free='free -mth'
 alias cpuinfo='cat /proc/cpuinfo'
 alias meminfo='cat /proc/meminfo'
@@ -56,7 +56,7 @@ alias dirsize='du -sh'
 
 # more ls aliases
 #
-[ -x $(which tree) ] && alias tree='tree -Csh'
+[ -x $(which tree 2> /dev/null) ] && alias tree='tree -Csh'
 
 alias l='ls -C'
 alias la='ls -A'
@@ -94,7 +94,7 @@ alias psearch='ps aux | grep'
 
 # search installed package
 #
-if [ -x $(which dpkg) ]
+if [ -x $(which dpkg 2> /dev/null) ]
 then
 	alias pkglist='dpkg -l | more'
 	alias pkgsearch='dpkg -l | grep'
@@ -110,7 +110,7 @@ alias tarcomp='tar --auto-compress -cf'
 
 # apt aliases
 #
-if [ -x $(which apt) ]
+if [ -x $(which apt 2> /dev/null) ]
 then
 	alias apt-search='sudo apt search'
 	alias apt-install='sudo apt install'
@@ -122,7 +122,7 @@ fi
 
 # git aliases
 #
-if [ -x $(which git) ]
+if [ -x $(which git 2> / dev/null) ]
 then
 	alias gadd='git add'
 	alias ginit='git init'
@@ -135,10 +135,10 @@ fi
 
 # other aliases
 #
-[ -x $(which nmap) ] && alias scanme='nmap localhost'
-[ -x $(which rsync) ] && alias backup='rsync -avuz'
+[ -x $(which nmap 2> /dev/null) ] && alias scanme='nmap localhost'
+[ -x $(which rsync 2> /dev/null) ] && alias backup='rsync -avuz'
 
-if [[ -x $(which cupsd) && -x $(which elinks) ]] ; then
+if [[ -x $(which cupsd 2> /dev/null) && -x $(which elinks 2> /dev/null) ]] ; then
 	alias cups-config='elinks http://localhost:631'
 fi
 
