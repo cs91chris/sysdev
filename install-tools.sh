@@ -42,7 +42,7 @@ sudo apt update 2>> $FILE_LOG && {
 } || ERR_EXIT=1
 
 
-if [ ! -x $(which cheat) ]
+if [ ! -x $(which cheat 2>/dev/null) ]
 then
 	echo -e "${orange}Installing${reset} cheat..."
 	git clone $CHEAT_REPO 2>> $FILE_LOG || ERR_EXIT=1

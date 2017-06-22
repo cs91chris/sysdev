@@ -85,8 +85,15 @@ shopt -s cdspell
 #
 clear
 echo -e "${txtcyn}"
-[ -x $(which figlet) ] && figlet "Welcome $USER" || echo -e "Welcome $USER"
+
+if [ -x $(which figlet 2> /dev/null) ]
+then
+	figlet "Welcome $USER"
+else
+	echo -e "Welcome $USER"
+fi
 echo -e "${txtrst}"
 
 sleep 0.5
+
 

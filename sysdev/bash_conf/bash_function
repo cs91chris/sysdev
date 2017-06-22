@@ -1,7 +1,15 @@
+function randpasswd()
+{
+	[ -z "$1" ] && local digits=8 || local digits=$1
+
+	local passwd=$(< /dev/urandom tr -dc [:alnum:] | head -c $digits)
+	echo -e "\n\t$passwd\n" 
+}
+
 
 function say()
 {
-	if [ -x $(which festival) ]
+	if [ -x $(which festival 2>/dev/null) ]
 	then
 		echo -e "$@" | festival --tts
 	else
@@ -24,7 +32,7 @@ function typing()
 
 function vim()
 {
-	if [ -x $(which vim) ]
+	if [ -x $(which vim 2>/dev/null) ]
 	then
 		local STTYOPTS="$(stty --save)"
 		stty stop '' -ixoff
@@ -53,7 +61,7 @@ function decode64()
 
 function secrm()
 {
-	if [ -x $(which shred) ]
+	if [ -x $(which shred 2>/dev/null) ]
 	then
 		shred -xn7 --zero --remove $@ &
 	else
@@ -69,4 +77,5 @@ function swap_filename()
 	mv $2 $1
 	mv $TMP $2
 }
+
 
