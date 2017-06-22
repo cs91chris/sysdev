@@ -47,7 +47,7 @@ alias mkdir='mkdir -vp'
 [ -x $(which pydf 2> /dev/null) ] && alias pydf='pydf -H'
 
 alias df='df -Th | grep -v tmpfs'
-alias free='free -mth'
+alias free='free -toh'
 alias cpuinfo='cat /proc/cpuinfo'
 alias meminfo='cat /proc/meminfo'
 alias lastmsg='dmesg | tail'
