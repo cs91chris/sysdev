@@ -1,6 +1,8 @@
 # ~/.bashrc: executed by bash for non-login shells
 #
 
+set -o vi
+
 if [ -d $HOME/.bash_conf ] ; then
 	for f in $(ls $HOME/.bash_conf) ; do
 		[ -f $HOME/.bash_conf/$f ] && . "$HOME/.bash_conf/$f"

@@ -17,6 +17,7 @@ TOOLS="
 	unrar p7zip
 	sudo git vim
 	hdparm udisks2
+	supervisor members
 	smartmontools acpitool
 	lshw hddtemp lm-sensors
 	figlet screenfetch pydf
