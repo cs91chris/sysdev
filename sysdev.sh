@@ -11,7 +11,7 @@ REPO_VUNDLE=https://github.com/VundleVim/Vundle.vim.git
 
 
 if [ "$1" == "--help" ]; then
-	echo -e "\nAuthor: ${green}Christian Sannino${reset}"
+	echo -e "\nAuthor: ${green}Cs91chris${reset}"
 	echo -e "Released under ${green}GPL v3 license${reset}\n"
 	echo -e "First run ${orange}./install-tools${reset} then:"
 	echo -e "${orange}./sysdev.sh${reset}: for installing sysdev configuration"
@@ -75,4 +75,3 @@ fi
 echo -e "$msg_text!${reset} "
 cd - > /dev/null
 exit $ERR_EXIT
-

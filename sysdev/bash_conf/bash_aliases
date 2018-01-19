@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # enable color support of ls and also add handy aliases
 #
 if [ -x /usr/bin/dircolors ]
@@ -27,7 +29,8 @@ alias a='alias'
 alias asearch='alias | grep'
 alias clr='clear'
 alias h='history'
-alias more='less'
+alias cat='cat -n'
+# alias more='less' # deprecated in Debian 9
 alias ping='ping -c5'
 alias funct='declare -F'
 
@@ -47,7 +50,7 @@ alias mkdir='mkdir -vp'
 [ -x $(which pydf 2> /dev/null) ] && alias pydf='pydf -H'
 
 alias df='df -Th | grep -v tmpfs'
-alias free='free -toh'
+alias free='free -th'
 alias cpuinfo='cat /proc/cpuinfo'
 alias meminfo='cat /proc/meminfo'
 alias lastmsg='dmesg | tail'
@@ -73,15 +76,15 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
-alias home="cd $HOME"
-alias etc='cd /etc'
-alias usr='cd /usr'
-alias opt='cd /opt'
-alias tmp='cd /tmp'
-alias www='cd /var/www'
+alias .home="cd $HOME"
+alias .etc='cd /etc'
+alias .usr='cd /usr'
+alias .opt='cd /opt'
+alias .tmp='cd /tmp'
+alias .www='cd /var/www'
 
-[ -d $HOME/.script ] && alias Script="cd $HOME/.script"
-[ -d $HOME/.bin ] && alias Bin="cd $HOME/.bin"
+[ -d $HOME/.script ] && alias .script="cd $HOME/.script"
+[ -d $HOME/.bin ] && alias .bin="cd $HOME/.bin"
 
 
 # more ps alias
@@ -141,5 +144,3 @@ fi
 if [[ -x $(which cupsd 2> /dev/null) && -x $(which elinks 2> /dev/null) ]] ; then
 	alias cups-config='elinks http://localhost:631'
 fi
-
-

@@ -1,5 +1,66 @@
-function randpasswd()
+#! /bin/bash
+
+function countfile() {
+#
+# $1 source directory (default $HOME)
+# $2 file type (extension) (default all)
+#
+    [ "$1" != "" ] && local SRC_DIR=$1 || local SRC_DIR=$HOME
+
+    local CMD="find $SRC_DIR -type f"
+    [ "$2" != "" ] && CMD="$CMD -name *.$2"
+
+    local FILES=$($CMD | wc -l)
+    local TOT_SIZE=$(du -sh $DEST_DIR | cut -f1)
+
+    echo "file: $FILES size: $TOT_SIZE"
+}
+
+
+function xzencrypt()
 {
+#
+# encrypt with xz
+# $1 file name
+#
+	local IN=$1
+	local XZ_OPT="-6e --compress --threads=0"
+
+	if [ ! -f $IN ]; then
+		echo "$IN is not a regular file"
+		exit 1
+	fi
+
+	if [[ -x $(which xz) && -x $(which gpg) ]]; then
+		tar -c $IN | xz $XZ_OPT | gpg -c > $IN.crypt
+	fi
+}
+
+
+function xzdecrypt()
+{
+#
+# decrypt with xz
+# $1 file name
+#
+	local IN=$1
+
+	if [ ! -f $IN ]; then
+		echo "$IN is not a regular file"
+		exit 1
+	fi
+
+	if [[ -x $(which xz) && -x $(which gpg) ]]; then
+		gpg -d $IN | xz --decompress
+	fi
+}
+
+
+function randpasswd() {
+#
+# generate random password
+# $1 numbero of char (default 8)
+#
 	[ -z "$1" ] && local digits=8 || local digits=$1
 
 	local passwd=$(< /dev/urandom tr -dc [:alnum:] | head -c $digits)
@@ -7,8 +68,10 @@ function randpasswd()
 }
 
 
-function say()
-{
+function say() {
+#
+# festival speaks input string
+#
 	if [ -x $(which festival 2>/dev/null) ]
 	then
 		echo -e "$@" | festival --tts
@@ -18,8 +81,11 @@ function say()
 	fi
 }
 
-function typing()
-{
+function typing() {
+#
+# write file on fly
+# $1 filename
+#
 	if [ -n "$1" ]
 	then
 		echo -e "write on $1 (Ctrl-D for EOF)"
@@ -30,8 +96,10 @@ function typing()
 	fi
 }
 
-function vim()
-{
+function vim() {
+#
+# start vim with nerdtree
+#
 	if [ -x $(which vim 2>/dev/null) ]
 	then
 		local STTYOPTS="$(stty --save)"
@@ -44,23 +112,32 @@ function vim()
 	fi
 }
 
-function calc()
-{
+function calc() {
+#
+# $1 expression to calculate
+#
 	echo -e "$1" | bc --mathlib --warn --standard
 }
 
-function encode64()
-{
+function encode64() {
+#
+# $@ variable string
+#
 	echo -e "$@" | base64
 }
 
-function decode64()
-{
+function decode64() {
+#
+# $@ variable string
+#
 	echo -e "$@" | base64 -d
 }
 
-function secrm()
-{
+function secrm() {
+#
+# secure remove (shred)
+# $@ list of file name
+#
 	if [ -x $(which shred 2>/dev/null) ]
 	then
 		shred -xn7 --zero --remove $@ &
@@ -70,12 +147,14 @@ function secrm()
 	fi
 }
 
-function swap_filename()
-{
+function swapfilename() {
+#
+# swap filename
+# $1 first file name
+# $1 second file name
+#
 	local TMP=tmp.$$
 	mv $1 $TMP
 	mv $2 $1
 	mv $TMP $2
 }
-
-

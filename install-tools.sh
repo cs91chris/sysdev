@@ -14,16 +14,15 @@ touch $FILE_LOG
 chmod 744 $FILE_LOG
 
 TOOLS="
-	unrar p7zip
-	sudo git vim
+	sudo git vim 
 	hdparm udisks2
 	supervisor members
 	smartmontools acpitool
 	lshw hddtemp lm-sensors
 	figlet screenfetch pydf
-	ipython python-pip pyflakes
+	python python3 python-pip python3-pip
 	elinks wget curl nmap tcpdump
-	glances ranger htop tmux tree
+	glances ranger htop tmux tree p7zip
 	colorgcc gcc gdb g++ indent valgrind
 "
 
@@ -62,5 +61,3 @@ fi
 }
 
 exit $ERR_EXIT
-
-
