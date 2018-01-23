@@ -1,16 +1,21 @@
 #!/bin/bash
-
-source ~/.script/color.conf  2> /dev/null
-source ~/.script/writelog.sh "extract" 2> /dev/null
+#
+# $@ compress archive list of various format
+#
+source $BASH_LIB/color.conf
+source $BASH_LIB/writelog.sh "extract"
 
 
 FILES=$@
 err_exit=0
 
-ERR_MSG()
-{
-	message=$1
-	err_exit=1
+
+function ERR_MSG() {
+#
+# $1 error message
+#
+	local message=$1
+	local err_exit=1
 
 	if type WRITE_LOG &> /dev/null
 	then
@@ -20,18 +25,21 @@ ERR_MSG()
 	fi
 }
 
-EXTRACT()
-{
-	file=$1
-	cmd=$2
-	opt=$3
+function EXTRACT() {
+#
+# $1 file to be extracted
+# $2 program that extracts
+# $3 options of $2
+#
+	local file=$1
+	local cmd=$2
+	local opt=$3
 
 	if [ "$cmd" != "NONE" ]
 	then
-		mess=$($cmd $opt $file 2>&1)
+		local mess=$($cmd $opt $file 2>&1)
 
-		if [ $? -eq 0 ]
-		then
+		if [ $? -eq 0 ]; then
 			echo -e "\t'$file' ${green}extracted!${reset}"
 		else
 			ERR_MSG "$mess"
@@ -56,14 +64,17 @@ esac
 
 for F in $FILES
 do
+    CMD="NONE"
+	OPT=""
+
 	if [ -f $F ] ; then
 		case $F in
-			*.Z) 		CMD=uncompress 	; 	OPT=""		;;
+			*.Z) 		CMD=uncompress  ; 	OPT=		;;
 			*.7z)		CMD=7z 			; 	OPT=x		;;
-			*.gz)		CMD=gunzip 		; 	OPT=""		;;
+			*.gz)		CMD=gunzip 		; 	OPT=		;;
 			*.rar)		CMD=unrar 		; 	OPT=x		;;
-			*.zip)		CMD=unzip 		; 	OPT=""		;;
-			*.bz2)		CMD=bunzip2 	; 	OPT=""		;;
+			*.zip)		CMD=unzip 		; 	OPT=		;;
+			*.bz2)		CMD=bunzip2 	; 	OPT=		;;
 			*.tar)		CMD=tar 		; 	OPT=xf		;;
 			*.tgz)		CMD=tar 		; 	OPT=xzf		;;
 			*.tbz2)		CMD=tar 		; 	OPT=xjf		;;
@@ -71,13 +82,11 @@ do
 			*.tar.bz2)	CMD=tar 		; 	OPT=xjf		;;
 			*.tar.gz)	CMD=tar 		; 	OPT=xzf		;;
 			*)
-				CMD="NONE"
-				OPT=""
 				ERR_MSG "'$F' not supported"
 			;;
 		esac
 
-		EXTRACT $F $CMD $OPT
+		EXTRACT $F $CMD $OPT &
 	else
 		ERR_MSG "'$F' is not a valid file!"
 	fi
