@@ -10,10 +10,9 @@ function countfile() {
     local CMD="find $SRC_DIR -type f"
     [ "$2" != "" ] && CMD="$CMD -name *.$2"
 
-    local FILES=$($CMD | wc -l)
-    local TOT_SIZE=$(du -sh $DEST_DIR | cut -f1)
-
-    echo "file: $FILES size: $TOT_SIZE"
+    local FILES=$($CMD)
+    local TOT_SIZE=$(du -csh $FILES | tail -n1 | cut -f1)
+    echo "file: $($FILES | wc -l) size: $TOT_SIZE"
 }
 
 
