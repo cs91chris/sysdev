@@ -18,23 +18,15 @@ fi
 
 # more alias
 #
-alias sl='ls'
-alias mroe='more'
-alias moer='more'
-alias omre='more'
-alias mdkir='mkdir'
-alias mdkir='mkdir'
-
 alias a='alias'
 alias asearch='alias | grep'
 alias clr='clear'
 alias h='history'
-alias cat='cat -n'
-# alias more='less' # deprecated in Debian 9
+alias ncat='cat -n'
 alias ping='ping -c5'
 alias funct='declare -F'
-
 alias REF="source $HOME/.profile"
+
 
 # interactive and verbose mode
 #
@@ -49,8 +41,8 @@ alias mkdir='mkdir -vp'
 #
 [ -x $(which pydf 2> /dev/null) ] && alias pydf='pydf -H'
 
-alias df='df -Th | grep -v tmpfs'
-alias free='free -th'
+alias dft='df -Th | grep -v tmpfs'
+alias hfree='free -th'
 alias cpuinfo='cat /proc/cpuinfo'
 alias meminfo='cat /proc/meminfo'
 alias lastmsg='dmesg | tail'
@@ -65,7 +57,8 @@ alias l='ls -C'
 alias la='ls -A'
 alias ll='ls -Alh'
 alias lrt='ls -lhrt'
-alias ld='ls -lv --group-directories-first'
+alias lrs='ls -lrsSh'
+alias lld='ls -lv --group-directories-first'
 
 
 # more cd aliases
@@ -76,7 +69,6 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
-alias .home="cd $HOME"
 alias .etc='cd /etc'
 alias .usr='cd /usr'
 alias .opt='cd /opt'
@@ -89,7 +81,7 @@ alias .www='cd /var/www'
 
 # more ps alias
 #
-alias ps='ps auxf'
+alias psaux='ps auxf'
 alias psroot='ps | grep root'
 alias psuser="ps | grep $USER"
 alias psearch='ps aux | grep'
@@ -106,9 +98,11 @@ fi
 
 # more tar alias
 #
-alias mktar='tar -cf'
-alias tarlist='tar -tvf'
-alias tarcomp='tar --auto-compress -cf'
+alias tarmake='tar --verbose --verify --create -f'
+alias tarlist='tar --verbose --list --file'
+alias tarcomp='tar --verbose --auto-compress --create -f'
+alias taradd='tar --verbose --append -f'
+alias tarext='tar --verbose --extract -f'
 
 
 # apt aliases

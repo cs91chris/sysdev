@@ -1,23 +1,47 @@
 #! /bin/bash
 
+function getfileline() {
+#
+# $1 file name
+# $2-$3 is the range of file
+# $3 is optional if not passed only $2 line is printed
+#
+    local row
+    local content
+
+    [ "$3" != "" ] && row=$3 || row=$2
+    mapfile -s $(($2-1)) -n $(($row-$2+1)) content < "$1"
+    printf '%s' "${content[@]}"
+}
+
+
 function countfile() {
 #
 # $1 source directory (default $HOME)
 # $2 file type (extension) (default all)
 #
-    [ "$1" != "" ] && local SRC_DIR=$1 || local SRC_DIR=$HOME
+    local BLANK_ESCAPE="s/\ /\\\ /g"
 
-    local CMD="find $SRC_DIR -type f"
-    [ "$2" != "" ] && CMD="$CMD -name *.$2"
+    if [[ "$1" != "" ]]; then
+        local SRC_DIR=$(readlink -f $1)
+    else
+        local SRC_DIR=$HOME
+    fi
 
-    local FILES=$($CMD)
-    local TOT_SIZE=$(du -csh $FILES | tail -n1 | cut -f1)
-    echo "file: $($FILES | wc -l) size: $TOT_SIZE"
+    if [[ "$2" != "" ]]; then
+        local FILES=$(find $SRC_DIR -type f | grep "\.$2" | sed "$BLANK_ESCAPE")
+    else
+        local FILES=$(find $SRC_DIR -type f | sed "$BLANK_ESCAPE")
+    fi
+
+    local NUM_FILES=$(echo "$FILES" | wc -l)
+    local TOT_SIZE=$(echo "$FILES" | xargs du -ch | tail -n1 | cut -f1)
+
+    echo "file: $NUM_FILES size: $TOT_SIZE"
 }
 
 
-function xzencrypt()
-{
+function xzencrypt() {
 #
 # encrypt with xz
 # $1 file name
@@ -36,8 +60,7 @@ function xzencrypt()
 }
 
 
-function xzdecrypt()
-{
+function xzdecrypt() {
 #
 # decrypt with xz
 # $1 file name
