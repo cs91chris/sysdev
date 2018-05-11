@@ -14,24 +14,23 @@ touch $FILE_LOG
 chmod 744 $FILE_LOG
 
 TOOLS="
-	sudo git vim 
+	sudo git vim most
 	hdparm udisks2
 	supervisor members
 	smartmontools acpitool
 	lshw hddtemp lm-sensors
 	figlet screenfetch pydf
-	python python3 python-pip python3-pip
+	python python-virtualenv
+	python3 python3-virtualenv
 	elinks wget curl nmap tcpdump
 	glances ranger htop tmux tree p7zip
 	colorgcc gcc gdb g++ indent valgrind
 "
 
 if [ "$1" == "--help" ]; then
-	echo -e "\nAuthor: ${green}Christian Sannino${reset}"
-	echo -e "Released under ${green}GPL v3 license${reset}\n"
+	cat README.md
 	echo -e "This script installs this packages:"
 	echo -e "$TOOLS"
-
 	echo -e "In case of error see ${orange}$FILE_LOG${reset}\n"
 	exit 0
 fi

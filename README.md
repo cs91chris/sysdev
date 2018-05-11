@@ -1,7 +1,7 @@
 > author: *cs91chris*
  email: *cs91chris@voidbrain.me*
  license: *GPL v3*
-> version: *1.2*
+> version: *1.0.2*
 
 
 ## Installation
