@@ -24,7 +24,7 @@ esac
 
 # set variable identifying the chroot you work in
 #
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]
+if [[ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]]
 then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
@@ -36,7 +36,7 @@ esac
 force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ] ; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null
+    if [[ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null ]
     then
 		color_prompt=yes
     else
