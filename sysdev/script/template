@@ -7,7 +7,7 @@
 source $BASH_LIB/color.conf
 
 
-if [ "$1" == "--help" ]
+if [[ $1 == "--help" ]]
 then
 	echo -e "this script required 2 argument:"
 	echo -e "\t1 file ${orange}model${reset}"
@@ -19,20 +19,20 @@ fi
 FILE=""
 MODEL=$1
 NAME=$2
-PATH_MODEL=~/.models
-[ "$2" == "" ] && NAME=$1
+PATH_MODEL=$HOME/.models
+[ -z $2 ] && NAME=$1
 
 
 echo -e "${green}"
 
 for d in $(ls $PATH_MODEL)
 do
-	if [ -f $PATH_MODEL/$d/$MODEL.* ]; then
+	if [[ -f $PATH_MODEL/$d/$MODEL.* ]]; then
 		FILE=$NAME.$MODEL
 		cp -v $PATH_MODEL/$d/$MODEL.* $FILE
 		break
 
-	elif [ -f $PATH_MODEL/$d/$MODEL ]; then
+	elif [[ -f $PATH_MODEL/$d/$MODEL ]]; then
 		FILE=$NAME
 		cp -v $PATH_MODEL/$d/$MODEL $FILE
 		break
@@ -43,7 +43,8 @@ sleep 0.5s
 echo -e "${reset}"
 
 
-[ "$FILE" != "" ] && $EDITOR $FILE || {
+[ ! -z $FILE ] && $EDITOR $FILE || {
 	echo -e "template $MODEL does ${red}not exist${reset}!"
 	exit 1
 }
+

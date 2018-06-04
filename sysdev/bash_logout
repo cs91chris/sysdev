@@ -12,7 +12,7 @@ clear
 # leaving message
 #
 echo -e "${txtcyn} "
-if [ -x $(which figlet 2> /dev/null) ]
+if [[ -x $(which figlet 2> /dev/null) ]]
 then
 	figlet "Bye Bye..."
 else
@@ -26,7 +26,7 @@ clear
 
 # clear the screen
 #
-if [ "$SHLVL" = 1 ] ; then
+if [[ $SHLVL = 1 ]] ; then
 	[ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
 fi
 

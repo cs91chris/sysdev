@@ -35,11 +35,11 @@ function EXTRACT() {
 	local cmd=$2
 	local opt=$3
 
-	if [ "$cmd" != "NONE" ]
+	if [[ $cmd != "NONE" ]]
 	then
 		local mess=$($cmd $opt $file 2>&1)
 
-		if [ $? -eq 0 ]; then
+		if [[ $? -eq 0 ]]; then
 			echo -e "\t'$file' ${green}extracted!${reset}"
 		else
 			ERR_MSG "$mess"
@@ -49,7 +49,7 @@ function EXTRACT() {
 
 
 case $1 in
-	"h" | "-h" | "help" | "--help")
+	h|-h|help|--help)
 		echo -e "\nArchive supported:"
 		echo -e "\t${orange}zip,   rar,  tar,  tar.xz,  tar.bz2,  tar.gz${reset}"
 		echo -e "\t${orange}tbz2,  bz2,  gz,   7z,      tgz,      Z${reset}\n"
@@ -67,7 +67,7 @@ do
     CMD="NONE"
 	OPT=""
 
-	if [ -f $F ] ; then
+	if [[ -f $F ]] ; then
 		case $F in
 			*.Z) 		CMD=uncompress  ; 	OPT=		;;
 			*.7z)		CMD=7z 			; 	OPT=x		;;
@@ -93,3 +93,4 @@ do
 done
 
 exit $err_exit
+

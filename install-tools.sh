@@ -3,14 +3,13 @@
 SYSDEV_DIR=$(dirname "$0")
 source $SYSDEV_DIR/sysdev/develop/include/bash/color.conf
 
+mkdir $HOME/.log
 
-FILE_LOG=$HOME/.sysdev.log
+FILE_LOG=$HOME/.log/sysdev.log
 CHEAT_REPO=https://github.com/jahendrie/cheat.git
 CHEAT_PATH=/usr/share/cheat/sheets
 
-
 ERR_EXIT=0
-FILE_LOG=$HOME/.sysdev.log
 touch $FILE_LOG
 chmod 744 $FILE_LOG
 
@@ -28,7 +27,7 @@ TOOLS="
 	colorgcc gcc gdb g++ indent valgrind
 "
 
-if [[ "$1" == "--help" ]]; then
+if [[ $1 == "--help" ]]; then
 	cat $SYSDEV_DIR/README.md
 	echo -e "This script installs this packages:"
 	echo -e "$TOOLS"
@@ -56,9 +55,9 @@ then
 fi
 
 
-[ $ERR_EXIT -ne 0 ] && {
+if [[ $ERR_EXIT -ne 0 ]]; then
 	echo -e "${red}An error occurred! See $FILE_LOG${reset}"
-}
+fi
 
 exit $ERR_EXIT
 
