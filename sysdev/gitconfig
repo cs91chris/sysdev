@@ -28,7 +28,8 @@
     a = add
     c = clone
     t = tag
-    st = status
+    s = status
+    r = remote
     cm = commit -m
     co = checkout
     ls = ls-files

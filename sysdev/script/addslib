@@ -7,11 +7,11 @@
 source $BASH_LIB/color.conf
 
 
-TO
+TO=''
 lib=lib$1.a
 DEV_LIB_PATH=~/.develop/lib
 
-if [ "$1" == "--help" ]
+if [[ $1 == "--help" ]]
 then
 	echo -e "\nTwo arguments required:"
 	echo -e "\t1 ${orange}name of static library${reset}"
@@ -21,10 +21,10 @@ then
 fi
 
 
-[ "$2" != "" ] && TO="$2" || TO="."
+[ -z $2 ] && TO="$2" || TO="."
 
 
-if [ -d $DEV_LIB_PATH/$lib ]; then
+if [[ -d $DEV_LIB_PATH/$lib ]]; then
 	echo -e "${green}"
 	cp -v $DEV_LIB_PATH/$lib $TO
 	echo -e "${reset}"
@@ -33,3 +33,4 @@ else
 	echo "$lib ${red}not found${reset}"
 	exit 1
 fi
+

@@ -5,13 +5,13 @@ SYSDEV_DIR=$(dirname "$0")
 source $SYSDEV_DIR/sysdev/develop/include/bash/color.conf
 
 ERR_EXIT=0
-FILE_LOG=$HOME/.sysdev.log
+FILE_LOG=$HOME/.log/sysdev.log
 
 REPO_SPEEDTEST=https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py 
 REPO_VUNDLE=https://github.com/VundleVim/Vundle.vim.git 
 
 
-if [[ "$1" == "--help" ]]; then
+if [[ $1 == "--help" ]]; then
 	cat $SYSDEV_DIR/README.md
 	echo -e "In case of error see ${orange}$FILE_LOG${reset}\n"
 	exit 0
@@ -43,7 +43,7 @@ cd - > /dev/null
 echo -e "${orange}Installing${reset} scripts..."
 cd $HOME/.script > /dev/null
 
-if [ ! -f speedtest-cli ] ; then
+if [[ ! -f speedtest-cli ]] ; then
 	wget -O speedtest-cli $REPO_SPEEDTEST 2>> $FILE_LOG || ERR_EXIT=1
 fi
 
@@ -51,7 +51,7 @@ chmod +x *
 cd - > /dev/null
 
 
-if [ ! -d $HOME/.vim/bundle/Vundle.vim ]
+if [[ ! -d $HOME/.vim/bundle/Vundle.vim ]]
 then
 	echo -e "${orange}Setting vim${reset} configurations..."
 	git clone $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim 2>> $FILE_LOG || ERR_EXIT=1
@@ -61,7 +61,7 @@ then
 fi
 
 
-if [ $ERR_EXIT -eq 1 ]
+if [[ $ERR_EXIT -eq 1 ]]
 then
 	echo -e "${red}"
 	msg_text="something went wrong see $FILE_LOG"
