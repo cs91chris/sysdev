@@ -52,6 +52,7 @@ set autoread
 set encoding=utf8
 set expandtab
 set foldcolumn=2
+set fileformats=unix,dos,mac
 set hid
 set linebreak
 set history=1000
@@ -80,6 +81,7 @@ set ttyfast
 set t_Co=512
 set tabstop=4
 set tw=256
+set timeoutlen=500
 set wrap
 set wrapmargin=2
 
@@ -88,6 +90,13 @@ set wrapmargin=2
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
 set dictionary=/usr/share/dict/italian,/usr/share/dict/american-english
+
+" Toggle invisible characters
+set listchars=tab:▸\ ,eol:¬,space:·
+noremap <F3> :set list!<CR>
+inoremap <F3> <C-o>:set list!<CR>
+cnoremap <F3> <C-c>:set list!<CR>
+
 
 "use <C-L> to clear the highlighting of search
 if maparg('<C-L>', 'n') ==# ''
@@ -112,7 +121,7 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
 " Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 
 " plugin NERDtree (Ctrl-n)
@@ -144,3 +153,4 @@ try
 	coloscheme thor
 catch
 endtry
+

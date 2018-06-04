@@ -3,9 +3,9 @@
 
 set -o vi
 
-if [ -d $HOME/.bash_conf ] ; then
+if [[ -d $HOME/.bash_conf ]] ; then
 	for f in $(ls $HOME/.bash_conf) ; do
-		[ -f $HOME/.bash_conf/$f ] && . "$HOME/.bash_conf/$f"
+		[ -f $HOME/.bash_conf/$f ] && source $HOME/.bash_conf/$f
 	done
 fi
 
@@ -24,7 +24,7 @@ esac
 
 # set variable identifying the chroot you work in
 #
-if [[ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]]
+if [[ -z ${debian_chroot:-} && -r /etc/debian_chroot ]]
 then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
@@ -35,8 +35,8 @@ esac
 
 force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ] ; then
-    if [[ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null ]
+if [[ -n $force_color_prompt ]] ; then
+    if [[ -x /usr/bin/tput && $(tput setaf 1 >&/dev/null) ]]
     then
 		color_prompt=yes
     else
@@ -44,17 +44,16 @@ if [ -n "$force_color_prompt" ] ; then
     fi
 fi
 
-export IP_HOST=$(curl ifconfig.me 2> /dev/null)
-[ "$IP_HOST" != "" ] && _ip_=":\[$txtgry\]$IP_HOST\[$txtrst\]"
+export IP_HOST=$(curl -m 1 ifconfig.me 2> /dev/null)
+[ ! -z "$IP_HOST" ] && _ip_=":\[$txtgry\]$IP_HOST\[$txtrst\]"
 
 _username_="\[$txtgrn\]\u\[$txtwht\]"
 _hostname_="\[$txtblu\]\h\[$txtwht\]"
 _workdir_="\[$txtylw\]\W\[$txtwht\]"
 
-
 PS1="\[$txtwht\]\w\n${debian_chroot:+($debian_chroot)}\\
 ┌────[$_username_@$_hostname_$_ip_]──[$_workdir_] \n\[$bakwht\] \\
-\[$txtwht\]\$([ \$? == 0 ] && echo \" \[$bakgrn\] \" || echo \" \[$bakred\] \") \\
+\[$txtwht\]\$([ \$? == 0 ] && echo ' \[$bakgrn\] ' || echo ' \[$bakred\] ') \\
 \[$txtwht\]\n\\
 └─────>>> "
 
@@ -63,12 +62,12 @@ PS2="     └────> "
 
 # enable programmable completion features
 #
-if ! shopt -oq posix
+if ! shopt -oq posix 
 then
-	if [ -f /usr/share/bash-completion/bash_completion ]; then
+	if [[ -f /usr/share/bash-completion/bash_completion ]]; then
 		source /usr/share/bash-completion/bash_completion
 
-	elif [ -f /etc/bash_completion ]; then
+	elif [[ -f /etc/bash_completion ]]; then
 		source /etc/bash_completion
 	fi
 fi
@@ -92,7 +91,7 @@ shopt -s cdspell
 clear
 echo -e "${txtcyn}"
 
-if [ -x $(which figlet 2> /dev/null) ]
+if [[ -x $(which figlet 2> /dev/null) ]]
 then
 	figlet "Welcome $USER"
 else
@@ -101,3 +100,4 @@ fi
 echo -e "${txtrst}"
 
 sleep 0.5
+

@@ -19,7 +19,7 @@ export WARN="WARN"
 export ERROR="ERROR"
 export DEBUG="DEBUG"
 
-export FILE_LOG=~/.log/${FILE_NAME}_$DAY.log
+export FILE_LOG=$HOME/.log/${FILE_NAME}_$DAY.log
 
 
 WRITE_LOG()
@@ -28,7 +28,7 @@ WRITE_LOG()
 	local message=$2
 	local curr_date=$(date "+%T %F")
 
-	[[ "$type" != "" && "$message" != "" ]] && {
+	[[ ! -z $type && ! -z $message ]] && {
 		echo -e "[$curr_date][$type]: $message" >> $FILE_LOG
 	}
 }

@@ -1,9 +1,10 @@
 #!/bin/bash
 
-source sysdev/script/color.conf
+SYSDEV_DIR=$(dirname "$0")
+source $SYSDEV_DIR/sysdev/develop/include/bash/color.conf
 
 
-FILE_LOG=~/.sysdev.log
+FILE_LOG=$HOME/.sysdev.log
 CHEAT_REPO=https://github.com/jahendrie/cheat.git
 CHEAT_PATH=/usr/share/cheat/sheets
 
@@ -20,15 +21,15 @@ TOOLS="
 	smartmontools acpitool
 	lshw hddtemp lm-sensors
 	figlet screenfetch pydf
-	python python-virtualenv
-	python3 python3-virtualenv
+	python python3 virtualenv
+	python-dev python3-dev
 	elinks wget curl nmap tcpdump
 	glances ranger htop tmux tree p7zip
 	colorgcc gcc gdb g++ indent valgrind
 "
 
-if [ "$1" == "--help" ]; then
-	cat README.md
+if [[ "$1" == "--help" ]]; then
+	cat $SYSDEV_DIR/README.md
 	echo -e "This script installs this packages:"
 	echo -e "$TOOLS"
 	echo -e "In case of error see ${orange}$FILE_LOG${reset}\n"
@@ -41,7 +42,7 @@ sudo apt update 2>> $FILE_LOG && {
 } || ERR_EXIT=1
 
 
-if [ ! -x $(which cheat 2>/dev/null) ]
+if [[ ! -x $(which cheat 2>/dev/null) ]]
 then
 	echo -e "${orange}Installing${reset} cheat..."
 	git clone $CHEAT_REPO 2>> $FILE_LOG || ERR_EXIT=1
@@ -60,3 +61,4 @@ fi
 }
 
 exit $ERR_EXIT
+

@@ -1,0 +1,38 @@
+[user]
+    name = cs91chris
+    email = cs91chris@voidbrain.me
+
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[alias]
+    i = init
+    a = add
+    c = clone
+    t = tag
+    st = status
+    cm = commit -m
+    co = checkout
+    ls = ls-files
+    tl = tag -ln
+    pom = push origin master
+    lg = log --graph --decorate --pretty=oneline --abbrev-commit --all
+
