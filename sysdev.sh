@@ -1,7 +1,8 @@
 #!/bin/bash
 
 set +o noclobber
-source sysdev/script/color.conf
+SYSDEV_DIR=$(dirname "$0")
+source $SYSDEV_DIR/sysdev/develop/include/bash/color.conf
 
 ERR_EXIT=0
 FILE_LOG=$HOME/.sysdev.log
@@ -10,8 +11,8 @@ REPO_SPEEDTEST=https://raw.githubusercontent.com/sivel/speedtest-cli/master/spee
 REPO_VUNDLE=https://github.com/VundleVim/Vundle.vim.git 
 
 
-if [ "$1" == "--help" ]; then
-	cat README.md
+if [[ "$1" == "--help" ]]; then
+	cat $SYSDEV_DIR/README.md
 	echo -e "In case of error see ${orange}$FILE_LOG${reset}\n"
 	exit 0
 fi
@@ -28,35 +29,35 @@ case "$ANS" in
 esac
 
 
-echo -e "${orange}Copying${reset} configurations..."
+echo -e "${orange}Installing${reset} configurations..."
 
-cd sysdev > /dev/null
+cd $SYSDEV_DIR/sysdev > /dev/null
 for x in $(ls)
 do
-	[ -d ~/.$x ] && tmp="$x/*" || tmp="$x" 
-	cp --verbose --recursive $tmp ~/.$x &>> $FILE_LOG || ERR_EXIT=1
+	[ -d $HOME/.$x ] && tmp="$x/*" || tmp="$x" 
+	cp --verbose --recursive $tmp $HOME/.$x &>> $FILE_LOG || ERR_EXIT=1
 done
 cd - > /dev/null
 
 
-echo -e "${orange}Copying${reset} scripts..."
-cd ~/.script > /dev/null
+echo -e "${orange}Installing${reset} scripts..."
+cd $HOME/.script > /dev/null
 
 if [ ! -f speedtest-cli ] ; then
-	wget -O speedtest-cli $REPO_SPEEDTEST 2>> $FILE_LOG > /dev/null || ERR_EXIT=1
+	wget -O speedtest-cli $REPO_SPEEDTEST 2>> $FILE_LOG || ERR_EXIT=1
 fi
 
 chmod +x *
 cd - > /dev/null
 
 
-if [ ! -d ~/.vim/bundle/Vundle.vim ]
+if [ ! -d $HOME/.vim/bundle/Vundle.vim ]
 then
 	echo -e "${orange}Setting vim${reset} configurations..."
-	git clone $REPO_VUNDLE ~/.vim/bundle/Vundle.vim &>> $FILE_LOG || ERR_EXIT=1
+	git clone $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim 2>> $FILE_LOG || ERR_EXIT=1
 
-	vim +PluginInstall +qall 2>> $FILE_LOG > /dev/null || ERR_EXIT=1
-	echo "colorscheme thor" >> ~/.vim/vimrc
+	vim +PluginInstall +qall 2>> $FILE_LOG || ERR_EXIT=1
+	echo "colorscheme thor" >> $HOME/.vim/vimrc
 fi
 
 
@@ -72,3 +73,4 @@ fi
 echo -e "$msg_text!${reset} "
 cd - > /dev/null
 exit $ERR_EXIT
+

@@ -1,4 +1,20 @@
-#! /bin/bash
+function gmvtag() {
+#
+# move tag from one commit to another
+# $1 tag name
+#
+	TAG_NAME=$1
+
+	if [[ -x $(which git 2> /dev/null) ]]
+	then
+		git push origin :refs/tags/$TAG_NAME
+		git tag -f $TAG_NAME
+		git push origin master --tags
+	else
+		echo -e "\n'git' is not installed!"
+	fi
+}
+
 
 function getfileline() {
 #
@@ -9,7 +25,7 @@ function getfileline() {
     local row
     local content
 
-    [ "$3" != "" ] && row=$3 || row=$2
+    [ ! -z "$3" ] && row=$3 || row=$2
     mapfile -s $(($2-1)) -n $(($row-$2+1)) content < "$1"
     printf '%s' "${content[@]}"
 }
@@ -22,13 +38,13 @@ function countfile() {
 #
     local BLANK_ESCAPE="s/\ /\\\ /g"
 
-    if [[ "$1" != "" ]]; then
+    if [[ ! -z "$1" ]]; then
         local SRC_DIR=$(readlink -f $1)
     else
         local SRC_DIR=$HOME
     fi
 
-    if [[ "$2" != "" ]]; then
+    if [[ ! -z "$2" ]]; then
         local FILES=$(find $SRC_DIR -type f | grep "\.$2" | sed "$BLANK_ESCAPE")
     else
         local FILES=$(find $SRC_DIR -type f | sed "$BLANK_ESCAPE")
@@ -49,7 +65,7 @@ function xzencrypt() {
 	local IN=$1
 	local XZ_OPT="-6e --compress --threads=0"
 
-	if [ ! -f $IN ]; then
+	if [[ ! -f $IN ]]; then
 		echo "$IN is not a regular file"
 		exit 1
 	fi
@@ -67,7 +83,7 @@ function xzdecrypt() {
 #
 	local IN=$1
 
-	if [ ! -f $IN ]; then
+	if [[ ! -f $IN ]]; then
 		echo "$IN is not a regular file"
 		exit 1
 	fi
@@ -94,7 +110,7 @@ function say() {
 #
 # festival speaks input string
 #
-	if [ -x $(which festival 2>/dev/null) ]
+	if [[] -x $(which festival 2>/dev/null) ]]
 	then
 		echo -e "$@" | festival --tts
 	else
@@ -180,3 +196,4 @@ function swapfilename() {
 	mv $2 $1
 	mv $TMP $2
 }
+
