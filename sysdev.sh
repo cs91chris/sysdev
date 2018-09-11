@@ -38,6 +38,7 @@ do
 	cp --verbose --recursive $tmp $HOME/.$x &>> $FILE_LOG || ERR_EXIT=1
 done
 cd - > /dev/null
+ranger --copy-config=scope
 
 
 echo -e "${orange}Installing${reset} scripts..."

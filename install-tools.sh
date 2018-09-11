@@ -15,7 +15,7 @@ chmod 744 $FILE_LOG
 
 TOOLS="
 	sudo git vim most
-	hdparm udisks2
+	hdparm udisks2 highlight
 	supervisor members
 	smartmontools acpitool
 	lshw hddtemp lm-sensors
