@@ -36,6 +36,8 @@ do
 done
 cd - > /dev/null
 
+ranger --copy-config=scope &>> $FILE_LOG
+
 
 echo -e "${orange}Installing${reset} scripts..."
 cd $HOME/.script > /dev/null
