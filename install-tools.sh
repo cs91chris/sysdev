@@ -3,21 +3,17 @@
 SYSDEV_DIR=$(dirname "$0")
 source $SYSDEV_DIR/sysdev/develop/include/bash/color.conf
 
-mkdir $HOME/.log
-
-FILE_LOG=$HOME/.log/sysdev.log
+FILE_LOG=$SYSDEV_DIR/error.log
 CHEAT_REPO=https://github.com/jahendrie/cheat.git
 CHEAT_PATH=/usr/share/cheat/sheets
 
 ERR_EXIT=0
-touch $FILE_LOG
-chmod 744 $FILE_LOG
 
 TOOLS="
-	sudo git vim most
+	sudo git vim most make autossh
 	hdparm udisks2 highlight
-	supervisor members
-	smartmontools acpitool
+	supervisor members speedtest-cli
+	smartmontools acpitool net-tools
 	lshw hddtemp lm-sensors
 	figlet screenfetch pydf
 	python python3 virtualenv
@@ -60,4 +56,3 @@ if [[ $ERR_EXIT -ne 0 ]]; then
 fi
 
 exit $ERR_EXIT
-

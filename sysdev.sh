@@ -7,8 +7,10 @@ source $SYSDEV_DIR/sysdev/develop/include/bash/color.conf
 ERR_EXIT=0
 FILE_LOG=$HOME/.log/sysdev.log
 
-REPO_SPEEDTEST=https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py 
 REPO_VUNDLE=https://github.com/VundleVim/Vundle.vim.git 
+
+
+mkdir $HOME/.log && touch $FILE_LOG
 
 
 if [[ $1 == "--help" ]]; then
@@ -41,11 +43,6 @@ ranger --copy-config=scope &>> $FILE_LOG
 
 echo -e "${orange}Installing${reset} scripts..."
 cd $HOME/.script > /dev/null
-
-if [[ ! -f speedtest-cli ]] ; then
-	wget -O speedtest-cli $REPO_SPEEDTEST 2>> $FILE_LOG || ERR_EXIT=1
-fi
-
 chmod +x *
 cd - > /dev/null
 
