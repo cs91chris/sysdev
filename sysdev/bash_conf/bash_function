@@ -3,7 +3,7 @@ function gmvtag() {
 # move tag from one commit to another
 # $1 tag name
 #
-	TAG_NAME=$1
+	local TAG_NAME=$1
 
 	if [[ -x $(which git 2> /dev/null) ]]
 	then

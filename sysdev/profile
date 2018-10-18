@@ -28,13 +28,11 @@ if [[ -d $HOME/.develop ]]; then
 	export BASH_LIB=$HOME/.develop/include/bash
 fi
 
-
-# add python init file
-# add gcc colorized
-# add default editor
-#
 if [[ -x $(which vim 2> /dev/null) ]]; then
 	export EDITOR=vim
+fi
+if [[ -x $(which most 2> /dev/null) ]]; then
+	export PAGER=most
 fi
 if [[ -f $HOME/.conf/python/pyrc ]]; then
 	export PYTHONSTARTUP=$HOME/.conf/python/pyrc
@@ -64,12 +62,9 @@ HISTFILESIZE=3000
 HISTCONTROL=ignoreboth
 shopt -s histappend
 
-[ -x $(which most 2> /dev/null) ] && export PAGER="most"
-
 
 # if running bash
 #
 if [[ -n $BASH_VERSION ]] ; then
 	[ -f $HOME/.bashrc ] && source $HOME/.bashrc
 fi
-
