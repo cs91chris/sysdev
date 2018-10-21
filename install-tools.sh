@@ -9,24 +9,14 @@ CHEAT_PATH=/usr/share/cheat/sheets
 
 ERR_EXIT=0
 
-TOOLS="
-	sudo git vim most make autossh
-	hdparm udisks2 highlight
-	supervisor members speedtest-cli
-	smartmontools acpitool net-tools
-	lshw hddtemp lm-sensors
-	figlet screenfetch pydf
-	python python3 virtualenv
-	python-dev python3-dev
-	elinks wget curl nmap tcpdump
-	glances ranger htop tmux tree p7zip
-	colorgcc gcc gdb g++ indent valgrind
-"
+TOOLS="$(cat $SYSDEV_DIR/packages)"
 
-if [[ $1 == "--help" ]]; then
+
+if [[ $1 == "--help" ]]
+then
 	cat $SYSDEV_DIR/README.md
 	echo -e "This script installs this packages:"
-	echo -e "$TOOLS"
+	echo -e "$TOOLS\n"
 	echo -e "In case of error see ${orange}$FILE_LOG${reset}\n"
 	exit 0
 fi

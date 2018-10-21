@@ -97,5 +97,3 @@ else
 fi
 echo -e "${txtrst}"
 
-sleep 0.5
-

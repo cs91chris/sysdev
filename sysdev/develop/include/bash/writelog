@@ -22,7 +22,7 @@ export DEBUG="DEBUG"
 export FILE_LOG=$HOME/.log/${FILE_NAME}_$DAY.log
 
 
-WRITE_LOG()
+LOG()
 {
 	local type=$1
 	local message=$2
@@ -32,3 +32,4 @@ WRITE_LOG()
 		echo -e "[$curr_date][$type]: $message" >> $FILE_LOG
 	}
 }
+

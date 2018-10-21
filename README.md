@@ -7,17 +7,24 @@
 > version: *1.1.0*
 >
 
+Worked on debian based distro, well tested on Debian 9.x
+
+
 ## Installation
 
-0. make sure you are connected to the internet
-1. first of all run `bash install-tools.sh` as root
-2. run `bash sysdev.sh` to install the configurations
-3. if you want add some personal features, add your:
-	- bash aliases in:  `~/.bash_conf/bash_aliases`
-	- bash function in: `~/.bash_conf/bash_function`
-	- binary file in:   `~/.bin/`
-	- script file in:   `~/.script/`
-	- template in:      `~/.models/`
-	- cheat sheet in:   `~/.cheat/`
-	- library in:       `~/.develop/include`
-4. enjoy!
+- make sure you are connected to the internet
+- first of all run `sudo bash install-tools.sh`
+- run `bash sysdev.sh` to install the configurations
+
+
+## Configuration
+
+if you want add some personal features, add your:
+- bash aliases in:  `~/.bash_conf/aliases`
+- bash function in: `~/.bash_conf/function`
+- binary file in:   `~/.bin/`
+- script file in:   `~/.script/`
+- template in:      `~/.models/`
+- cheat sheet in:   `~/.cheat/`
+- library in:       `~/.develop/include`
+

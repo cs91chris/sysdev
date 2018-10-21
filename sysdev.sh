@@ -10,7 +10,7 @@ FILE_LOG=$HOME/.log/sysdev.log
 REPO_VUNDLE=https://github.com/VundleVim/Vundle.vim.git 
 
 
-mkdir $HOME/.log && touch $FILE_LOG
+mkdir -p $HOME/.log && touch $FILE_LOG
 
 
 if [[ $1 == "--help" ]]; then

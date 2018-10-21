@@ -1,9 +1,9 @@
 
-txtrst='\e[0m'    # Text Reset
+export txtrst='\e[0m'    # Text Reset
 
 
 # text color
-
+#
 export txtred='\e[0;31m' # red
 export txtgrn='\e[0;32m' # green
 export txtylw='\e[0;33m' # yellow
@@ -14,7 +14,7 @@ export txtwht='\e[0;37m' # white
 
 
 # bold color
-
+#
 export bldblk='\e[1;30m' 	# black
 export bldred='\e[1;31m' 	# red
 export bldgrn='\e[1;32m' 	# green
@@ -26,7 +26,7 @@ export bldwht='\e[1;37m' 	# white
 
 
 # underline color
-
+#
 export unkblk='\e[4;30m' 	# black
 export undred='\e[4;31m' 	# red
 export undgrn='\e[4;32m' 	# green
@@ -38,7 +38,7 @@ export undwht='\e[4;37m' 	# white
 
 
 # background color
-
+#
 export bakblk='\e[00m'   	# black
 export bakred='\e[41m'   	# red
 export bakgrn='\e[42m'   	# green
@@ -47,3 +47,4 @@ export bakblu='\e[44m'   	# blue
 export bakvlt='\e[45m'   	# violet
 export bakcyn='\e[46m'   	# cyan
 export bakwht='\e[47m'   	# white
+
