@@ -1,0 +1,50 @@
+# Will pre-form the disk by preparing it for encryption
+#
+cryptsetup luksFormat /dev/sdX1
+
+
+# open device
+#
+cryptsetup luksOpen /dev/sdx1 <device_name>
+
+
+# Create the filesystem on the device mapper
+#
+mkfs.<fs> /dev/mapper/<device_name>
+
+
+# mount device
+#
+mount /dev/mapper/<device_name> /mnt
+
+
+# close device
+#
+cryptsetup luksClose <device_name>
+
+
+# create random key file
+#
+sudo dd if=/dev/urandom of=/<path>/keyfile bs=1024 count=4
+
+
+# importing key file
+#
+sudo cryptsetup luksAddKey /dev/sdx1 /<path>/keyfile
+
+
+#
+# 	mounting device at startup
+#
+
+
+# add this line to /etc/crypttap
+#
+<devmap_name> /dev/sdX /<path>/keyfile luks
+
+
+# add this line to /etc/fstab
+#
+/dev/mapper/<devmap_name> /mnt ext3 defaults 0 2
+
+

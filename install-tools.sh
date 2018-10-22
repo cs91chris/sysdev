@@ -34,9 +34,11 @@ then
 
 	cd cheat > /dev/null
 	sudo make install 2>> $FILE_LOG || ERR_EXIT=1
-	chmod -R 744 $CHEAT_PATH
 
-	cd - > /dev/null
+	chmod 755 $CHEAT_PATH
+    chmod 644 $CHEAT_PATH/*
+
+	cd .. > /dev/null
 	rm -rf cheat
 fi
 

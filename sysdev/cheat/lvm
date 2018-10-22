@@ -1,0 +1,17 @@
+# with fdisk make a partition: 8e (Linux LVM)
+#
+
+# create physical volume
+#
+pvcreate /dev/sdaX
+
+
+# create volume group
+#
+vgcreate sysvg /dev/sdaX
+
+
+# create root logical volume
+#
+lvcreate -L <size> -n <name> <vg>
+

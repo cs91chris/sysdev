@@ -7,7 +7,7 @@ source $SYSDEV_DIR/sysdev/develop/include/bash/color.conf
 ERR_EXIT=0
 FILE_LOG=$HOME/.log/sysdev.log
 
-REPO_VUNDLE=https://github.com/VundleVim/Vundle.vim.git 
+REPO_VUNDLE=https://github.com/VundleVim/Vundle.vim.git
 
 
 mkdir -p $HOME/.log && touch $FILE_LOG
@@ -66,4 +66,3 @@ fi
 echo -e "$msg_text!${reset} "
 cd - > /dev/null
 exit $ERR_EXIT
-

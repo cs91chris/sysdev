@@ -1,0 +1,22 @@
+
+# create a swap file 
+#
+fallocate --length 512MiB /swapfile
+
+# set rw permission only for root
+#
+chmod 600 /swapfile
+
+# make and activate the swap
+#
+mkswap /swapfile
+swapon /swapfile
+
+# add to /etc/fstab if a swap partition exists
+#
+/swapfile       swap        swap        sw       0      0
+
+# set none if a swap partition does not exist
+#
+/swapfile       none        swap        sw       0      0
+
