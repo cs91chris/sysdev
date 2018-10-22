@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+[ -z $1 ] && VERSION=8 || VERSION=$1
+
+JAVA_HOME=$HOME/.bin/jdk-1.$VERSION.0
+CLASSPATH=$CLASSPATH:$HOME/.develop/java/jar
+JRE_HOME=$JAVA_HOME/jre
+PATH=$JAVA_HOME/bin:$PATH
+
+
+if [[ -d $JAVA_HOME ]]
+then
+	export JAVA_HOME
+    export JRE_HOME
+    export CLASSPATH
+    export PATH
+
+	echo "JAVA_HOME=$JAVA_HOME"
+	echo "JRE_HOME=$JRE_HOME"
+	echo "CLASSPATH=$CLASSPATH"
+	echo "PATH=$PATH"
+	echo
+	java -version
+
+else
+	echo "jdk-1.$VERSION.0 is not installed!"
+fi
