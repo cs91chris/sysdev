@@ -7,7 +7,7 @@ p7zip
 acpitool lm-sensors
 figlet screenfetch uuid
 smartmontools hddtemp hdparm udisks2 pydf
-speedtest-cli net-tools elinks wget curl nmap tcpdump
+speedtest-cli net-tools elinks wget curl nmap tcpdump httpie
 python python3 python-dev python3-dev virtualenv
 glances ranger highlight htop tmux tree
 colorgcc gcc gdb g++ indent valgrind make
