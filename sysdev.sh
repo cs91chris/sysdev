@@ -17,9 +17,6 @@ if [[ $1 == "--help" ]]; then
 	exit 0
 fi
 
-#===============================================================================
-
-
 echo -e "${red}Warning${reset}: this will destroy configuration files in your home!"
 echo -e "Do you want continue? [y/N]: " ; read -r ANS
 
@@ -51,14 +48,10 @@ chmod +x *
 cd - > /dev/null
 
 
-if [[ ! -d $HOME/.vim/bundle/Vundle.vim ]]
-then
-	echo -e "${orange}Setting vim${reset} configurations..."
-	git clone $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim 2>> $FILE_LOG || ERR_EXIT=1
-
-	vim +PluginInstall +qall 2>> $FILE_LOG || ERR_EXIT=1
-	echo "colorscheme thor" >> $HOME/.vim/vimrc
-fi
+echo -e "${orange}Setting vim${reset} configurations..."
+rm -vrf $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim >> $FILE_LOG 
+git clone $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim 2>> $FILE_LOG || ERR_EXIT=1
+vim +PluginInstall +qall >> $FILE_LOG 2>&1 || ERR_EXIT=1
 
 
 if [[ $ERR_EXIT -eq 1 ]]
