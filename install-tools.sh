@@ -35,8 +35,8 @@ then
 	cd cheat > /dev/null
 	sudo make install 2>> $FILE_LOG || ERR_EXIT=1
 
-	chmod 755 $CHEAT_PATH $CHEAT_PATH/sheet
-    chmod 644 $CHEAT_PATH/sheet/*
+	chmod 755 $CHEAT_PATH $CHEAT_PATH/sheets
+    chmod 644 $CHEAT_PATH/sheets/*
 
 	cd .. > /dev/null
 	rm -rf cheat
@@ -48,3 +48,4 @@ if [[ $ERR_EXIT -ne 0 ]]; then
 fi
 
 exit $ERR_EXIT
+

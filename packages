@@ -2,13 +2,48 @@ p7zip
 rlwrap
 autossh
 members
-inxi lshw
+inxi
+lshw
 supervisor
-sudo git vim most
-acpitool lm-sensors
-figlet screenfetch uuid
-glances ranger highlight htop tmux tree
-colorgcc gcc gdb g++ indent valgrind make
-smartmontools hddtemp hdparm udisks2 pydf
-python python3 python-dev python3-dev virtualenv
-speedtest-cli net-tools elinks wget curl nmap tcpdump httpie netcat
+sudo
+git
+vim
+most
+acpitool
+lm-sensors
+figlet
+screenfetch
+uuid
+glances
+ranger
+highlight
+htop
+tmux
+tree
+colorgcc
+gcc
+gdb
+g++
+indent
+valgrind
+make
+smartmontools
+hddtemp
+hdparm
+udisks2
+pydf
+python
+python3
+python-dev
+python3-dev
+virtualenv
+speedtest-cli
+net-tools
+elinks
+wget
+curl
+nmap
+tcpdump
+httpie
+netcat
+ethtool
