@@ -76,3 +76,4 @@ echo -e "$msg_text!${reset} "
 cd - > /dev/null
 exit $ERR_EXIT
 
+
