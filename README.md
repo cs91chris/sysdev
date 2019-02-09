@@ -4,8 +4,6 @@
 >
 > license: *GPL v3*
 >
-> version: *1.1.0*
->
 
 Worked on debian based distro, well tested on Debian 9.x
 
