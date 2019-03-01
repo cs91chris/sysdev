@@ -75,6 +75,7 @@ alias .tmp='cd /tmp'
 alias .www='cd /var/www'
 
 [ -d $HOME/.script ] && alias .script='cd $HOME/.script'
+[ -d $HOME/.develop ] && alias .develop='cd $HOME/.develop'
 [ -d $HOME/.bin ] && alias .bin='cd $HOME/.bin'
 
 

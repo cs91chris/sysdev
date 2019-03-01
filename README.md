@@ -24,5 +24,5 @@ if you want add some personal features, add your:
 - script file in:   `~/.script/`
 - template in:      `~/.models/`
 - cheat sheet in:   `~/.cheat/`
-- library in:       `~/.develop/include`
+- library in:       `~/.develop/`
 

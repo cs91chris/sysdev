@@ -23,9 +23,10 @@ fi
 # add extern dynamic library
 #
 if [[ -d $HOME/.develop ]]; then
-	export CPATH=$HOME/.develop/include/C
-	export LD_LIBRARY_PATH=$HOME/.develop/lib
-	export BASH_LIB=$HOME/.develop/include/bash
+	export CFLAGS=$HOME/.develop/C/include
+	export LD_LIBRARY_PATH=$HOME/.develop/C/lib
+	export LIBRARY_PATH=$LD_LIBRARY_PATH
+	export BASH_LIB=$HOME/.develop/bash
 fi
 
 if [[ -x $(which vim 2> /dev/null) ]]; then

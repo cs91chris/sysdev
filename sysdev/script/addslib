@@ -9,7 +9,6 @@ source $BASH_LIB/color.conf
 
 TO=''
 lib=lib$1.a
-DEV_LIB_PATH=~/.develop/lib
 
 if [[ $1 == "--help" ]]
 then
@@ -24,7 +23,7 @@ fi
 [ -z $2 ] && TO="$2" || TO="."
 
 
-if [[ -d $DEV_LIB_PATH/$lib ]]; then
+if [[ -d $LIBRARY_PATH/$lib ]]; then
 	echo -e "${green}"
 	cp -v $DEV_LIB_PATH/$lib $TO
 	echo -e "${reset}"
