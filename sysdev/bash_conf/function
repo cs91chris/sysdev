@@ -2,14 +2,17 @@ function gmvtag() {
 #
 # move tag from one commit to another
 # $1 tag name
+# $2 remote (default origin)
 #
 	local TAG_NAME=$1
+    local REMOTE=$2
+    [ -z $REMOTE ] && REMOTE=origin
 
 	if [[ -x $(which git 2> /dev/null) ]]
 	then
-		git push origin :refs/tags/$TAG_NAME
+		git push $REMOTE :refs/tags/$TAG_NAME
 		git tag -f $TAG_NAME
-		git push origin master --tags
+		git push $REMOTE master --tags
 	else
 		echo -e "\n'git' is not installed!"
 	fi
