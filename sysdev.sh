@@ -2,7 +2,7 @@
 
 set +o noclobber
 SYSDEV_DIR=$(dirname "$0")
-source $SYSDEV_DIR/sysdev/develop/include/bash/color.conf
+source $SYSDEV_DIR/sysdev/develop/bash/color.conf
 
 ERR_EXIT=0
 FILE_LOG=$HOME/.log/sysdev.log

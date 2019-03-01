@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SYSDEV_DIR=$(dirname "$0")
-source $SYSDEV_DIR/sysdev/develop/include/bash/color.conf
+source $SYSDEV_DIR/sysdev/develop/bash/color.conf
 
 FILE_LOG=$SYSDEV_DIR/error.log
 CHEAT_REPO=https://github.com/jahendrie/cheat.git
