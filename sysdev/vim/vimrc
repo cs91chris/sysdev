@@ -51,6 +51,9 @@ let g:syntastic_c_check_header = 1
 let g:syntastic_c_include_dirs = [$CFLAGS, 'include']
 
 " vim options
+set title
+set wildmenu
+set wildmode=longest:full,full
 set autoindent
 set autoread
 set encoding=utf8
@@ -129,7 +132,7 @@ noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 
 " plugin NERDtree (Ctrl-n)
-map <C-n> :NERDTreeToggle <CR> 
+nnoremap <C-n> :NERDTreeToggle <CR> 
 let NERDTreeIgnore = ['\.pyc$']
 
 " space for search
