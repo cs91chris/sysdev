@@ -23,9 +23,9 @@ fi
 # add extern dynamic library
 #
 if [[ -d $HOME/.develop ]]; then
-	export CFLAGS=$HOME/.develop/C/include
-	export LD_LIBRARY_PATH=$HOME/.develop/C/lib
-	export LIBRARY_PATH=$LD_LIBRARY_PATH
+	export CFLAGS="-I $HOME/.develop/C/include"
+	export LD_LIBRARY_PATH=$HOME/.develop/C/lib:$LD_LIBRARY_PATH
+	export LIBRARY_PATH=$LD_LIBRARY_PATH:$LIBRARY_PATH
 	export BASH_LIB=$HOME/.develop/bash
 fi
 

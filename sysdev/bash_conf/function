@@ -176,6 +176,7 @@ function encode64() {
 # $@ variable string
 #
 	echo -e "$@" | base64
+    echo
 }
 
 function decode64() {
@@ -183,6 +184,7 @@ function decode64() {
 # $@ variable string
 #
 	echo -e "$@" | base64 -d
+    echo
 }
 
 function secrm() {
