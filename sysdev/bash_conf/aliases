@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # enable color support of ls and also add handy aliases
 #
 if [[ -x /usr/bin/dircolors ]]
@@ -20,6 +22,7 @@ alias a='alias'
 alias asearch='alias | grep'
 alias clr='clear'
 alias h='history'
+alias hsearch='history | grep'
 alias ncat='cat -n'
 alias ping='ping -c5'
 alias funct='declare -F'

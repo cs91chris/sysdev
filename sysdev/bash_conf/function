@@ -1,3 +1,14 @@
+#!/bin/bash
+
+function join_by() {
+# join element of array by a given separator
+# $1 separator
+#
+    local IFS="$1"
+    shift
+    echo "$*"
+}
+
 function gmvtag() {
 #
 # move tag from one commit to another
