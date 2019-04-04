@@ -1,28 +1,33 @@
 #!/bin/bash
 
+set +o noclobber
 SYSDEV_DIR=$(dirname "$0")
 source $SYSDEV_DIR/sysdev/develop/bash/color.conf
 
 FILE_LOG=$SYSDEV_DIR/error.log
-CHEAT_REPO=https://github.com/jahendrie/cheat.git
+CHEAT_REPO=https://github.com/Ch4p34uN0iR/cheat.git
 CHEAT_PATH=/usr/share/cheat
 
 ERR_EXIT=0
 
-TOOLS="$(cat $SYSDEV_DIR/packages)"
+TOOLS="$(cat $SYSDEV_DIR/packages | sort)"
 
+case $1 in
+    h|-h|help|--help)
+    	echo -e "${red}Root privileges required${reset}. This script installs the following packages:"
+        echo -e "\n${green}$TOOLS${reset}\n"
+    	echo -e "In case of error see ${orange}$FILE_LOG${reset}\n"
+    	exit 0
+    ;;
+esac
 
-if [[ $1 == "--help" ]]
+if [[ "$EUID" -ne 0 ]]
 then
-	cat $SYSDEV_DIR/README.md
-	echo -e "This script installs this packages:"
-	echo -e "$TOOLS\n"
-	echo -e "In case of error see ${orange}$FILE_LOG${reset}\n"
-	exit 0
+    echo -e "\n${red}ERROR: Please run as root${reset}\n"
+    exit 1
 fi
 
-
-sudo apt update 2>> $FILE_LOG && {
+apt update 2>> $FILE_LOG && {
 	sudo apt install $TOOLS -y 2>> $FILE_LOG || ERR_EXIT=1
 } || ERR_EXIT=1
 
@@ -43,7 +48,8 @@ then
 fi
 
 
-if [[ $ERR_EXIT -ne 0 ]]; then
+if [[ $ERR_EXIT -ne 0 ]]
+then
 	echo -e "${red}An error occurred! See $FILE_LOG${reset}"
 fi
 
