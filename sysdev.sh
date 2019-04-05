@@ -10,25 +10,23 @@ FILE_LOG=$HOME/.log/sysdev.log
 REPO_VUNDLE=https://github.com/VundleVim/Vundle.vim.git
 
 
-mkdir -p $HOME/{.log, .bin}
-
-
 if [[ $1 == "--help" ]]; then
 	cat $SYSDEV_DIR/README.md
 	echo -e "In case of error see ${orange}$FILE_LOG${reset}\n"
 	exit 0
 fi
 
-echo -e "${red}Warning${reset}: this will destroy configuration files in your home!"
-echo -e "Do you want continue? [y/N]: " ; read -r ANS
+echo -e "${red}Warning${reset}: this will replace configuration files in your home!"
+read -p "Do you want continue? [yes/N]: " -r ANS
 
 case "$ANS" in
-	y*|Y*)    ;;
+	yes)      ;;
 	*) exit 1 ;;
 esac
 
 
 echo -e "${orange}Installing${reset} configurations..."
+mkdir -p $HOME/{.log,.bin}
 
 cd $SYSDEV_DIR/sysdev > /dev/null
 for x in $(ls)
@@ -43,23 +41,23 @@ ranger --copy-config=scope &>> $FILE_LOG
 
 
 echo -e "${orange}Installing${reset} scripts..."
-curl https://cheat.sh/:bash_completion > $HOME/.bash_conf/cht_completion
-curl https://cht.sh/:cht.sh > $HOME/.script/cht
+curl -s https://cheat.sh/:bash_completion > $HOME/.bash_conf/cht_completion
+curl -s https://cht.sh/:cht.sh > $HOME/.script/cht
 
-chmod +x $HOME/.script/*
+chmod +x $HOME/{.script,.bin}/*
 
 
+echo -e "${orange}Setting vim${reset} configurations..."
 if [[ ! -d $HOME/.vim/bundle/Vundle.vim ]]
 then
-	echo -e "${orange}Setting vim${reset} configurations..."
 	git clone $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim 2>> $FILE_LOG && {
-        vim +PluginInstall +qall 2>> $FILE_LOG || ERR_EXIT=1
+        vim +PluginInstall +qall > /dev/null 2>> $FILE_LOG || ERR_EXIT=1
         echo "colorscheme thor" >> $HOME/.vim/vimrc
     } || ERR_EXIT=1
 else
     cd $HOME/.vim/bundle/Vundle.vim > /dev/null
-    git pull 2>> $FILE_LOG && {
-        vim +PluginUpdate +qall 2>> $FILE_LOG || ERR_EXIT=1
+    git pull > /dev/null 2>> $FILE_LOG && {
+        vim +PluginUpdate +qall > /dev/null 2>> $FILE_LOG || ERR_EXIT=1
     }
     cd - > /dev/null
 fi

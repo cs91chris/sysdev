@@ -5,7 +5,7 @@ source $SYSDEV_DIR/sysdev/develop/include/bash/color.conf
 
 FILE_LOG=$SYSDEV_DIR/error.log
 CHEAT_REPO=https://github.com/jahendrie/cheat.git
-CHEAT_PATH=/usr/share/cheat/sheets
+CHEAT_PATH=/usr/share/cheat
 
 ERR_EXIT=0
 
@@ -35,8 +35,8 @@ then
 	cd cheat > /dev/null
 	sudo make install 2>> $FILE_LOG || ERR_EXIT=1
 
-	chmod 755 $CHEAT_PATH
-    chmod 644 $CHEAT_PATH/*
+	chmod 755 $CHEAT_PATH $CHEAT_PATH/sheet
+    chmod 644 $CHEAT_PATH/sheet/*
 
 	cd .. > /dev/null
 	rm -rf cheat
