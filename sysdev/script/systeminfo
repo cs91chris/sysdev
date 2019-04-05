@@ -1,7 +1,7 @@
 #!/bin/bash
 
 clear
-source ~/.script/color.conf 2> /dev/null
+source $BASH_LIB/color.conf
 
 echo
 echo -e " - ${orange}USER${reset}: ${green}$USER${reset}"
@@ -21,18 +21,12 @@ echo
 }
 
 echo
-echo -e "\n - ${orange}CONNECTED-USERS${reset}:"
-w -s -i -h
-
-echo -e "\n - ${orange}DISK-INFO${reset}:"
-df -Th | grep -v tmpfs
-
-echo -e "\n - ${orange}MEM-INFO${reset}:"
-free -mth
+echo -e "\n - ${orange}CONNECTED-USERS${reset}:"; w -s -i -h
+echo -e "\n - ${orange}DISK-INFO${reset}:"; df -Th | grep -v tmpfs
+echo -e "\n - ${orange}MEM-INFO${reset}:"; free -mth
 
 [ -x $(which lshw) ] && {
 	echo -e "\n - ${orange}CPU-INFO${reset}:"
 	lshw -C cpu 2> /dev/null | awk '/product/||/size/||/capacity/||/width/'
 }
 echo
-

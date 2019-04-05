@@ -1,6 +1,10 @@
 #!/bin/bash
-
-source ~/.script/color.conf 2> /dev/null
+#
+# $1 model file
+# $2 file name (optionale)
+# create $2 file from $1 template
+#
+source $BASH_LIB/color.conf
 
 
 if [ "$1" == "--help" ]
@@ -43,4 +47,3 @@ echo -e "${reset}"
 	echo -e "template $MODEL does ${red}not exist${reset}!"
 	exit 1
 }
-

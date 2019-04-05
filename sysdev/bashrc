@@ -44,12 +44,19 @@ if [ -n "$force_color_prompt" ] ; then
     fi
 fi
 
+export IP_HOST=$(curl ifconfig.me 2> /dev/null)
+[ "$IP_HOST" != "" ] && _ip_=":\[$txtgry\]$IP_HOST\[$txtrst\]"
+
+_username_="\[$txtgrn\]\u\[$txtwht\]"
+_hostname_="\[$txtblu\]\h\[$txtwht\]"
+_workdir_="\[$txtylw\]\W\[$txtwht\]"
+
 
 PS1="\[$txtwht\]\w\n${debian_chroot:+($debian_chroot)}\\
-┌────[\[$txtgrn\]\u@\h\[$txtwht\]]──[\[$txtylw\]\W\[$txtwht\]] \n\[$bakwht\] \\
+┌────[$_username_@$_hostname_$_ip_]──[$_workdir_] \n\[$bakwht\] \\
 \[$txtwht\]\$([ \$? == 0 ] && echo \" \[$bakgrn\] \" || echo \" \[$bakred\] \") \\
 \[$txtwht\]\n\\
-└─────\[$txtrst\]>>> "
+└─────>>> "
 
 PS2="     └────> "
 
