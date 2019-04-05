@@ -1,13 +1,14 @@
-sudo git vim most
+p7zip
+rlwrap
 autossh
-supervisor
 members
 inxi lshw
-p7zip
+supervisor
+sudo git vim most
 acpitool lm-sensors
 figlet screenfetch uuid
-smartmontools hddtemp hdparm udisks2 pydf
-speedtest-cli net-tools elinks wget curl nmap tcpdump httpie
-python python3 python-dev python3-dev virtualenv
 glances ranger highlight htop tmux tree
 colorgcc gcc gdb g++ indent valgrind make
+smartmontools hddtemp hdparm udisks2 pydf
+python python3 python-dev python3-dev virtualenv
+speedtest-cli net-tools elinks wget curl nmap tcpdump httpie netcat

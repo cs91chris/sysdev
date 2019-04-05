@@ -10,7 +10,7 @@ FILE_LOG=$HOME/.log/sysdev.log
 REPO_VUNDLE=https://github.com/VundleVim/Vundle.vim.git
 
 
-mkdir -p $HOME/.log && touch $FILE_LOG
+mkdir -p $HOME/{.log, .bin}
 
 
 if [[ $1 == "--help" ]]; then
@@ -43,15 +43,26 @@ ranger --copy-config=scope &>> $FILE_LOG
 
 
 echo -e "${orange}Installing${reset} scripts..."
-cd $HOME/.script > /dev/null
-chmod +x *
-cd - > /dev/null
+curl https://cheat.sh/:bash_completion > $HOME/.bash_conf/cht_completion
+curl https://cht.sh/:cht.sh > $HOME/.script/cht
+
+chmod +x $HOME/.script/*
 
 
-echo -e "${orange}Setting vim${reset} configurations..."
-rm -vrf $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim >> $FILE_LOG 
-git clone $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim 2>> $FILE_LOG || ERR_EXIT=1
-vim +PluginInstall +qall >> $FILE_LOG 2>&1 || ERR_EXIT=1
+if [[ ! -d $HOME/.vim/bundle/Vundle.vim ]]
+then
+	echo -e "${orange}Setting vim${reset} configurations..."
+	git clone $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim 2>> $FILE_LOG && {
+        vim +PluginInstall +qall 2>> $FILE_LOG || ERR_EXIT=1
+        echo "colorscheme thor" >> $HOME/.vim/vimrc
+    } || ERR_EXIT=1
+else
+    cd $HOME/.vim/bundle/Vundle.vim > /dev/null
+    git pull 2>> $FILE_LOG && {
+        vim +PluginUpdate +qall 2>> $FILE_LOG || ERR_EXIT=1
+    }
+    cd - > /dev/null
+fi
 
 
 if [[ $ERR_EXIT -eq 1 ]]

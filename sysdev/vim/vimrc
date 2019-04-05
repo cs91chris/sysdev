@@ -24,6 +24,9 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'vimwiki/vimwiki'
 Plugin 'jamessan/vim-gnupg'
+Plugin 'tpope/vim-eunuch'
+Plugin 'mattn/emmet-vim'
+Plugin 'vim-gitgutter'
 
 " All of your Plugins must be added before the following line
 call vundle#end()    " required
@@ -129,7 +132,7 @@ map <C-n> :NERDTreeToggle <CR>
 let NERDTreeIgnore = ['\.pyc$']
 
 " space for search
-map <space> /
+nmap <space> /
 
 " toggle spell checking
 nnoremap sc :setlocal spell!<CR>
