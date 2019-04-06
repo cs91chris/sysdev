@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # enable color support of ls and also add handy aliases
 #
 if [[ -x /usr/bin/dircolors ]]
@@ -42,8 +40,8 @@ alias mkdir='mkdir -vp'
 #
 [ -x $(which pydf 2> /dev/null) ] && alias pydf='pydf -H'
 
-alias dft='df -Th | grep -v tmpfs'
 alias hfree='free -th'
+alias dft='df -Th | grep -v tmpfs'
 alias cpuinfo='cat /proc/cpuinfo'
 alias meminfo='cat /proc/meminfo'
 alias osinfo='cat /proc/info'

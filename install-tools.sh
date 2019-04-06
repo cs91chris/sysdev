@@ -10,7 +10,7 @@ CHEAT_PATH=/usr/share/cheat
 
 ERR_EXIT=0
 
-TOOLS="$(cat $SYSDEV_DIR/packages | sort)"
+TOOLS="$(cat $SYSDEV_DIR/packages)"
 
 case $1 in
     h|-h|help|--help)
@@ -54,4 +54,5 @@ then
 fi
 
 exit $ERR_EXIT
+
 

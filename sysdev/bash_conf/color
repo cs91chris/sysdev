@@ -1,4 +1,3 @@
-#!/bin/bash
 
 export txtrst='\e[0m'    # Text Reset
 

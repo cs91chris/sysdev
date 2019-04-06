@@ -35,7 +35,6 @@ do
 	cp --verbose --recursive $tmp $HOME/.$x &>> $FILE_LOG || ERR_EXIT=1
 done
 cd - > /dev/null
-ranger --copy-config=scope
 
 ranger --copy-config=scope &>> $FILE_LOG
 
@@ -48,20 +47,9 @@ chmod +x $HOME/{.script,.bin}/* >> $FILE_LOG 2>&1
 
 
 echo -e "${orange}Setting vim${reset} configurations..."
-if [[ ! -d $HOME/.vim/bundle/Vundle.vim ]]
-then
-	git clone $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim 2>> $FILE_LOG && {
-        vim +PluginInstall +qall > /dev/null 2>> $FILE_LOG || ERR_EXIT=1
-        echo "colorscheme thor" >> $HOME/.vim/vimrc
-    } || ERR_EXIT=1
-else
-    cd $HOME/.vim/bundle/Vundle.vim > /dev/null
-    git pull > /dev/null 2>> $FILE_LOG && {
-        vim +PluginUpdate +qall > /dev/null 2>> $FILE_LOG || ERR_EXIT=1
-    }
-    cd - > /dev/null
-fi
-
+rm -vrf $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim >> $FILE_LOG 
+git clone $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim 2>> $FILE_LOG || ERR_EXIT=1
+vim +PluginInstall +qall >> $FILE_LOG 2>&1 || ERR_EXIT=1
 
 if [[ $ERR_EXIT -eq 1 ]]
 then

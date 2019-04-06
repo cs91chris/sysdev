@@ -1,8 +1,7 @@
-#!/bin/bash
-
 function join_by() {
 # join element of array by a given separator
 # $1 separator
+# $* variable number of arguments
 #
     local IFS="$1"
     shift
