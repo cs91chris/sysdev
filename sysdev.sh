@@ -43,13 +43,22 @@ echo -e "${orange}Installing${reset} scripts..."
 curl -s https://cheat.sh/:bash_completion > $HOME/.bash_conf/cht_completion
 curl -s https://cht.sh/:cht.sh > $HOME/.script/cht
 
-chmod +x $HOME/{.script,.bin}/* >> $FILE_LOG 2>&1 
+chmod +x $HOME/{.script,.bin}/* >> $FILE_LOG 2>&1
 
 
 echo -e "${orange}Setting vim${reset} configurations..."
 rm -vrf $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim >> $FILE_LOG 
 git clone $REPO_VUNDLE $HOME/.vim/bundle/Vundle.vim 2>> $FILE_LOG || ERR_EXIT=1
 vim +PluginInstall +qall >> $FILE_LOG 2>&1 || ERR_EXIT=1
+
+echo -e "${orange}Installing tmux${reset} configuration..."
+
+git clone https://github.com/gpakosz/.tmux.git >> $FILE_LOG 2>&1 && {
+    cp .tmux/.tmux.conf $HOME
+    cp .tmux/.tmux.conf.local $HOME
+    rm -rf .tmux
+} || ERR_EXIT=1
+
 
 if [[ $ERR_EXIT -eq 1 ]]
 then
@@ -63,5 +72,3 @@ fi
 echo -e "$msg_text!${reset} "
 cd - > /dev/null
 exit $ERR_EXIT
-
-
