@@ -43,7 +43,7 @@ then
 	chmod 755 $CHEAT_PATH $CHEAT_PATH/sheets
     chmod 644 $CHEAT_PATH/sheets/*
 
-	cd .. > /dev/null
+	cd - > /dev/null
 	rm -rf cheat
 fi
 
@@ -54,5 +54,3 @@ then
 fi
 
 exit $ERR_EXIT
-
-

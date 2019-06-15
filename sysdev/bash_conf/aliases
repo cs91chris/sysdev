@@ -40,13 +40,16 @@ alias mkdir='mkdir -vp'
 #
 [ -x $(which pydf 2> /dev/null) ] && alias pydf='pydf -H'
 
-alias hfree='free -th'
+alias freeh='free -th'
 alias dft='df -Th | grep -v tmpfs'
 alias cpuinfo='cat /proc/cpuinfo'
 alias meminfo='cat /proc/meminfo'
 alias osinfo='cat /proc/info'
 alias lastmsg='dmesg | tail'
 alias dirsize='du -sh'
+
+alias group-list='cut -d: -f1 /etc/group | sort'
+alias user-list='cut -d: -f1 /etc/shadow | sort'
 
 
 # more ls aliases
