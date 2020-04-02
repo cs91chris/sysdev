@@ -1,3 +1,24 @@
+function dateseq() {
+# print on stdout a list of date by a given range
+# $1 start date
+# $2 end date
+# $3 date format (optionally)
+#
+    dstart=$1
+    dend=$2
+    [ ! -z $3 ] && fmt=$3 || fmt=%Y-%m-%d
+    
+    start=$(date -d $dstart +%s)
+    end=$(date -d $dend +%s)
+    cur=$start
+
+    while [ $cur -le $end ]
+    do
+        echo $(date -d@$cur +$fmt)
+        let cur+=24*60*60
+    done
+}
+
 function join_by() {
 # join element of array by a given separator
 # $1 separator

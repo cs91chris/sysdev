@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# this script rename all selected files and directory
+# replacing all special character with '-' and UPPERCASE with lowercase
+#
+
+if [[ $1 == "--help" || $1 == "" ]]
+then
+    echo -e "It take one argument: directory name"
+    echo -e "this script rename all files and directory"
+    echo -e "replacing all special character with '-' and UPPERCASE with lowercase"
+    exit 0
+fi
+
+
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
+
+
+for f in $(\ls -1 $1)
+do
+    tmp=${f//[^[:alnum:]]/-}
+    tmp=$(echo "${tmp,,}" | sed -r 's/-\./\./g' | sed -r 's/\.-/\./g' | sed -r 's/--*/-/g')
+
+    [[ "${tmp:0:1}" == "-" ]] && tmp=${tmp:1}
+
+    if [[ -x $(which iconv) ]]
+    then
+        tmp=$(echo "$tmp" | iconv -f UTF-8 -t ascii//TRANSLIT//IGNORE)
+        tmp=$(echo "$tmp" | sed -r 's/`//g' | sed -r 's/\x27//g')
+    fi
+
+    if [[ "$tmp" != "$f" ]]
+    then
+        if [[ -f $tmp ]]; then
+            echo "ERROR: unable to rename '$f' into $tmp: '$tmp' already exists"
+        else
+            mv -v "$f" $tmp
+        fi
+    fi
+done
+
+IFS=$SAVEIFS
