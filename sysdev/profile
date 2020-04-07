@@ -14,7 +14,7 @@ if [[ -d $HOME/.script && -d $HOME/.bin ]]; then
 
 	case $PATH in
 		*.script*|*.bin*) ;;
-		*) export PATH=$script:$bin:$PATH ;;
+		*) export PATH=${script}:${bin}:$PATH ;;
 	esac
 fi
 
@@ -24,8 +24,8 @@ fi
 #
 if [[ -d $HOME/.develop ]]; then
 	export CFLAGS="-I $HOME/.develop/C/include"
-	export LD_LIBRARY_PATH=$HOME/.develop/C/lib:$LD_LIBRARY_PATH
-	export LIBRARY_PATH=$LD_LIBRARY_PATH:$LIBRARY_PATH
+	export LD_LIBRARY_PATH=$HOME/.develop/C/lib:${LD_LIBRARY_PATH}
+	export LIBRARY_PATH=${LD_LIBRARY_PATH}:${LIBRARY_PATH}
 	export BASH_LIB=$HOME/.develop/bash
 fi
 
@@ -34,6 +34,8 @@ if [[ -x $(which vim 2> /dev/null) ]]; then
 fi
 if [[ -x $(which most 2> /dev/null) ]]; then
 	export PAGER=most
+else
+	export PAGER=less
 fi
 if [[ -f $HOME/.conf/python/pyrc ]]; then
 	export PYTHONSTARTUP=$HOME/.conf/python/pyrc
@@ -61,6 +63,7 @@ fi
 HISTSIZE=1000
 HISTFILESIZE=3000
 HISTCONTROL=ignoreboth
+HISTTIMEFORMAT="%F %T "
 shopt -s histappend
 
 

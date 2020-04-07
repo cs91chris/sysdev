@@ -1,19 +1,20 @@
 # ~/.bashrc: executed by bash for non-login shells
 #
 
+# If not running interactively, don't do anything
+#
+case $- in
+	*i*) ;;
+	*) return ;;
+esac
+
+# import all custom functions, aliases, variables, etc...
+#
 if [[ -d $HOME/.bash_conf ]] ; then
 	for f in $(ls $HOME/.bash_conf) ; do
 		[ -f $HOME/.bash_conf/$f ] && source $HOME/.bash_conf/$f
 	done
 fi
-
-# If not running interactively, don't do anything
-#
-case $- in
-    *i*) ;;
-      *) return ;;
-esac
-
 
 # make less more friendly
 #
@@ -41,6 +42,9 @@ if [[ -n $force_color_prompt ]] ; then
 		color_prompt=
     fi
 fi
+ 
+export CLICOLOR=1
+export VIMINIT=":set nobackup noswapfile encoding=utf8 viminfo="
 
 export IP_HOST=$(curl -m 1 ifconfig.me 2> /dev/null)
 [ ! -z "$IP_HOST" ] && _ip_=":\[$txtgry\]$IP_HOST\[$txtrst\]"
@@ -91,9 +95,9 @@ echo -e "${txtcyn}"
 
 if [[ -x $(which figlet 2> /dev/null) ]]
 then
-	figlet "Welcome $USER"
+	figlet "Welcome ${USER}"
 else
-	echo -e "Welcome $USER"
+	echo -e "Welcome ${USER}"
 fi
 echo -e "${txtrst}"
 
@@ -103,7 +107,11 @@ if [[ -z "$TMUX" ]]
 then
     if tmux has-session 2>/dev/null
     then
-        exec tmux attach
+        read -p "Saved session of tmux found. Do you want attach to it? [Y/n]: " ANS
+		case ${ANS} in
+			n|N) ;;
+			*) tmux attach ;;
+		esac
     else
         exec tmux
     fi

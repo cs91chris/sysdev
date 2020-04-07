@@ -1,4 +1,13 @@
+lll() {
+#
+# paging a long ls output
+#
+	[ ! -z "${PAGER}" ] && pager=${PAGER} || pager=less
+	ls -lrtA --color "$@" | ${pager} -FXRn ;
+}
+
 function dateseq() {
+#
 # print on stdout a list of date by a given range
 # $1 start date
 # $2 end date
@@ -20,6 +29,7 @@ function dateseq() {
 }
 
 function join_by() {
+#
 # join element of array by a given separator
 # $1 separator
 # $* variable number of arguments
@@ -60,7 +70,7 @@ function getfileline() {
     local content
 
     [ ! -z "$3" ] && row=$3 || row=$2
-    mapfile -s $(($2-1)) -n $(($row-$2+1)) content < "$1"
+    mapfile -s $(($2-1)) -n $((${row}-$2+1)) content < "$1"
     printf '%s' "${content[@]}"
 }
 
@@ -79,15 +89,15 @@ function countfile() {
     fi
 
     if [[ ! -z "$2" ]]; then
-        local FILES=$(find $SRC_DIR -type f | grep "\.$2" | sed "$BLANK_ESCAPE")
+        local FILES=$(find ${SRC_DIR} -type f | grep "\.$2" | sed "${BLANK_ESCAPE}")
     else
-        local FILES=$(find $SRC_DIR -type f | sed "$BLANK_ESCAPE")
+        local FILES=$(find ${SRC_DIR} -type f | sed "${BLANK_ESCAPE}")
     fi
 
-    local NUM_FILES=$(echo "$FILES" | wc -l)
-    local TOT_SIZE=$(echo "$FILES" | xargs du -ch | tail -n1 | cut -f1)
+    local NUM_FILES=$(echo "${FILES}" | wc -l)
+    local TOT_SIZE=$(echo "${FILES}" | xargs du -ch | tail -n1 | cut -f1)
 
-    echo "file: $NUM_FILES size: $TOT_SIZE"
+    echo "file: ${NUM_FILES} size: ${TOT_SIZE}"
 }
 
 
@@ -99,13 +109,13 @@ function xzencrypt() {
 	local IN=$1
 	local XZ_OPT="-6e --compress --threads=0"
 
-	if [[ ! -f $IN ]]; then
-		echo "$IN is not a regular file"
+	if [[ ! -f ${IN} ]]; then
+		echo "${IN} is not a regular file"
 		exit 1
 	fi
 
 	if [[ -x $(which xz) && -x $(which gpg) ]]; then
-		tar -c $IN | xz $XZ_OPT | gpg -c > $IN.crypt
+		tar -c ${IN} | xz ${XZ_OPT} | gpg -c > ${IN}.crypt
 	fi
 }
 
@@ -142,13 +152,13 @@ function randpasswd() {
 
 function say() {
 #
-# festival speaks input string
+# festival speaks input strings
 #
 	if [[] -x $(which festival 2>/dev/null) ]]
 	then
 		echo -e "$@" | festival --tts
 	else
-		echo -e "festival not found"
+		echo -e "festival is not installed"
 		exit 0
 	fi
 }
@@ -227,9 +237,9 @@ function swapfilename() {
 # $1 first file name
 # $1 second file name
 #
-	local TMP=tmp.$$
-	mv $1 $TMP
+	local TMP=.tmp.$$
+	mv $1 ${TMP}
 	mv $2 $1
-	mv $TMP $2
+	mv ${TMP} $2
 }
 
