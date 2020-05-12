@@ -110,7 +110,7 @@ then
         read -p "Saved session of tmux found. Do you want attach to it? [Y/n]: " ANS
 		case ${ANS} in
 			n|N) ;;
-			*) tmux attach ;;
+			*) exec tmux attach ;;
 		esac
     else
         exec tmux

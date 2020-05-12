@@ -123,7 +123,6 @@ fi
 
 # other aliases
 #
-[ -x $(which nmap 2> /dev/null) ] && alias scanme='nmap localhost'
 [ -x $(which rsync 2> /dev/null) ] && alias backup='rsync -avuz'
 
 if [[ -x $(which cupsd 2> /dev/null) && -x $(which elinks 2> /dev/null) ]] ; then
