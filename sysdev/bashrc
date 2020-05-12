@@ -44,7 +44,6 @@ if [[ -n $force_color_prompt ]] ; then
 fi
  
 export CLICOLOR=1
-export VIMINIT=":set nobackup noswapfile encoding=utf8 viminfo="
 
 export IP_HOST=$(curl -m 1 ifconfig.me 2> /dev/null)
 [ ! -z "$IP_HOST" ] && _ip_=":\[$txtgry\]$IP_HOST\[$txtrst\]"
