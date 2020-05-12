@@ -18,6 +18,7 @@ htop
 httpie
 indent
 inxi
+jq
 lm-sensors
 lshw
 make
@@ -45,6 +46,6 @@ tree
 udisks2
 uuid
 valgrind
-vim
+vim-nox
 virtualenv
 wget

@@ -35,5 +35,6 @@
     ls = ls-files
     tl = tag -ln
     pom = push origin master
-    lg = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    lg = log --graph --decorate --pretty=oneline --abbrev-commit
+	ane = --amend --no-edit
 
