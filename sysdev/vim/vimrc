@@ -12,21 +12,27 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 " add others plugin if you want
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-airline/vim-airline'
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'Raimondi/delimitMate'
+Bundle 'Valloric/YouCompleteMe'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'jamessan/vim-gnupg'
+Plugin 'kevinw/pyflakes-vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'nvie/vim-flake8'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'tpope/vim-fugitive'
-Plugin 'Raimondi/delimitMate'
-Plugin 'kevinw/pyflakes-vim'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'vimwiki/vimwiki'
-Plugin 'jamessan/vim-gnupg'
+Plugin 'tmhedberg/SimpylFold'
 Plugin 'tpope/vim-eunuch'
-Plugin 'mattn/emmet-vim'
-Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'vimwiki/vimwiki'
 
 " All of your Plugins must be added before the following line
 call vundle#end()    " required
@@ -49,8 +55,26 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_c_check_header = 1
 let g:syntastic_c_include_dirs = [$CFLAGS, 'include']
-let g:syntastic_python_flake8_exec = 'python3'
 let g:syntastic_python_flake8_args = ['-m', 'flake8']
+let g:syntastic_python_flake8_exec = 'python3'
+
+let g:SimpylFold_docstring_preview=1
+
+" you complete me settings
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+let python_highlight_all=1
+
+"python virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  base_dir = os.environ['VIRTUAL_ENV']
+  activate = os.path.join(base_dir, 'bin', 'activate')
+  execfile(activate, dict(__file__=activate))
+EOF
 
 function Py2Check()
     let g:syntastic_python_python_exec = 'python'
@@ -63,47 +87,74 @@ endfunction
 call Py3Check() " default to python3"
 
 " vim options
-set title
-set wildmenu
-set wildmode=longest:full,full
 set autoindent
 set autoread
-set encoding=utf8
+set clipboard=unnamed
+set encoding=utf-8
 set expandtab
-set foldcolumn=2
 set fileformats=unix,dos,mac
+set foldcolumn=2
+set foldlevel=99
+set foldmethod=indent
 set hid
-set linebreak
-set history=1000
 set hidden
+set history=1000
 set hlsearch
-set incsearch
 set ignorecase
-set lbr
+set incsearch
+set laststatus=2
 set lazyredraw 
+set lbr
+set linebreak
+set nobackup
+set noerrorbells
+set noswapfile
+set novisualbell
 set nowb
 set number
-set noerrorbells
-set novisualbell
-set noswapfile
-set nobackup
 set ruler
-set smarttab
-set showcmd
-set showmode
-set showmatch
 set shiftwidth=4
-set softtabstop=4
+set showcmd
+set showmatch
+set showmode
 set smartcase
-set laststatus=2
-set ttyfast
+set smarttab
+set softtabstop=4
+set splitbelow
+set splitright
 set t_Co=512
 set tabstop=4
-set tw=256
 set timeoutlen=500
+set title
+set ttyfast
+set tw=256
+set wildmenu
+set wildmode=longest:full,full
 set wrap
 set wrapmargin=2
 
+
+" split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Enable folding with the spacebar
+nnoremap <F6> za
+
+" PEP 8 indentation
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+" flagging unnecessary whitespace
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
@@ -117,9 +168,9 @@ inoremap <F3> <C-o>:set list!<CR>
 cnoremap <F3> <C-c>:set list!<CR>
 
 
-"use <C-L> to clear the highlighting of search
-if maparg('<C-L>', 'n') ==# ''
-	nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+" use <leader>l to clear the highlighting of search
+if maparg('<leader>l', 'n') ==# ''
+	nnoremap <silent> <leader>l :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 
 " Return to last edit position when opening files
@@ -169,7 +220,14 @@ filetype plugin on
 filetype indent on
 
 try
-	coloscheme thor
+	colorscheme Monokai
 catch
+	try
+		coloscheme twilight256
+	catch
+		try
+			coloscheme thor
+		catch
+		endtry
+	endtry
 endtry
-
