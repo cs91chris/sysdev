@@ -49,6 +49,18 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_c_check_header = 1
 let g:syntastic_c_include_dirs = [$CFLAGS, 'include']
+let g:syntastic_python_flake8_exec = 'python3'
+let g:syntastic_python_flake8_args = ['-m', 'flake8']
+
+function Py2Check()
+    let g:syntastic_python_python_exec = 'python'
+endfunction
+
+function Py3Check()
+    let g:syntastic_python_python_exec = 'python3'
+endfunction
+
+call Py3Check() " default to python3"
 
 " vim options
 set title
