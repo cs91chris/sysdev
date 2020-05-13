@@ -5,13 +5,13 @@
 > license: *GPL v3*
 >
 
-Worked on debian based distro, well tested on Debian 9.x
+Well tested on debian based distro. Most features works on git bash (windows) too.
 
 
 ## Installation
 
 - make sure you are connected to the internet
-- first of all run `sudo bash install-tools.sh`
+- run `sudo bash install-tools.sh` to install packages (only linux)
 - run `bash sysdev.sh` to install the configurations
 
 
@@ -23,6 +23,5 @@ if you want add some personal features, add your:
 - binary file in:   `~/.bin/`
 - script file in:   `~/.script/`
 - template in:      `~/.models/`
-- cheat sheet in:   `~/.cheat/`
 - library in:       `~/.develop/`
 
