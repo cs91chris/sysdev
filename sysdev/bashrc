@@ -10,9 +10,9 @@ esac
 
 # import all custom functions, aliases, variables, etc...
 #
-if [[ -d $HOME/.bash_conf ]] ; then
-	for f in $(ls $HOME/.bash_conf) ; do
-		[ -f $HOME/.bash_conf/$f ] && source $HOME/.bash_conf/$f
+if [[ -d ${HOME}/.bash_conf ]] ; then
+	for f in $(ls ${HOME}/.bash_conf) ; do
+		[ -f ${HOME}/.bash_conf/${f} ] && source ${HOME}/.bash_conf/$f
 	done
 fi
 
@@ -28,13 +28,18 @@ then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-case "$TERM" in
+
+# enable terminal colors
+#
+export TERM=xterm-256color
+
+case "${TERM}" in
 	xterm-color) color_prompt=yes ;;
 esac
 
 force_color_prompt=yes
 
-if [[ -n $force_color_prompt ]] ; then
+if [[ -n ${force_color_prompt} ]] ; then
     if [[ -x /usr/bin/tput && $(tput setaf 1 >&/dev/null) ]]
     then
 		color_prompt=yes
@@ -45,17 +50,20 @@ fi
  
 export CLICOLOR=1
 
+
+# set custom prompt
+#
 export IP_HOST=$(curl -m 1 ifconfig.me 2> /dev/null)
-[ ! -z "$IP_HOST" ] && _ip_=":\[$txtgry\]$IP_HOST\[$txtrst\]"
+[ ! -z "${IP_HOST}" ] && _ip_=":\[${txtgry}\]${IP_HOST}\[${txtrst}\]"
 
-_username_="\[$txtgrn\]\u\[$txtwht\]"
-_hostname_="\[$txtblu\]\h\[$txtwht\]"
-_workdir_="\[$txtylw\]\W\[$txtwht\]"
+_username_="\[${txtgrn}\]\u\[${txtwht}\]"
+_hostname_="\[${txtblu}\]\h\[${txtwht}\]"
+_workdir_="\[${txtylw}\]\W\[${txtwht}\]"
 
-PS1="\[$txtwht\]\w\n${debian_chroot:+($debian_chroot)}\\
-┌────[$_username_@$_hostname_$_ip_]──[$_workdir_] \n\[$bakwht\] \\
-\[$txtwht\]\$([ \$? == 0 ] && echo ' \[$bakgrn\] ' || echo ' \[$bakred\] ') \\
-\[$txtwht\]\n\\
+PS1="\[${txtwht}\]\w\n${debian_chroot:+(${debian_chroot})}\\
+┌────[${_username_}@${_hostname_}${_ip_}]──[${_workdir_}] \n\[${bakwht}\] \\
+\[${txtwht}\]\$([ \$? == 0 ] && echo ' \[${bakgrn}\] ' || echo ' \[${bakred}\] ') \\
+\[${txtwht}\]\n\\
 └─────>>> "
 
 PS2="     └────> "
@@ -74,17 +82,20 @@ then
 fi
 
 
-# do not overwrite file on redirection
-set -o noclobber
-
 # set ctrl+l behavior to clear screen
 bind -m vi-insert \C-l:clear-screen
 
-# check the window size after each command
-shopt -s checkwinsize
+set -o noclobber       # do not overwrite file on redirection
+shopt -s checkwinsize  # check the window size after each command
+shopt -s cdspell       # ignore simple spelling mistakes in the cd command
+shopt -s histappend
 
-# ignore simple spelling mistakes in the cd command
-shopt -s cdspell
+# setting history
+#
+HISTSIZE=1000
+HISTFILESIZE=3000
+HISTCONTROL=ignoreboth
+HISTTIMEFORMAT="%F %T "
 
 
 # welcome message
@@ -100,18 +111,18 @@ else
 fi
 echo -e "${txtrst}"
 
-
-# restore tmux session or create new one
-if [[ -z "$TMUX" ]]
-then
-    if tmux has-session 2>/dev/null
-    then
-        read -p "Saved session of tmux found. Do you want attach to it? [Y/n]: " ANS
-		case ${ANS} in
-			n|N) ;;
-			*) exec tmux attach ;;
-		esac
-    else
-        exec tmux
-    fi
+if [[ -x $(which tmux 2> /dev/null) ]]; then
+    # restore tmux session or create new one
+    if [[ -z "${TMUX}" ]]; then
+        if tmux has-session 2>/dev/null ; then
+            read -p "${txtred}WARN:${txtrst} Saved session of tmux found. Do you want attach to it? [Y/n]: " ANS
+    		case ${ANS} in
+    			n|N) ;;
+    			*) exec tmux attach ;;
+    		esac
+        else
+            exec tmux
+        fi
+    fi    
 fi
+

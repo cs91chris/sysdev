@@ -8,13 +8,13 @@ umask 077
 
 # add personal Script and Bin to PATH
 #
-if [[ -d $HOME/.script && -d $HOME/.bin ]]; then
-	script=$HOME/.script
-	bin=$HOME/.bin
+if [[ -d ${HOME}/.script && -d ${HOME}/.bin ]]; then
+	script=${HOME}/.script
+	bin=${HOME}/.bin
 
-	case $PATH in
+	case ${PATH} in
 		*.script*|*.bin*) ;;
-		*) export PATH=${script}:${bin}:$PATH ;;
+		*) export PATH=${script}:${bin}:${PATH} ;;
 	esac
 fi
 
@@ -23,10 +23,10 @@ fi
 # add extern dynamic library
 #
 if [[ -d $HOME/.develop ]]; then
-	export CFLAGS="-I $HOME/.develop/C/include"
-	export LD_LIBRARY_PATH=$HOME/.develop/C/lib:${LD_LIBRARY_PATH}
+	export CFLAGS="-I ${HOME}/.develop/C/include"
+	export LD_LIBRARY_PATH=${HOME}/.develop/C/lib:${LD_LIBRARY_PATH}
 	export LIBRARY_PATH=${LD_LIBRARY_PATH}:${LIBRARY_PATH}
-	export BASH_LIB=$HOME/.develop/bash
+	export BASH_LIB=${HOME}/.develop/bash
 fi
 
 if [[ -x $(which vim 2> /dev/null) ]]; then
@@ -38,40 +38,16 @@ else
 	export PAGER=less
 fi
 if [[ -f $HOME/.conf/python/pyrc ]]; then
-	export PYTHONSTARTUP=$HOME/.conf/python/pyrc
+	export PYTHONSTARTUP=${HOME}/.conf/python/pyrc
 fi
 if [[ -x $(which colorgcc 2> /dev/null) ]]; then
 	export CC="colorgcc"
 	export GCC_COLORS="error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01"
 fi
 
-
-# cheat variables
-#
-if [[ -x $(which cheat 2> /dev/null) ]]; then
-	export CHEATCOLORS=true
-	export DEFAULT_CHEAT_DIR=/usr/share/cheat/sheets
-	export CHEATPATH=$DEFAULT_CHEAT_DIR:$HOME/.cheat
-	export CHEAT_TEXT_VIEWER=$PAGER
-	#export CHEAT_IMAGE_VIEWER=
-	#export CHEAT_PDF_VIEWER=
-fi
-
-
-# setting history
-#
-HISTSIZE=1000
-HISTFILESIZE=3000
-HISTCONTROL=ignoreboth
-HISTTIMEFORMAT="%F %T "
-shopt -s histappend
-
-
-export TERM=xterm-256color
-
 # if running bash
 #
-if [[ -n $BASH_VERSION ]] ; then
-	[ -f $HOME/.bashrc ] && source $HOME/.bashrc
+if [[ -n ${BASH_VERSION} ]] ; then
+	[ -f ${HOME}/.bashrc ] && source ${HOME}/.bashrc
 fi
 
