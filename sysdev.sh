@@ -64,6 +64,10 @@ if [[ -x $(which vim 2> /dev/null) ]]; then
     git clone ${REPO_VUNDLE} ${VIM_BUNDLE}/Vundle.vim 2>> ${FILE_LOG} || ERR_EXIT=1
 
     vim +PluginInstall +qall
+
+    cd ${VIM_BUNDLE}/YouCompleteMe > /dev/null
+    [[ -x $(which python3 2> /dev/null) ]] && PYTHON_CMD=python3 || PYTHON_CMD=python
+    ${PYTHON_CMD} install.py --clang-completer 2>> ${FILE_LOG} || ERR_EXIT=1
 fi
 
 
