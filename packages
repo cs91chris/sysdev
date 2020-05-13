@@ -1,4 +1,5 @@
 acpitool
+atool
 autossh
 bash-completion
 build-essential
@@ -24,6 +25,7 @@ jq
 lm-sensors
 lshw
 make
+mediainfo
 members
 most
 netcat
