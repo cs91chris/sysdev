@@ -1,10 +1,10 @@
 #!/bin/bash
 
 clear
-source $BASH_LIB/color.conf
+source ${BASH_LIB}/color.conf
 
 echo
-echo -e " - ${orange}USER${reset}: ${green}$USER${reset}"
+echo -e " - ${orange}USER${reset}: ${green}${USER}${reset}"
 echo -e " - ${orange}HOSTNAME${reset}: ${green}`uname -n`${reset}"
 echo -e " - ${orange}UPTIME${reset}: ${green}`uptime --pretty`${reset}"
 echo -e " - ${orange}DATE${reset}: ${green}`date "+%A %e %B %Y %H:%M"`${reset}"

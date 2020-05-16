@@ -1,9 +1,8 @@
+### ANSI colors
 
 export txtrst='\e[0m'    # Text Reset
 
-
 # text color
-#
 export txtred='\e[0;31m' # red
 export txtgrn='\e[0;32m' # green
 export txtylw='\e[0;33m' # yellow
@@ -12,9 +11,7 @@ export txtvlt='\e[0;35m' # violet
 export txtcyn='\e[0;36m' # cyan
 export txtwht='\e[0;37m' # white
 
-
 # bold color
-#
 export bldblk='\e[1;30m' 	# black
 export bldred='\e[1;31m' 	# red
 export bldgrn='\e[1;32m' 	# green
@@ -24,9 +21,7 @@ export bldvlt='\e[1;35m' 	# violet
 export bldcyn='\e[1;36m' 	# cyan
 export bldwht='\e[1;37m' 	# white
 
-
 # underline color
-#
 export unkblk='\e[4;30m' 	# black
 export undred='\e[4;31m' 	# red
 export undgrn='\e[4;32m' 	# green
@@ -36,9 +31,7 @@ export undvlt='\e[4;35m' 	# violet
 export undcyn='\e[4;36m' 	# cyan
 export undwht='\e[4;37m' 	# white
 
-
 # background color
-#
 export bakblk='\e[00m'   	# black
 export bakred='\e[41m'   	# red
 export bakgrn='\e[42m'   	# green
@@ -48,3 +41,45 @@ export bakvlt='\e[45m'   	# violet
 export bakcyn='\e[46m'   	# cyan
 export bakwht='\e[47m'   	# white
 
+
+### tput colors
+
+export tblack=$(tput setaf 0)	# black
+export tred=$(tput setaf 1)		# red
+export tgreen=$(tput setaf 2)	# green
+export tyellow=$(tput setaf 3)	# yellow
+export tblue=$(tput setaf 4)	# blue
+export tviolet=$(tput setaf 5)	# violet
+export tcyan=$(tput setaf 6)	# cyan
+export twhite=$(tput setaf 7)	# white
+export tgray=$(tput setaf 8)	# gray
+export treset=$(tput sgr0)		# reset
+
+
+function cecho() {
+#
+# $1 color (optional)
+# $2 mess to print
+#
+	local color=$1
+	local mess=$2
+
+	[ -z "${mess}" ] && mess=$1
+
+	if [[ | ${color} =~ '^[0-9]$' ]]; then
+		case $(echo ${color} | tr '[:upper:]' '[:lower:]') in
+			black)   color=0 ;;
+			red)     color=1 ;;
+			green)   color=2 ;;
+			yellow)  color=3 ;;
+			blue)    color=4 ;;
+			magenta) color=5 ;;
+			cyan)    color=6 ;;
+			white|*) color=7 ;;
+		esac
+	fi
+
+	tput setaf ${color}
+	echo ${mess}
+	tput sgr0
+}

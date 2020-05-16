@@ -4,32 +4,33 @@
 # $2 path where library is copied (optional) default current folder
 # copy a static library from default library path
 #
-source $BASH_LIB/color.conf
+source ${BASH_LIB}/color.conf
 
 
 TO=''
-lib=lib$1.a
+LIB=lib$1.a
 
-if [[ $1 == "--help" ]]
-then
-	echo -e "\nTwo arguments required:"
-	echo -e "\t1 ${orange}name of static library${reset}"
-	echo -e "\t2 ${orange}path where library is copied${reset} (optional)"
-	echo -e "\t  if path is void it was copied in the current directory\n"
-	exit 0
+case $1 in
+	-h|--help)
+		echo -e "\nTwo arguments required:"
+		echo -e "\t1 ${orange}name of static library${reset}"
+		echo -e "\t2 ${orange}path where library is copied${reset} (optional)"
+		echo -e "\t  if path is void it was copied in the current directory\n"
+		exit 0
+	;;
 fi
 
 
 [ -z $2 ] && TO="$2" || TO="."
 
 
-if [[ -d $LIBRARY_PATH/$lib ]]; then
+if [[ -d ${LIBRARY_PATH}/${LIB} ]]; then
 	echo -e "${green}"
-	cp -v $DEV_LIB_PATH/$lib $TO
+	cp -v ${DEV_LIB_PATH}/${LIB} ${TO}
 	echo -e "${reset}"
 
 else
-	echo "$lib ${red}not found${reset}"
+	echo "${LIB} ${red}not found${reset}"
 	exit 1
 fi
 
