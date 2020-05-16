@@ -1,8 +1,8 @@
-# enable color support of ls and also add handy aliases
+# enable color support of ls and grep
 #
-if [[ -x /usr/bin/dircolors ]]
+if [[ -x $(which dircolors) ]]
 then
-	test -r $HOME/.dircolors && eval "$(dircolors -b $HOME/.dircolors)" || eval "$(dircolors -b)"
+	test -r ${HOME}/.dircolors && eval "$(dircolors -b ${HOME}/.dircolors)" || eval "$(dircolors -b)"
 
     alias dir='dir --color=auto'
     alias ls='ls --color=auto -F'
@@ -24,7 +24,8 @@ alias hsearch='history | grep'
 alias ncat='cat -n'
 alias ping='ping -c5'
 alias funct='declare -F'
-alias REF="source $HOME/.profile"
+alias datetime='date +"%Y-%m-%d %H:%M:%S"'
+alias REF="source ${HOME}/.profile"
 
 
 # interactive and verbose mode
@@ -78,16 +79,16 @@ alias .opt='cd /opt'
 alias .tmp='cd /tmp'
 alias .www='cd /var/www'
 
-[ -d $HOME/.script ] && alias .script='cd $HOME/.script'
-[ -d $HOME/.develop ] && alias .develop='cd $HOME/.develop'
-[ -d $HOME/.bin ] && alias .bin='cd $HOME/.bin'
+[ -d ${HOME}/.script ] && alias .script='cd ${HOME}/.script'
+[ -d ${HOME}/.develop ] && alias .develop='cd ${HOME}/.develop'
+[ -d ${HOME}/.bin ] && alias .bin='cd ${HOME}/.bin'
 
 
 # more ps alias
 #
 alias psaux='ps auxf'
 alias psroot='ps | grep root'
-alias psuser="ps | grep $USER"
+alias psuser="ps | grep ${USER}"
 alias psearch='ps aux | grep'
 
 

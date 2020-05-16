@@ -22,7 +22,7 @@ echo -e "${red}Warning${reset}: this will replace configuration files in your ho
 read -p "Do you want continue? [yes/N]: " -r ANS
 
 case "${ANS}" in
-	yes)      ;;
+	yes) ;;
 	*) exit 1 ;;
 esac
 
@@ -62,12 +62,13 @@ if [[ -x $(which vim 2> /dev/null) ]]; then
 
     rm -vrf ${REPO_VUNDLE} ${VIM_BUNDLE}/Vundle.vim >> ${FILE_LOG} 
     git clone ${REPO_VUNDLE} ${VIM_BUNDLE}/Vundle.vim 2>> ${FILE_LOG} || ERR_EXIT=1
-
     vim +PluginInstall +qall
+
+	echo -e "${orange}compiling${reset} youCompleteMe..."
 
     cd ${VIM_BUNDLE}/YouCompleteMe > /dev/null
     [[ -x $(which python3 2> /dev/null) ]] && PYTHON_CMD=python3 || PYTHON_CMD=python
-    ${PYTHON_CMD} install.py --clang-completer 2>> ${FILE_LOG} || ERR_EXIT=1
+    ${PYTHON_CMD} install.py --clang-completer 2>> ${FILE_LOG} > /dev/null || ERR_EXIT=1
 fi
 
 

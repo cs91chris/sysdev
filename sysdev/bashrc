@@ -1,59 +1,117 @@
 # ~/.bashrc: executed by bash for non-login shells
-#
 
 # If not running interactively, don't do anything
-#
 case $- in
 	*i*) ;;
 	*) return ;;
 esac
 
-# import all custom functions, aliases, variables, etc...
+
+# only user has permissions on own files
+umask 077
+
+
+# ENV variables
 #
+export CLICOLOR=1
+export HISTCONTROL=ignoreboth
+export HISTFILESIZE=50000
+export HISTSIZE=10000
+export IP_HOST=$(curl -m 1 ifconfig.me 2> /dev/null)
+export LANG=en_US.UTF-8
+export TERM=xterm-256color
+
+if [[ -x $(which vim 2> /dev/null) ]]; then
+	export EDITOR=vim
+fi
+if [[ -x $(which most 2> /dev/null) ]]; then
+	export PAGER=most
+else
+	export PAGER=less
+fi
+if [[ -f ${HOME}/.conf/python/pyrc ]]; then
+	export PYTHONSTARTUP=${HOME}/.conf/python/pyrc
+fi
+if [[ -x $(which colorgcc 2> /dev/null) ]]; then
+	export CC="colorgcc"
+	export GCC_COLORS="error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01"
+fi
+
+# function to avoid adding duplicate entries to path given in $1
+# e.g. pathmunge PATH ~/bin after
+#
+pathmunge () {
+    case ":${!1}:" in
+        *:"$2":*) ;;
+        *)
+            if [ "$3" = "after" ] ; then
+                eval "${1}=\$${1}:$2"
+            else
+                eval "${1}=$2:\$${1}"
+            fi
+		;;
+    esac
+}
+
+[ -d ${HOME}/.script ] && pathmunge PATH ${HOME}/.script
+[ -d ${HOME}/.bin ] && pathmunge PATH ${HOME}/.bin
+
+if [[ -d ${HOME}/.develop ]]; then
+	export CFLAGS="-I ${HOME}/.develop/C/include"
+	export LD_LIBRARY_PATH=${HOME}/.develop/C/lib:${LD_LIBRARY_PATH}
+	export LIBRARY_PATH=${LD_LIBRARY_PATH}:${LIBRARY_PATH}
+	export BASH_LIB=${HOME}/.develop/bash
+fi
+#
+
+# make less more friendly
+if [[ -x /usr/bin/lesspipe ]]; then
+	eval "$(SHELL=/bin/sh lesspipe)"
+elif [[ -x /usr/bin/lesspipe.sh ]]; then
+	export LESSOPEN="|/usr/bin/lesspipe.sh %s"
+fi
+
+# set variable identifying the chroot you work in
+if [[ -z ${debian_chroot:-} && -r /etc/debian_chroot ]]; then
+	debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# enable colors
+#
+case "${TERM}" in
+	*xterm*color*)
+		color_prompt=yes
+	;;
+	*)
+		case "${COLORTERM}" in
+			*-terminal)
+				if [ "${TERM}" = "xterm" ]; then
+					export TERM=xterm-256color
+				fi
+				color_prompt=yes
+			;;
+			*)
+				if [[ -x $(which tput 2> /dev/null) && $(tput setaf 1 >& /dev/null) ]]
+				then
+					color_prompt=yes
+				else
+					color_prompt=
+				fi
+			;;
+		esac
+	;;
+esac
+#
+
+# import all custom functions, aliases, variables, etc...
 if [[ -d ${HOME}/.bash_conf ]] ; then
 	for f in $(ls ${HOME}/.bash_conf) ; do
-		[ -f ${HOME}/.bash_conf/${f} ] && source ${HOME}/.bash_conf/$f
+		[ -f ${HOME}/.bash_conf/${f} ] && source ${HOME}/.bash_conf/${f}
 	done
 fi
 
-# make less more friendly
-#
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-
-# set variable identifying the chroot you work in
-#
-if [[ -z ${debian_chroot:-} && -r /etc/debian_chroot ]]
-then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-
-# enable terminal colors
-#
-export TERM=xterm-256color
-
-case "${TERM}" in
-	xterm-color) color_prompt=yes ;;
-esac
-
-force_color_prompt=yes
-
-if [[ -n ${force_color_prompt} ]] ; then
-    if [[ -x /usr/bin/tput && $(tput setaf 1 >&/dev/null) ]]
-    then
-		color_prompt=yes
-    else
-		color_prompt=
-    fi
-fi
- 
-export CLICOLOR=1
-
-
 # set custom prompt
 #
-export IP_HOST=$(curl -m 1 ifconfig.me 2> /dev/null)
 [ ! -z "${IP_HOST}" ] && _ip_=":\[${txtgry}\]${IP_HOST}\[${txtrst}\]"
 
 _username_="\[${txtgrn}\]\u\[${txtwht}\]"
@@ -66,37 +124,31 @@ PS1="\[${txtwht}\]\w\n${debian_chroot:+(${debian_chroot})}\\
 \[${txtwht}\]\n\\
 └─────>>> "
 
-PS2="     └────> "
-
+PS2="	 └────> "
+#
 
 # enable programmable completion features
-#
-if ! shopt -oq posix
-then
+if ! shopt -oq posix; then
 	if [[ -f /usr/share/bash-completion/bash_completion ]]; then
 		source /usr/share/bash-completion/bash_completion
-
 	elif [[ -f /etc/bash_completion ]]; then
 		source /etc/bash_completion
 	fi
 fi
 
-
 # set ctrl+l behavior to clear screen
 bind -m vi-insert \C-l:clear-screen
 
-set -o noclobber       # do not overwrite file on redirection
+set -o noclobber	   # do not overwrite file on redirection
 shopt -s checkwinsize  # check the window size after each command
-shopt -s cdspell       # ignore simple spelling mistakes in the cd command
+shopt -s cdspell	   # ignore simple spelling mistakes in the cd command
 shopt -s histappend
 
-# setting history
-#
-HISTSIZE=1000
-HISTFILESIZE=3000
-HISTCONTROL=ignoreboth
-HISTTIMEFORMAT="%F %T "
-
+if [[ "${color_prompt}" = yes ]]; then
+	export HISTTIMEFORMAT="- $(tput setaf 1)%F %T$(tput sgr0) - "
+else
+	export HISTTIMEFORMAT="- %F %T - "
+fi
 
 # welcome message
 #
@@ -112,17 +164,19 @@ fi
 echo -e "${txtrst}"
 
 if [[ -x $(which tmux 2> /dev/null) ]]; then
-    # restore tmux session or create new one
-    if [[ -z "${TMUX}" ]]; then
-        if tmux has-session 2>/dev/null ; then
-            read -p "${txtred}WARN:${txtrst} Saved session of tmux found. Do you want attach to it? [Y/n]: " ANS
-    		case ${ANS} in
-    			n|N) ;;
-    			*) exec tmux attach ;;
-    		esac
-        else
-            exec tmux
-        fi
-    fi    
-fi
+	if [[ -z "${TMUX}" ]]; then
+		# restore tmux session or create new one
+		if tmux has-session 2>/dev/null ; then
+			echo -en "${txtred}WARN:${txtrst} Saved session of tmux found. Do you want attach to it? [Y/n]: "
+			read ANS
 
+			case ${ANS} in
+				n|N) ;;
+				*) exec tmux attach ;;
+			esac
+		else
+			exec tmux
+		fi
+	fi
+fi
+#

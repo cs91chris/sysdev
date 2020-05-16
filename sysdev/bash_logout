@@ -1,4 +1,3 @@
-
 # clear history
 #
 history -c
@@ -21,12 +20,12 @@ fi
 echo -e "${txtrst} "
 
 sleep 1s
-clear
-
 
 # clear the screen
 #
 if [[ $SHLVL = 1 ]] ; then
 	[ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
+else
+	clear
 fi
 
