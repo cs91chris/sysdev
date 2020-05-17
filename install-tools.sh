@@ -26,7 +26,9 @@ if [[ "${EUID}" -ne 0 ]]; then
 fi
 
 apt update 2>> ${FILE_LOG} && {
-	sudo apt install ${TOOLS} -y 2>> ${FILE_LOG} || ERR_EXIT=1
+	for pkg in ${TOOLS}; do
+		apt install ${pkg} -y 2>> ${FILE_LOG} || ERR_EXIT=1
+	done
 } || ERR_EXIT=1
 
 

@@ -1,6 +1,6 @@
 # enable color support of ls and grep
 #
-if [[ -x $(which dircolors) ]]
+if [[ -x $(which dircolors 2> /dev/null) ]]
 then
 	test -r ${HOME}/.dircolors && eval "$(dircolors -b ${HOME}/.dircolors)" || eval "$(dircolors -b)"
 
@@ -24,8 +24,9 @@ alias hsearch='history | grep'
 alias ncat='cat -n'
 alias ping='ping -c5'
 alias funct='declare -F'
+alias functsearch='declare -F | grep'
 alias datetime='date +"%Y-%m-%d %H:%M:%S"'
-alias REF="source ${HOME}/.profile"
+alias REF="source ${HOME}/.bash_profile"
 
 
 # interactive and verbose mode
@@ -45,7 +46,7 @@ alias freeh='free -th'
 alias dft='df -Th | grep -v tmpfs'
 alias cpuinfo='cat /proc/cpuinfo'
 alias meminfo='cat /proc/meminfo'
-alias osinfo='cat /proc/info'
+alias osinfo='cat /proc/version'
 alias lastmsg='dmesg | tail'
 alias dirsize='du -sh'
 
@@ -86,6 +87,7 @@ alias .www='cd /var/www'
 
 # more ps alias
 #
+alias ps='ps --forest'
 alias psaux='ps auxf'
 alias psroot='ps | grep root'
 alias psuser="ps | grep ${USER}"
@@ -94,8 +96,7 @@ alias psearch='ps aux | grep'
 
 # search installed package
 #
-if [[ -x $(which dpkg 2> /dev/null) ]]
-then
+if [[ -x $(which dpkg 2> /dev/null) ]]; then
 	alias pkglist='dpkg -l | more'
 	alias pkgsearch='dpkg -l | grep'
 fi
@@ -112,8 +113,7 @@ alias tarext='tar --verbose --extract -f'
 
 # apt aliases
 #
-if [[ -x $(which apt 2> /dev/null) ]]
-then
+if [[ -x $(which apt 2> /dev/null) ]]; then
 	alias apt-search='sudo apt search'
 	alias apt-install='sudo apt install'
 	alias apt-remove='sudo apt purge'

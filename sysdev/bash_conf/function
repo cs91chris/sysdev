@@ -1,3 +1,18 @@
+function geturls {
+#
+# get urls from html page
+#
+	local URL=$1
+
+	if [[ -x $(lynx git 2> /dev/null) ]]; then
+		lynx -nonumbers -dump -listonly "${URL}"
+	else
+		echo -e "\n${txtred}lynx${txtrst} required\n"
+		return 1
+	fi
+}
+
+
 function lll {
 #
 # paging a long ls output
@@ -47,7 +62,7 @@ function dateseq() {
     local end=$(date -d ${dend} +%s)
     local cur=${start}
 
-    while [ $cur -le $end ]
+    while [ ${cur} -le ${end} ]
     do
         echo $(date -d@${cur} +${fmt})
         let cur+=24*60*60
@@ -87,7 +102,8 @@ function gmvtag() {
 		git tag -f ${tag_name}
 		git push ${remote} ${branch} --tags
 	else
-		echo -e "\n'git' is not installed!"
+		echo -e "\n${txtred}git${txtrst} required\n"
+		return 1
 	fi
 }
 
@@ -117,7 +133,7 @@ function countfile() {
     if [[ ! -z "$1" ]]; then
         local SRC_DIR=$(readlink -f $1)
     else
-        local SRC_DIR=$HOME
+        local SRC_DIR=${HOME}
     fi
 
     if [[ ! -z "$2" ]]; then
@@ -129,7 +145,7 @@ function countfile() {
     local NUM_FILES=$(echo "${FILES}" | wc -l)
     local TOT_SIZE=$(echo "${FILES}" | xargs du -ch | tail -n1 | cut -f1)
 
-    echo "file: ${NUM_FILES} size: ${TOT_SIZE}"
+    echo "${txtgrn}file${txtrst}: ${NUM_FILES} ${txtylw}size${txtrst}: ${TOT_SIZE}"
 }
 
 
@@ -142,12 +158,15 @@ function xzencrypt() {
 	local XZ_OPT="-6e --compress --threads=0"
 
 	if [[ ! -f ${IN} ]]; then
-		echo "${IN} is not a regular file"
-		exit 1
+		echo -e "${IN} is not a regular file"
+		return 1
 	fi
 
-	if [[ -x $(which xz) && -x $(which gpg) ]]; then
+	if [[ -x $(which xz 2> /dev/null) && -x $(which gpg 2> /dev/null) ]]; then
 		tar -c ${IN} | xz ${XZ_OPT} | gpg -c > ${IN}.crypt
+	else
+		echo -e "\n${txtred}xz${txtrst} and ${txtred}gpg${txtrst} required\n"
+		return 1
 	fi
 }
 
@@ -159,13 +178,16 @@ function xzdecrypt() {
 #
 	local IN=$1
 
-	if [[ ! -f $IN ]]; then
-		echo "$IN is not a regular file"
-		exit 1
+	if [[ ! -f ${IN} ]]; then
+		echo "'${IN}' is not a regular file"
+		return 1
 	fi
 
-	if [[ -x $(which xz) && -x $(which gpg) ]]; then
-		gpg -d $IN | xz --decompress
+	if [[ -x $(which xz 2> /dev/null) && -x $(which gpg 2> /dev/null) ]]; then
+		gpg -d ${IN} | xz --decompress
+	else
+		echo -e "\n${txtred}xz${txtrst} and ${txtred}gpg${txtrst} required\n"
+		return 1
 	fi
 }
 
@@ -186,12 +208,12 @@ function say() {
 #
 # festival speaks input strings
 #
-	if [[] -x $(which festival 2>/dev/null) ]]
+	if [[ -x $(which festival 2>/dev/null) ]]
 	then
 		echo -e "$@" | festival --tts
 	else
-		echo -e "festival is not installed"
-		exit 0
+		echo -e "\n${txtred}festival${txtrst} required\n"
+		return 1
 	fi
 }
 
@@ -201,13 +223,13 @@ function typing() {
 # write file on fly
 # $1 filename
 #
-	if [ -n "$1" ]
+	if [[ -n "$1" ]]
 	then
 		echo -e "write on $1 (Ctrl-D for EOF)"
 		tee >> $1
 	else
-		echo -e "enter a file name"
-		exit 1
+		echo -e "\nenter a valid file name\n"
+		return 1
 	fi
 }
 
@@ -216,15 +238,15 @@ function vim() {
 #
 # start vim with nerdtree
 #
-	if [ -x $(which vim 2>/dev/null) ]
+	if [[ -x $(which vim 2>/dev/null) ]]
 	then
 		local STTYOPTS="$(stty --save)"
 		stty stop '' -ixoff
 		command vim +NERDTreeToggle "$@"
-		stty "$STTYOPTS"
+		stty "${STTYOPTS}"
 	else
-		echo -e "vim is not installed"
-		exit 0
+		echo -e "\n${txtred}vim${txtrst} required\n"
+		return 1
 	fi
 }
 
@@ -233,7 +255,12 @@ function calc() {
 #
 # $1 expression to calculate
 #
-	echo -e "$1" | bc --mathlib --warn --standard
+	if [[ -x $(which vim 2>/dev/null) ]]; then
+		echo -e "$1" | bc --mathlib --warn --standard
+	else
+		echo -e "\n${txtred}bc${txtrst} required\n"
+		return 1
+	fi
 }
 
 
@@ -241,6 +268,7 @@ function encode64() {
 #
 # $@ variable string
 #
+	echo
 	echo -e "$@" | base64
     echo
 }
@@ -250,6 +278,7 @@ function decode64() {
 #
 # $@ variable string
 #
+	echo
 	echo -e "$@" | base64 -d
     echo
 }
@@ -260,12 +289,12 @@ function secrm() {
 # secure remove (shred)
 # $@ list of file name
 #
-	if [ -x $(which shred 2>/dev/null) ]
+	if [[ -x $(which shred 2>/dev/null) ]]
 	then
 		shred -xn7 --zero --remove $@ &
 	else
-		echo -e "shred is not installed"
-		exit 0
+		echo -e "\n${txtred}shred{txtrst} required\n"
+		return 1
 	fi
 }
 
@@ -277,8 +306,5 @@ function swapfilename() {
 # $1 second file name
 #
 	local TMP=.tmp.$$
-	mv $1 ${TMP}
-	mv $2 $1
-	mv ${TMP} $2
+	mv $1 ${TMP} && mv $2 $1 && mv ${TMP} $2
 }
-
