@@ -71,9 +71,9 @@ py3 << EOF
 import os
 import sys
 if 'VIRTUAL_ENV' in os.environ:
-  base_dir = os.environ['VIRTUAL_ENV']
-  activate = os.path.join(base_dir, 'bin', 'activate')
-  execfile(activate, dict(__file__=activate))
+    base_dir = os.environ['VIRTUAL_ENV']
+    activate = os.path.join(base_dir, 'bin', 'activate')
+    exec(open(activate).read())
 EOF
 
 function Py2Check()
@@ -92,6 +92,7 @@ set autoread
 set clipboard=unnamed
 set encoding=utf-8
 set expandtab
+set ffs=unix
 set fileformats=unix,dos,mac
 set foldcolumn=2
 set foldlevel=99
@@ -113,6 +114,7 @@ set novisualbell
 set nowb
 set number
 set ruler
+set selection=exclusive
 set shiftwidth=4
 set showcmd
 set showmatch
@@ -212,6 +214,17 @@ noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 " plugin NERDtree (Ctrl-n)
 nnoremap <C-n> :NERDTreeToggle <CR> 
 let NERDTreeIgnore = ['\.pyc$']
+
+" Focus main window, not NERDTree
+augroup NERD
+    autocmd!
+    autocmd VimEnter * NERDTree
+    autocmd VimEnter * wincmd p
+augroup END
+
+
+" Exit Vim when the only window left is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " space for search
 nmap <space> /

@@ -142,13 +142,35 @@ bind -m vi-insert \C-l:clear-screen
 set -o noclobber	   # do not overwrite file on redirection
 shopt -s checkwinsize  # check the window size after each command
 shopt -s cdspell	   # ignore simple spelling mistakes in the cd command
-shopt -s histappend
+shopt -s dirspell	   # ignore simple spelling mistakes in the cd command
+shopt -s histappend    # history list is appended to the file named by the value of the HISTFILE
+shopt -s lithist       # multi-line commands are saved to the history with embedded newlines
+
 
 if [[ "${color_prompt}" = yes ]]; then
 	export HISTTIMEFORMAT="- $(tput setaf 1)%F %T$(tput sgr0) - "
 else
 	export HISTTIMEFORMAT="- %F %T - "
 fi
+
+if [[ -f "${HOME}/.bash-git-prompt/gitprompt.sh" ]]; then
+	GIT_PROMPT_ONLY_IN_REPO=1
+	GIT_PROMPT_THEME=Solarized
+
+	# GIT_PROMPT_FETCH_REMOTE_STATUS=0   		# uncomment to avoid fetching remote status
+	# GIT_PROMPT_IGNORE_SUBMODULES=1 			# uncomment to avoid searching for changed files in submodules
+	# GIT_PROMPT_WITH_VIRTUAL_ENV=0 			# uncomment to avoid setting virtual environment infos for node/python/conda
+	# GIT_PROMPT_SHOW_UPSTREAM=1 				# uncomment to show upstream tracking branch
+	# GIT_PROMPT_SHOW_UNTRACKED_FILES=normal 	# can be no, normal or all; determines counting of untracked files
+	# GIT_PROMPT_SHOW_CHANGED_FILES_COUNT=0 	# uncomment to avoid printing the number of changed files
+	# GIT_PROMPT_START=...    					# uncomment for custom prompt start sequence
+	# GIT_PROMPT_END=...      					# uncomment for custom prompt end sequence
+	# GIT_PROMPT_THEME_FILE=...					# default ~/.git-prompt-colors.sh
+	# GIT_PROMPT_THEME=Custom 					# use custom theme specified in file GIT_PROMPT_THEME_FILE
+
+	source ${HOME}/.bash-git-prompt/gitprompt.sh
+fi
+
 
 # welcome message
 #
