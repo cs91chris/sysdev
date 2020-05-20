@@ -1,10 +1,21 @@
+function gitignore {
+#
+# save default gitignore for a specific language
+# $1 language name
+#
+	local language=$1
+	curl -L -s "https://www.gitignore.io/api/${language}" > .gitignore
+}
+
+
 function geturls {
 #
 # get urls from html page
+# $1 web page
 #
 	local URL=$1
 
-	if [[ -x $(lynx git 2> /dev/null) ]]; then
+	if [[ -x $(which lynx 2> /dev/null) ]]; then
 		lynx -nonumbers -dump -listonly "${URL}"
 	else
 		echo -e "\n${txtred}lynx${txtrst} required\n"
