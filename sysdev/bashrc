@@ -30,7 +30,7 @@ else
 	export PAGER=less
 fi
 if [[ -f ${HOME}/.conf/python/pyrc ]]; then
-	export PYTHONSTARTUP=${HOME}/.conf/python/pyrc
+	export PYTHONSTARTUP=${HOME}/.conf/python/pyrc.py
 fi
 if [[ -x $(which colorgcc 2> /dev/null) ]]; then
 	export CC="colorgcc"
@@ -119,7 +119,7 @@ _hostname_="\[${txtblu}\]\h\[${txtwht}\]"
 _workdir_="\[${txtylw}\]\W\[${txtwht}\]"
 
 PS1="\[${txtwht}\]\w\n${debian_chroot:+(${debian_chroot})}\\
-┌────[${_username_}@${_hostname_}${_ip_}]──[${_workdir_}] \n\[${bakwht}\] \\
+┌────[${_username_}@${_hostname_}${_ip_}]─[${_workdir_}]-[\j] \n\[${bakwht}\] \\
 \[${txtwht}\]\$([ \$? == 0 ] && echo ' \[${bakgrn}\] ' || echo ' \[${bakred}\] ') \\
 \[${txtwht}\]\n\\
 └─────>>> "
@@ -155,12 +155,12 @@ fi
 
 if [[ -f "${HOME}/.bash-git-prompt/gitprompt.sh" ]]; then
 	GIT_PROMPT_ONLY_IN_REPO=1
+	GIT_PROMPT_SHOW_UPSTREAM=1
 	GIT_PROMPT_THEME=Solarized
 
 	# GIT_PROMPT_FETCH_REMOTE_STATUS=0   		# uncomment to avoid fetching remote status
 	# GIT_PROMPT_IGNORE_SUBMODULES=1 			# uncomment to avoid searching for changed files in submodules
 	# GIT_PROMPT_WITH_VIRTUAL_ENV=0 			# uncomment to avoid setting virtual environment infos for node/python/conda
-	# GIT_PROMPT_SHOW_UPSTREAM=1 				# uncomment to show upstream tracking branch
 	# GIT_PROMPT_SHOW_UNTRACKED_FILES=normal 	# can be no, normal or all; determines counting of untracked files
 	# GIT_PROMPT_SHOW_CHANGED_FILES_COUNT=0 	# uncomment to avoid printing the number of changed files
 	# GIT_PROMPT_START=...    					# uncomment for custom prompt start sequence
