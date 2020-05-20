@@ -8,13 +8,18 @@ source ${SYSDEV_DIR}/sysdev/develop/bash/color.conf
 ERR_EXIT=0
 FILE_LOG=${HOME}/.log/sysdev.log
 VIM_BUNDLE=${HOME}/.vim/bundle
-REPO_VUNDLE="https://github.com/VundleVim/Vundle.vim.git"
-REPO_TMUX_CONF="https://github.com/gpakosz/.tmux.git"
-REPO_GIT_PROMPT="https://github.com/magicmonty/bash-git-prompt.git"
 
 VER_GIT_PROMPT="2.7.1"
 VER_VUNDLE="v0.10.2"
 VER_TMUX_CONF="d6f0f647dd68561ed010f83d8d226383aebfb805"
+VER_LAZY_GIT="0.20.4"
+
+REPO_VUNDLE="https://github.com/VundleVim/Vundle.vim.git"
+REPO_TMUX_CONF="https://github.com/gpakosz/.tmux.git"
+REPO_GIT_PROMPT="https://github.com/magicmonty/bash-git-prompt.git"
+REPO_LAZY_GIT="https://github.com/jesseduffield/lazygit/releases/download"
+REPO_LAZY_GIT_NIX="${REPO_LAZY_GIT}/v${VER_LAZY_GIT}/lazygit_${VER_LAZY_GIT}_Linux_x86_64.tar.gz"
+REPO_LAZY_GIT_WIN="${REPO_LAZY_GIT}/v${VER_LAZY_GIT}/lazygit_${VER_LAZY_GIT}_Windows_x86_64.zip"
 
 
 if [[ $1 == "--help" ]]; then
@@ -65,8 +70,35 @@ if [[ -x $(which tmux 2> /dev/null ) ]]; then
     } || ERR_EXIT=1
 fi
 
-rm -vrf ${HOME}/.bash-git-prompt &>> ${FILE_LOG} || ERR_EXIT=1
+rm -vrf ${HOME}/.bash-git-prompt &>> ${FILE_LOG}
 git clone ${REPO_GIT_PROMPT} --branch ${VER_GIT_PROMPT} ${HOME}/.bash-git-prompt --depth 1 &>> ${FILE_LOG}
+
+case "$(cat /proc/version)" in
+	MINGW*)
+		REPO_LAZY_GIT=${REPO_LAZY_GIT_WIN}
+		DECOMPRESSOR="unzip -o"
+		EXT="zip"
+	;;
+	Linux*)
+		REPO_LAZY_GIT=${REPO_LAZY_GIT_NIX}
+		DECOMPRESSOR="tar -xzf"
+		EXT="tar.gz"
+	;;
+	*)
+		REPO_LAZY_GIT=""
+		echo -e "not supported OS: $(cat /proc/version)"
+	;;
+esac
+
+if [[ ! -z "${REPO_LAZY_GIT}" ]]; then
+	rm -vrf ${HOME}/.bin/lazygit* &>> ${FILE_LOG}
+	wget -O ${HOME}/.bin/lazygit.${EXT} "${REPO_LAZY_GIT}" 2>> ${FILE_LOG} > /dev/null && {
+		cd ${HOME}/.bin > /dev/null
+		${DECOMPRESSOR} lazygit.${EXT} &>> ${FILE_LOG}
+		rm -vrf LICENSE README.md &>> ${FILE_LOG}
+		cd - > /dev/null
+	} || ERR_EXIT=1
+fi
 
 if [[ -x $(which vim 2> /dev/null) ]]; then
     echo -e "${orange}Setting vim${reset} configurations..."

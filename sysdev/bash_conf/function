@@ -1,3 +1,24 @@
+function lgit {
+#
+# If you change repos in lazygit your shell change directory into that repo on exiting
+# $@ passed to lazygit
+#
+    export LAZYGIT_NEW_DIR_FILE=${HOME}/.lazygit/newdir
+
+	case "$(cat /proc/version)" in
+		MINGW*) CMD="winpty lazygit" ;;
+		*) CMD="lazygit" ;;
+	esac
+		
+	${CMD} "$@"
+
+    if [[ -f ${LAZYGIT_NEW_DIR_FILE} ]]; then
+		cd "$(cat ${LAZYGIT_NEW_DIR_FILE})"
+		rm -f ${LAZYGIT_NEW_DIR_FILE} > /dev/null
+    fi
+}
+
+
 function gitignore {
 #
 # save default gitignore for a specific language
