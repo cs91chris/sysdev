@@ -4,7 +4,6 @@ autossh
 bash-completion
 build-essential
 cmake
-colorgcc
 curl
 elinks
 ethtool

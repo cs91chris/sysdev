@@ -2,6 +2,16 @@
 
 set +o noclobber
 
+BAT_VER=0.18.1
+LSD_VER=0.20.1
+DELTA_VER=0.8.0
+MCFLY_VER=0.5.7
+BAT_DEB=bat_${BAT_VER}_amd64.deb
+LSD_DEB=lsd_${LSD_VER}_amd64.deb
+DELTA_DEB=git-delta-musl_${DELTA_VER}_amd64.deb
+MCFLY_EP=https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh
+
+
 SYSDEV_DIR=$(dirname "$0")
 source ${SYSDEV_DIR}/sysdev/develop/bash/color.conf
 
@@ -31,6 +41,20 @@ apt update 2>> ${FILE_LOG} && {
 	done
 } || ERR_EXIT=1
 
+
+wget https://github.com/sharkdp/bat/releases/download/v${BAT_VER}/${BAT_DEB}
+sudo dpkg -i ${BAT_DEB}
+rm ${BAT_DEB}
+
+wget https://github.com/Peltoche/lsd/releases/download/${LSD_VER}/${LSD_DEB}
+sudo dpkg -i ${LSD_DEB}
+rm ${LSD_DEB}
+
+wget https://github.com/dandavison/delta/releases/download/${DELTA_VER}/${DELTA_DEB}
+sudo dpkg -i ${DELTA_DEB}
+rm ${DELTA_DEB}
+
+curl ${MCFLY_EP} | sh -s -- --git cantino/mcfly --force --tag v${MCFLY_VER}
 
 if [[ ${ERR_EXIT} -ne 0 ]]; then
 	echo -e "${red}An error occurred! See ${FILE_LOG}${reset}"

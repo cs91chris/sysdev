@@ -171,6 +171,13 @@ if [[ -f "${HOME}/.bash-git-prompt/gitprompt.sh" ]]; then
 	source ${HOME}/.bash-git-prompt/gitprompt.sh
 fi
 
+if [[ -x $(which mcfly 2> /dev/null) ]]; then
+    export MCFLY_KEY_SCHEME=vim
+    export MCFLY_FUZZY=true
+    export MCFLY_RESULTS=25
+    eval "$(mcfly init bash)"
+fi
+
 
 # welcome message
 #
