@@ -28,10 +28,12 @@ make
 mediainfo
 members
 most
+mycli
 netcat
 net-tools
 nmap
 p7zip
+pgcli
 pydf
 python
 python3
@@ -51,5 +53,4 @@ udisks2
 uuid
 valgrind
 vim-nox
-virtualenv
 wget
