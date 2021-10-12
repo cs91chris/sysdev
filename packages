@@ -2,6 +2,7 @@ acpitool
 atool
 autossh
 bash-completion
+btrfs-progs
 build-essential
 cmake
 curl
