@@ -2,6 +2,9 @@
     name = cs91chris
     email = cs91chris@voidbrain.me
 
+[init]
+    templateDir = ~/.config/git/template
+
 [color]
     branch = auto
     diff = auto
