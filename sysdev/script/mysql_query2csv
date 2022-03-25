@@ -1,0 +1,10 @@
+#!/bin/bash
+
+HOST=${HOST:-127.0.0.1}
+USERNAME=${USERNAME:-user}
+PASSWORD=${PASSWORD:-password}
+
+
+mysql -u "${USERNAME}" -p"${PASSWORD}" --host "${HOST}" -B \
+    -e "${1};" | sed "s/\t/;/g" | sed "s/NULL//g"
+
