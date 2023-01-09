@@ -26,6 +26,15 @@
     changed = green
     untracked = cyan
 
+[core]
+    pager = delta
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+
 [pager]
     diff = delta
     log = delta
@@ -36,6 +45,7 @@
     diffFilter = delta --color-only
 
 [delta]
+    navigate = true
     features = side-by-side line-numbers decorations
     whitespace-error-style = 22 reverse
 

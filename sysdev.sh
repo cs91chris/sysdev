@@ -11,8 +11,8 @@ VIM_BUNDLE=${HOME}/.vim/bundle
 
 VER_GIT_PROMPT="2.7.1"
 VER_VUNDLE="v0.10.2"
-VER_LAZY_GIT="0.20.4"
-VER_TMUX_CONF="d6f0f647dd68561ed010f83d8d226383aebfb805"  # commit
+VER_LAZY_GIT="0.36.0"
+VER_TMUX_CONF="5641d3b3f5f9c353c58dfcba4c265df055a05b6b"  # commit
 
 REPO_VUNDLE="https://github.com/VundleVim/Vundle.vim.git"
 REPO_TMUX_CONF="https://github.com/gpakosz/.tmux.git"
@@ -101,12 +101,6 @@ function install_vim_plugins {
 		rm -vrf ${VIM_BUNDLE}/Vundle.vim &>> ${FILE_LOG} || ERR_EXIT=1
 		git clone ${REPO_VUNDLE} ${VIM_BUNDLE}/Vundle.vim --branch ${VER_VUNDLE} --depth 1 &>> ${FILE_LOG} && {
 			vim +PluginInstall +qall
-
-			echo -e "${orange}compiling${reset} youCompleteMe..."
-
-			cd ${VIM_BUNDLE}/YouCompleteMe > /dev/null
-			[[ -x $(which python3 2> /dev/null) ]] && PYTHON_CMD=python3 || PYTHON_CMD=python
-			${PYTHON_CMD} install.py --clang-completer 2>> ${FILE_LOG} > /dev/null || ERR_EXIT=1
 		} || ERR_EXIT=1
 	fi
 }

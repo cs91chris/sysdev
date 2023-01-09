@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -e
+
+VERSION=${1}
+OPTS=${@:2}
+
+PREFIX=${HOME}/python/${VERSION}
+ZIP_FILE=python-${VERSION}.tar.gz
+DOWNLOAD_URL="https://codeload.github.com/python/cpython/tar.gz/refs/tags/v${VERSION}"
+
+
+if [[ -d "${PREFIX}" ]]; then
+    echo "python version already exists at ${PREFIX}! Delete it first for continue"
+    exit 1
+fi
+
+apt install -y \
+    libncurses-dev \
+    libgdbm-dev \
+    libz-dev \
+    tk-dev \
+    libsqlite3-dev \
+    libreadline-dev \
+    liblzma-dev \
+    libffi-dev \
+    libssl-dev
+
+
+curl --location --output ${ZIP_FILE} ${DOWNLOAD_URL}
+tar -xzf ${ZIP_FILE}
+
+cd cpython-${VERSION}
+./configure --prefix=${PREFIX} --enable-optimizations ${OPTS}
+make && make install
+

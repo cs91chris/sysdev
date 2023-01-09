@@ -20,14 +20,10 @@ export HISTSIZE=10000
 export IP_HOST=$(curl -m 1 ifconfig.me 2> /dev/null)
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
+export PAGER="less -FXRn"
 
 if [[ -x $(which vim 2> /dev/null) ]]; then
 	export EDITOR=vim
-fi
-if [[ -x $(which most 2> /dev/null) ]]; then
-	export PAGER=most
-else
-	export PAGER=less
 fi
 if [[ -f ${HOME}/.conf/python/pyrc ]]; then
 	export PYTHONSTARTUP=${HOME}/.conf/python/pyrc.py

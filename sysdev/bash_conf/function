@@ -24,8 +24,12 @@ function gitignore {
 # save default gitignore for a specific language
 # $1 language name
 #
-	local language=$1
-	curl -L -s "https://www.gitignore.io/api/${language}" > .gitignore
+	if [[ $1 == 'list' ]]; then
+		curl -sL "https://www.gitignore.io/api/list" | sed 's/,/\n/g' | sort
+	else
+		local language=$1
+		curl -sL "https://www.gitignore.io/api/${language}" > .gitignore
+	fi
 }
 
 
@@ -51,8 +55,8 @@ function lll {
 #
 	local pager=${PAGER}
 
-	[ -z "${pager}" ] && pager=less
-	ls -lrtA --color "$@" | ${pager} -FXRn ;
+	[ -z "${pager}" ] && pager="less -FXRn"
+	ls -lrtA --color "$@" | ${pager} ;
 }
 
 
@@ -126,7 +130,7 @@ function gmvtag() {
 	local branch=$3
 
     [ -z ${remote} ] && remote=origin
-	[ -z ${branch} ] && branch=master
+	[ -z ${branch} ] && branch=main
 
 	if [[ -x $(which git 2> /dev/null) ]]
 	then

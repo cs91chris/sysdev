@@ -4,4 +4,3 @@ VER=${1:-3.8}
 PKG_DIR=/usr/local/lib/python${VER}/site-packages
 find ${PKG_DIR} -type f -exec chmod go+r {} \;
 find ${PKG_DIR} -type d -exec chmod go+xr {} \;
-
