@@ -46,7 +46,7 @@ source "${SYSDEV_DIR}/sysdev/develop/bash/color.conf"
 TOOLS="$(cat "${SYSDEV_DIR}/packages")"
 
 
-function install_dist_packages() {    
+function install_dist_packages {    
     sudo apt update 2>> "${FILE_LOG}" && {
         # shellcheck disable=SC2086
         sudo apt install -y ${TOOLS} 2>> "${FILE_LOG}" || ERR_EXIT=1
@@ -54,7 +54,7 @@ function install_dist_packages() {
 }
 
 
-function install_nerd_fonts() {
+function install_nerd_fonts {
     echo "Downloading NerdFonts..."
     for font in "${FONTS[@]}"; do
         archive=${font}.zip
@@ -67,7 +67,7 @@ function install_nerd_fonts() {
 }
 
 
-function install_tmux() {
+function install_tmux {
     curl -Lso tmux-${TMUX_VER}.tar.gz ${TMUX_URL} && {
         sudo apt install libevent-dev libncurses-dev
         tar -xzf tmux-${TMUX_VER}.tar.gz
@@ -81,7 +81,7 @@ function install_tmux() {
 }
 
 
-function download_install_deb() {
+function download_install_deb {
     local URL=${1}
     local DEB=${2}
 
@@ -91,7 +91,7 @@ function download_install_deb() {
 }
 
 
-function install_iredis() {
+function install_iredis {
     wget ${REPO_IREDIS} && {
         tar -xzf iredis.tar.gz
         IREDIS_DEST=${HOME}/.bin/iredis-cli
@@ -103,7 +103,7 @@ function install_iredis() {
 }
 
 
-function install_mcfly() {
+function install_mcfly {
     curl -Ls ${MCFLY_EP} | \
         sudo sh -s -- --git cantino/mcfly --force --tag v${MCFLY_VER} \
         2>> "${FILE_LOG}" || ERR_EXIT=1

@@ -60,16 +60,20 @@ alias group-list='cut -d: -f1 /etc/group | sort'
 alias user-list='cut -d: -f1 /etc/shadow | sort'
 
 
-# more ls aliases
-#
 [ -x "$(which tree 2> /dev/null)" ] && alias tree='tree -Csh'
 
+# more ls aliases
+#
 alias l='lsd'
 alias la='lsd -A'
-alias ll='lsd -Alh'
+alias ll='lsd lh'
+alias lla='lsd -Alh'
 alias lrt='lsd -lhrt'
+alias lrta='lsd -Alhrt'
 alias lrs='lsd -lhrsS'
-alias lld='lsd -Alh --group-directories-first'
+alias lrsa='lsd -AlhrsS'
+alias lld='lsd -lh --group-directories-first'
+alias llda='lsd -Alh --group-directories-first'
 
 
 # more cd aliases
@@ -135,4 +139,3 @@ fi
 if [[ -x $(which cupsd 2> /dev/null) && -x $(which elinks 2> /dev/null) ]] ; then
 	alias cups-config='elinks http://localhost:631'
 fi
-

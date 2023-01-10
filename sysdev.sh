@@ -9,6 +9,7 @@ source "${SYSDEV_DIR}/sysdev/develop/bash/color.conf"
 ERR_EXIT=0
 FILE_LOG=${HOME}/.log/sysdev.log
 VIM_BUNDLE=${HOME}/.vim/bundle
+RANGER_CONF_DIR=${HOME}/.config/ranger
 
 VER_GIT_PROMPT="2.7.1"
 VER_VUNDLE="v0.10.2"
@@ -19,6 +20,7 @@ REPO_VUNDLE="https://github.com/VundleVim/Vundle.vim.git"
 REPO_TMUX_CONF="https://github.com/gpakosz/.tmux.git"
 REPO_GIT_PROMPT="https://github.com/magicmonty/bash-git-prompt.git"
 REPO_LAZY_GIT="https://github.com/jesseduffield/lazygit/releases/download"
+REPO_RANGER_DEVICON="https://github.com/alexanderjeurissen/ranger_devicons"
 
 
 function install_base {
@@ -110,6 +112,13 @@ function install_vim_plugins {
 }
 
 
+function install_ranger_devicon {
+	git clone --depth 1 "${REPO_RANGER_DEVICON}" "${RANGER_CONF_DIR}/plugins/ranger_devicons"
+	echo -e "\n# DevIcons Config" >> "${RANGER_CONF_DIR}/rc.conf"
+	echo "default_linemode devicons" >> "${RANGER_CONF_DIR}/rc.conf"
+}
+
+
 if [[ $1 == "--help" ]]; then
 	cat "${SYSDEV_DIR}/README.md"
 	echo -e "In case of error see ${orange}${FILE_LOG}${reset}\n"
@@ -131,6 +140,7 @@ install_tmux_conf
 install_git_prompt
 install_lazy_git
 install_vim_plugins
+install_ranger_devicon
 
 chmod +x "${HOME}"/{.script,.bin}/* >> "${FILE_LOG}" 2>&1
 
