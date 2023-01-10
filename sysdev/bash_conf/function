@@ -1,3 +1,6 @@
+#!/bin/bash
+
+
 function lgit {
 #
 # If you change repos in lazygit your shell change directory into that repo on exiting
@@ -12,9 +15,9 @@ function lgit {
 		
 	${CMD} "$@"
 
-    if [[ -f ${LAZYGIT_NEW_DIR_FILE} ]]; then
-		cd "$(cat ${LAZYGIT_NEW_DIR_FILE})"
-		rm -f ${LAZYGIT_NEW_DIR_FILE} > /dev/null
+    if [[ -f "${LAZYGIT_NEW_DIR_FILE}" ]]; then
+		cd "$(cat "${LAZYGIT_NEW_DIR_FILE}")" || return
+		rm -f "${LAZYGIT_NEW_DIR_FILE}" > /dev/null
     fi
 }
 
@@ -53,10 +56,11 @@ function lll {
 #
 # paging a long ls output
 #
-	local pager=${PAGER}
+	local _pager="${PAGER}"
 
-	[ -z "${pager}" ] && pager="less -FXRn"
-	ls -lrtA --color "$@" | ${pager} ;
+	[ -z "${_pager}" ] && _pager="less -FXRn"
+	# shellcheck disable=SC2012
+	ls -lrtA --color "$@" | ${_pager} ;
 }
 
 
@@ -67,9 +71,13 @@ function date_diff {
 # $2 second_date
 # $3 granularity -(s|m|h|d) [seconds|minutes|hours|days]
 #
-	local period=$((60*60*24))
-    local first_date=$(date -d "$1" "+%s")
-    local second_date=$(date -d "$2" "+%s")
+	local period
+	local first_date
+	local second_date
+
+	period=$((60*60*24))
+    first_date=$(date -d "$1" "+%s")
+    second_date=$(date -d "$2" "+%s")
 
     case "$3" in
         -s) period=1 ;;
@@ -77,7 +85,7 @@ function date_diff {
         -h) period=$((60*60)) ;;
     esac
 
-    echo $(( (${first_date} - ${second_date})/(${period}) ))
+    echo $(( (first_date - second_date) / (period) ))
 }
 
 
@@ -92,16 +100,19 @@ function dateseq() {
     local dend=$2
 	local fmt=$3
 
-    [ -z ${fmt} ] && fmt="%Y-%m-%d"
-    
-    local start=$(date -d ${dstart} +%s)
-    local end=$(date -d ${dend} +%s)
-    local cur=${start}
+    [ -z "${fmt}" ] && fmt="%Y-%m-%d"
 
-    while [ ${cur} -le ${end} ]
-    do
-        echo $(date -d@${cur} +${fmt})
-        let cur+=24*60*60
+	local start
+	local end
+	local cur
+
+    start=$(date -d "${dstart}" +%s)
+    end=$(date -d "${dend}" +%s)
+    cur=${start}
+
+    while [ "${cur}" -le "${end}" ]; do
+        date -d@"${cur}" +"${fmt}"
+        (( cur += 24 * 60 * 60 ))
     done
 }
 
@@ -129,14 +140,14 @@ function gmvtag() {
     local remote=$2
 	local branch=$3
 
-    [ -z ${remote} ] && remote=origin
-	[ -z ${branch} ] && branch=main
+    [ -z "${remote}" ] && remote=origin
+	[ -z "${branch}" ] && branch=main
 
 	if [[ -x $(which git 2> /dev/null) ]]
 	then
-		git push ${remote} :refs/tags/${tag_name}
-		git tag -f ${tag_name}
-		git push ${remote} ${branch} --tags
+		git push "${remote}" ":refs/tags/${tag_name}"
+		git tag -f "${tag_name}"
+		git push "${remote}" "${branch}" --tags
 	else
 		echo -e "\n${txtred}git${txtrst} required\n"
 		return 1
@@ -153,8 +164,8 @@ function getfileline() {
     local row
     local content
 
-    [ ! -z "$3" ] && row=$3 || row=$2
-    mapfile -s $(($2-1)) -n $((${row}-$2+1)) content < "$1"
+    [ -n "$3" ] && row=$3 || row=$2
+    mapfile -s $(($2-1)) -n $(("${row}"-$2+1)) content < "$1"
     printf '%s' "${content[@]}"
 }
 
@@ -164,22 +175,26 @@ function countfile() {
 # $1 source directory (default $HOME)
 # $2 file type (extension) (default all)
 #
+	local FILES
+	local SRC_DIR
+	local TOT_SIZE
+	local NUM_FILES
     local BLANK_ESCAPE="s/\ /\\\ /g"
 
-    if [[ ! -z "$1" ]]; then
-        local SRC_DIR=$(readlink -f $1)
+    if [[ -n "${1}" ]]; then
+        SRC_DIR=$(readlink -f "${1}")
     else
-        local SRC_DIR=${HOME}
+        SRC_DIR=${HOME}
     fi
 
-    if [[ ! -z "$2" ]]; then
-        local FILES=$(find ${SRC_DIR} -type f | grep "\.$2" | sed "${BLANK_ESCAPE}")
+    if [[ -n "${2}" ]]; then
+        FILES=$(find "${SRC_DIR}" -type f | grep "\.${2}" | sed "${BLANK_ESCAPE}")
     else
-        local FILES=$(find ${SRC_DIR} -type f | sed "${BLANK_ESCAPE}")
+        FILES=$(find "${SRC_DIR}" -type f | sed "${BLANK_ESCAPE}")
     fi
 
-    local NUM_FILES=$(echo "${FILES}" | wc -l)
-    local TOT_SIZE=$(echo "${FILES}" | xargs du -ch | tail -n1 | cut -f1)
+    NUM_FILES=$(echo "${FILES}" | wc -l)
+    TOT_SIZE=$(echo "${FILES}" | xargs du -ch | tail -n1 | cut -f1)
 
     echo "${txtgrn}file${txtrst}: ${NUM_FILES} ${txtylw}size${txtrst}: ${TOT_SIZE}"
 }
@@ -199,7 +214,7 @@ function xzencrypt() {
 	fi
 
 	if [[ -x $(which xz 2> /dev/null) && -x $(which gpg 2> /dev/null) ]]; then
-		tar -c ${IN} | xz ${XZ_OPT} | gpg -c > ${IN}.crypt
+		tar -c "${IN}" | xz "${XZ_OPT}" | gpg -c > "${IN}.crypt"
 	else
 		echo -e "\n${txtred}xz${txtrst} and ${txtred}gpg${txtrst} required\n"
 		return 1
@@ -212,7 +227,7 @@ function xzdecrypt() {
 # decrypt with xz
 # $1 file name
 #
-	local IN=$1
+	local IN=${1}
 
 	if [[ ! -f ${IN} ]]; then
 		echo "'${IN}' is not a regular file"
@@ -220,7 +235,7 @@ function xzdecrypt() {
 	fi
 
 	if [[ -x $(which xz 2> /dev/null) && -x $(which gpg 2> /dev/null) ]]; then
-		gpg -d ${IN} | xz --decompress
+		gpg -d "${IN}" | xz --decompress
 	else
 		echo -e "\n${txtred}xz${txtrst} and ${txtred}gpg${txtrst} required\n"
 		return 1
@@ -233,9 +248,12 @@ function randpasswd() {
 # generate random password
 # $1 numbero of char (default 8)
 #
-	[ -z "$1" ] && local digits=8 || local digits=$1
+	local passwd
+	local digits
 
-	local passwd=$(< /dev/urandom tr -dc [:alnum:] | head -c $digits)
+	[ -z "${1}" ] && digits=8 || digits=${1}
+
+	passwd=$(< /dev/urandom tr -dc '[:alnum:]' | head -c "${digits}")
 	echo -e "\n\t${passwd}\n" 
 }
 
@@ -259,10 +277,10 @@ function typing() {
 # write file on fly
 # $1 filename
 #
-	if [[ -n "$1" ]]
+	if [[ -n "${1}" ]]
 	then
-		echo -e "write on $1 (Ctrl-D for EOF)"
-		tee >> $1
+		echo -e "write on ${1} (Ctrl-D for EOF)"
+		tee >> "${1}"
 	else
 		echo -e "\nenter a valid file name\n"
 		return 1
@@ -274,9 +292,11 @@ function vim() {
 #
 # start vim with nerdtree
 #
+	local STTYOPTS
+
 	if [[ -x $(which vim 2>/dev/null) ]]
 	then
-		local STTYOPTS="$(stty --save)"
+		STTYOPTS="$(stty --save)"
 		stty stop '' -ixoff
 		command vim +NERDTreeToggle "$@"
 		stty "${STTYOPTS}"
@@ -327,7 +347,7 @@ function secrm() {
 #
 	if [[ -x $(which shred 2>/dev/null) ]]
 	then
-		shred -xn7 --zero --remove $@ &
+		shred -xn7 --zero --remove "$@" &
 	else
 		echo -e "\n${txtred}shred{txtrst} required\n"
 		return 1
@@ -341,6 +361,9 @@ function swapfilename() {
 # $1 first file name
 # $1 second file name
 #
+	local SRC="${1}"
+	local DST="${2}"
 	local TMP=.tmp.$$
-	mv $1 ${TMP} && mv $2 $1 && mv ${TMP} $2
+
+	mv "${SRC}" ${TMP} && mv "${DST}" "${SRC}" && mv ${TMP} "${DST}"
 }

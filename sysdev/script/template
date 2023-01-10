@@ -4,10 +4,11 @@
 # $2 file name (optionale)
 # create $2 file from $1 template
 #
-source ${BASH_LIB}/color.conf
+# shellcheck source=/dev/null
+source "${BASH_LIB}/color.conf"
 
 
-if [[ $1 == "--help" ]]; then
+if [[ "${1}" == "--help" ]]; then
 	echo -e "this script required 2 argument:"
 	echo -e "\t1 file ${orange}model${reset}"
 	echo -e "\t2 file ${orange}name${reset} (optional)"
@@ -16,25 +17,25 @@ fi
 
 
 FILE=""
-MODEL=$1
-NAME=$2
+MODEL=${1}
+NAME=${2}
 PATH_MODEL=${HOME}/.models
 
-[ -z $2 ] && NAME=$1
+[ -z "${2}" ] && NAME=$1
 
 
 echo -e "${green}"
 
-for d in $(ls ${PATH_MODEL}); do
+for d in $(ls "${PATH_MODEL}"); do
 	if [[ -f ${PATH_MODEL}/${d}/${MODEL}.* ]]
 	then
 		FILE=${NAME}.${MODEL}
-		cp -v ${PATH_MODEL}/${d}/${MODEL}.* ${FILE}
+		cp -v "${PATH_MODEL}/${d}/${MODEL}".* "${FILE}"
 		break
 	elif [[ -f ${PATH_MODEL}/${d}/${MODEL} ]]
 	then
 		FILE=${NAME}
-		cp -v ${PATH_MODEL}/${d}/${MODEL} ${FILE}
+		cp -v "${PATH_MODEL}/${d}/${MODEL}" "${FILE}"
 		break
 	fi
 done
@@ -42,8 +43,9 @@ done
 sleep 0.5
 echo -e "${reset}"
 
-[ ! -z ${FILE} ] && ${EDITOR} ${FILE} || {
+if [[ -n "${FILE}" ]]; then
+	${EDITOR} "${FILE}"
+else
 	echo -e "template $MODEL does ${red}not exist${reset}!"
 	exit 1
-}
-
+fi

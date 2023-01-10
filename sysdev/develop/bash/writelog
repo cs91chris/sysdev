@@ -11,7 +11,7 @@
 #	type: INFO, WARN, ERROR, DEBUG
 #
 
-FILE_NAME=$1
+FILE_NAME="${1}"
 DAY=$(date +"%Y%m%d")
 
 export INFO="INFO"
@@ -19,17 +19,16 @@ export WARN="WARN"
 export ERROR="ERROR"
 export DEBUG="DEBUG"
 
-export FILE_LOG=$HOME/.log/${FILE_NAME}_$DAY.log
+export FILE_LOG=${HOME}/.log/${FILE_NAME}_$DAY.log
 
 
-LOG()
-{
-	local type=$1
-	local message=$2
-	local curr_date=$(date "+%T %F")
+function LOG() {
+	local curr_date
+	local type=${1}
+	local message=${2}
+	curr_date=$(date "+%T %F")
 
-	[[ ! -z $type && ! -z $message ]] && {
-		echo -e "[$curr_date][$type]: $message" >> $FILE_LOG
+	[[ -n $type && -n $message ]] && {
+		echo -e "[${curr_date}][${type}]: ${message}" >> "${FILE_LOG}"
 	}
 }
-

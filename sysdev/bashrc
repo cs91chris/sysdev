@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # ~/.bashrc: executed by bash for non-login shells
 
 # If not running interactively, don't do anything
@@ -17,10 +19,12 @@ export CLICOLOR=1
 export HISTCONTROL=ignoreboth
 export HISTFILESIZE=50000
 export HISTSIZE=10000
-export IP_HOST=$(curl -m 1 ifconfig.me 2> /dev/null)
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
 export PAGER="less -FXRn"
+
+IP_HOST=$(curl -m 1 ifconfig.me 2> /dev/null)
+export IP_HOST
 
 if [[ -x $(which vim 2> /dev/null) ]]; then
 	export EDITOR=vim
@@ -49,8 +53,8 @@ pathmunge () {
     esac
 }
 
-[ -d ${HOME}/.script ] && pathmunge PATH ${HOME}/.script
-[ -d ${HOME}/.bin ] && pathmunge PATH ${HOME}/.bin
+[ -d "${HOME}/.script" ] && pathmunge PATH "${HOME}/.script"
+[ -d "${HOME}/.bin" ] && pathmunge PATH "${HOME}/.bin"
 
 if [[ -d ${HOME}/.develop ]]; then
 	export CFLAGS="-I ${HOME}/.develop/C/include"
@@ -101,14 +105,15 @@ esac
 
 # import all custom functions, aliases, variables, etc...
 if [[ -d ${HOME}/.bash_conf ]] ; then
-	for f in $(ls ${HOME}/.bash_conf) ; do
-		[ -f ${HOME}/.bash_conf/${f} ] && source ${HOME}/.bash_conf/${f}
+	for f in $(ls "${HOME}/.bash_conf"); do
+		# shellcheck source=/dev/null
+		[ -f "${HOME}/.bash_conf/${f}" ] && source "${HOME}/.bash_conf/${f}"
 	done
 fi
 
 # set custom prompt
 #
-[ ! -z "${IP_HOST}" ] && _ip_=":\[${txtgry}\]${IP_HOST}\[${txtrst}\]"
+[ -n "${IP_HOST}" ] && _ip_=":\[${txtgry}\]${IP_HOST}\[${txtrst}\]"
 
 _username_="\[${txtgrn}\]\u\[${txtwht}\]"
 _hostname_="\[${txtblu}\]\h\[${txtwht}\]"
@@ -125,6 +130,7 @@ PS2="	 └────> "
 
 # enable programmable completion features
 if ! shopt -oq posix; then
+	# shellcheck source=/dev/null
 	if [[ -f /usr/share/bash-completion/bash_completion ]]; then
 		source /usr/share/bash-completion/bash_completion
 	elif [[ -f /etc/bash_completion ]]; then
@@ -144,27 +150,29 @@ shopt -s lithist       # multi-line commands are saved to the history with embed
 
 
 if [[ "${color_prompt}" = yes ]]; then
-	export HISTTIMEFORMAT="- $(tput setaf 1)%F %T$(tput sgr0) - "
+	HISTTIMEFORMAT="- $(tput setaf 1)%F %T$(tput sgr0) - "
 else
-	export HISTTIMEFORMAT="- %F %T - "
+	HISTTIMEFORMAT="- %F %T - "
 fi
+export HISTTIMEFORMAT
 
 if [[ -f "${HOME}/.bash-git-prompt/gitprompt.sh" ]]; then
-	GIT_PROMPT_ONLY_IN_REPO=1
-	GIT_PROMPT_SHOW_UPSTREAM=1
-	GIT_PROMPT_THEME=Solarized
+	export GIT_PROMPT_ONLY_IN_REPO=1
+	export GIT_PROMPT_SHOW_UPSTREAM=1
+	export GIT_PROMPT_THEME=Solarized
 
-	# GIT_PROMPT_FETCH_REMOTE_STATUS=0   		# uncomment to avoid fetching remote status
-	# GIT_PROMPT_IGNORE_SUBMODULES=1 			# uncomment to avoid searching for changed files in submodules
-	# GIT_PROMPT_WITH_VIRTUAL_ENV=0 			# uncomment to avoid setting virtual environment infos for node/python/conda
-	# GIT_PROMPT_SHOW_UNTRACKED_FILES=normal 	# can be no, normal or all; determines counting of untracked files
-	# GIT_PROMPT_SHOW_CHANGED_FILES_COUNT=0 	# uncomment to avoid printing the number of changed files
-	# GIT_PROMPT_START=...    					# uncomment for custom prompt start sequence
-	# GIT_PROMPT_END=...      					# uncomment for custom prompt end sequence
-	# GIT_PROMPT_THEME_FILE=...					# default ~/.git-prompt-colors.sh
-	# GIT_PROMPT_THEME=Custom 					# use custom theme specified in file GIT_PROMPT_THEME_FILE
+	# GIT_PROMPT_FETCH_REMOTE_STATUS=0        # uncomment to avoid fetching remote status
+	# GIT_PROMPT_IGNORE_SUBMODULES=1          # uncomment to avoid searching for changed files in submodules
+	# GIT_PROMPT_WITH_VIRTUAL_ENV=0           # uncomment to avoid setting virtual environment infos for node/python/conda
+	# GIT_PROMPT_SHOW_UNTRACKED_FILES=normal  # can be no, normal or all; determines counting of untracked files
+	# GIT_PROMPT_SHOW_CHANGED_FILES_COUNT=0   # uncomment to avoid printing the number of changed files
+	# GIT_PROMPT_START=...                    # uncomment for custom prompt start sequence
+	# GIT_PROMPT_END=...                      # uncomment for custom prompt end sequence
+	# GIT_PROMPT_THEME_FILE=...               # default ~/.git-prompt-colors.sh
+	# GIT_PROMPT_THEME=Custom                 # use custom theme specified in file GIT_PROMPT_THEME_FILE
 
-	source ${HOME}/.bash-git-prompt/gitprompt.sh
+	# shellcheck source=/dev/null
+	source "${HOME}/.bash-git-prompt/gitprompt.sh"
 fi
 
 if [[ -x $(which mcfly 2> /dev/null) ]]; then
@@ -193,7 +201,7 @@ if [[ -x $(which tmux 2> /dev/null) ]]; then
 		# restore tmux session or create new one
 		if tmux has-session 2>/dev/null ; then
 			echo -en "${txtred}WARN:${txtrst} Saved session of tmux found. Do you want attach to it? [Y/n]: "
-			read ANS
+			read -r ANS
 
 			case ${ANS} in
 				n|N) ;;

@@ -68,4 +68,3 @@
     pom = push origin master
     lg = log --graph --decorate --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --date=relative --abbrev-commit
 	ane = commit --amend --no-edit
-

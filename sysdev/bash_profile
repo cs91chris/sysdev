@@ -1,6 +1,7 @@
-# source bashrc
+#!/bin/bash
+
 
 if [[ -f ${HOME}/.bashrc ]]; then
-    source ${HOME}/.bashrc
+    # shellcheck source=/dev/null
+    source "${HOME}/.bashrc"
 fi
-

@@ -3,7 +3,8 @@
 set +o noclobber
 
 SYSDEV_DIR=$(dirname "$0")
-source ${SYSDEV_DIR}/sysdev/develop/bash/color.conf
+# shellcheck source=/dev/null
+source "${SYSDEV_DIR}/sysdev/develop/bash/color.conf"
 
 ERR_EXIT=0
 FILE_LOG=${HOME}/.log/sysdev.log
@@ -21,24 +22,24 @@ REPO_LAZY_GIT="https://github.com/jesseduffield/lazygit/releases/download"
 
 
 function install_base {
-	mkdir -p ${HOME}/{.log,.bin}
-	cd ${SYSDEV_DIR}/sysdev > /dev/null
+	mkdir -p "${HOME}"/{.log,.bin}
+	cd "${SYSDEV_DIR}/sysdev" || return
 
 	for x in $(ls); do
-		[ -d ${HOME}/.${x} ] && tmp="${x}/*" || tmp="${x}" 
-		cp --verbose --recursive ${tmp} ${HOME}/.${x} &>> ${FILE_LOG} || ERR_EXIT=1
+		[ -d "${HOME}/.${x}" ] && tmp="${x}/*" || tmp="${x}" 
+		cp --verbose --recursive "${tmp}" "${HOME}/.${x}" &>> "${FILE_LOG}" || ERR_EXIT=1
 	done
-	cd - > /dev/null
+	cd - || return
 
 	if [[ -x $(which ranger 2> /dev/null) ]]; then
-		ranger --copy-config=scope &>> ${FILE_LOG} || ERR_EXIT=1
+		ranger --copy-config=scope &>> "${FILE_LOG}" || ERR_EXIT=1
 	fi
 }
 
 
 function install_cheat {
-	curl -s "https://cheat.sh/:bash_completion" > ${HOME}/.bash_conf/cht_completion 2>> ${FILE_LOG} || ERR_EXIT=1
-	curl -s "https://cht.sh/:cht.sh" > ${HOME}/.script/cht 2>> ${FILE_LOG} || ERR_EXIT=1
+	curl -s "https://cheat.sh/:bash_completion" > "${HOME}/.bash_conf/cht_completion" 2>> "${FILE_LOG}" || ERR_EXIT=1
+	curl -s "https://cht.sh/:cht.sh" > "${HOME}/.script/cht" 2>> "${FILE_LOG}" || ERR_EXIT=1
 }
 
 
@@ -46,21 +47,22 @@ function install_tmux_conf {
 	if [[ -x $(which tmux 2> /dev/null ) ]]; then
 		echo -e "${orange}Installing tmux${reset} configuration..."
 
-		rm -vrf ${HOME}/.tmux &>> ${FILE_LOG} || ERR_EXIT=1
-		git clone ${REPO_TMUX_CONF} ${HOME}/.tmux --depth 1 >> ${FILE_LOG} 2>&1 && {
-			cd ${HOME}/.tmux > /dev/null
-			git checkout -b tmp ${VER_TMUX_CONF}
-			cp .tmux.conf ${HOME}
-			cp .tmux.conf.local ${HOME}
-			cd - > /dev/null
+		rm -vrf "${HOME}/.tmux" &>> "${FILE_LOG}" || ERR_EXIT=1
+		git clone ${REPO_TMUX_CONF} "${HOME}/.tmux" --depth 1 >> "${FILE_LOG}" 2>&1 && {
+			(
+				cd "${HOME}/.tmux"
+				git checkout -b tmp ${VER_TMUX_CONF}
+				cp .tmux.conf "${HOME}"
+				cp .tmux.conf.local "${HOME}"
+			)
 		} || ERR_EXIT=1
 	fi
 }
 
 
 function install_git_prompt {
-	rm -vrf ${HOME}/.bash-git-prompt &>> ${FILE_LOG}
-	git clone ${REPO_GIT_PROMPT} --branch ${VER_GIT_PROMPT} ${HOME}/.bash-git-prompt --depth 1 &>> ${FILE_LOG}
+	rm -vrf "${HOME}/.bash-git-prompt" &>> "${FILE_LOG}"
+	git clone ${REPO_GIT_PROMPT} --branch ${VER_GIT_PROMPT} "${HOME}/.bash-git-prompt" --depth 1 &>> "${FILE_LOG}" || ERR_EXIT=1
 }
 
 
@@ -82,13 +84,14 @@ function install_lazy_git {
 		;;
 	esac
 
-	if [[ ! -z "${REPO_LAZY_GIT}" ]]; then
-		rm -vrf ${HOME}/.bin/lazygit* &>> ${FILE_LOG}
-		wget -O ${HOME}/.bin/lazygit.${EXT} "${REPO_LAZY_GIT}" 2>> ${FILE_LOG} > /dev/null && {
-			cd ${HOME}/.bin > /dev/null
-			${DECOMPRESSOR} lazygit.${EXT} &>> ${FILE_LOG}
-			rm -vrf LICENSE README.md &>> ${FILE_LOG}
-			cd - > /dev/null
+	if [[ -n "${REPO_LAZY_GIT}" ]]; then
+		rm -vrf "${HOME}"/.bin/lazygit* &>> "${FILE_LOG}"
+		wget -O "${HOME}/.bin/lazygit.${EXT}" "${REPO_LAZY_GIT}" 2>> "${FILE_LOG}" > /dev/null && {
+			(
+				cd "${HOME}"/.bin > /dev/null
+				${DECOMPRESSOR} "lazygit.${EXT}" &>> "${FILE_LOG}"
+				rm -vrf LICENSE README.md &>> "${FILE_LOG}"
+			)
 		} || ERR_EXIT=1
 	fi
 }
@@ -98,8 +101,8 @@ function install_vim_plugins {
 	if [[ -x $(which vim 2> /dev/null) ]]; then
 		echo -e "${orange}Setting vim${reset} configurations..."
 
-		rm -vrf ${VIM_BUNDLE}/Vundle.vim &>> ${FILE_LOG} || ERR_EXIT=1
-		git clone ${REPO_VUNDLE} ${VIM_BUNDLE}/Vundle.vim --branch ${VER_VUNDLE} --depth 1 &>> ${FILE_LOG} && {
+		rm -vrf "${VIM_BUNDLE}/Vundle.vim" &>> "${FILE_LOG}" || ERR_EXIT=1
+		git clone ${REPO_VUNDLE} "${VIM_BUNDLE}/Vundle.vim" --branch ${VER_VUNDLE} --depth 1 &>> "${FILE_LOG}" && {
 			vim +PluginInstall +qall
 		} || ERR_EXIT=1
 	fi
@@ -107,7 +110,7 @@ function install_vim_plugins {
 
 
 if [[ $1 == "--help" ]]; then
-	cat ${SYSDEV_DIR}/README.md
+	cat "${SYSDEV_DIR}/README.md"
 	echo -e "In case of error see ${orange}${FILE_LOG}${reset}\n"
 	exit 0
 fi
@@ -128,7 +131,7 @@ install_git_prompt
 install_lazy_git
 install_vim_plugins
 
-chmod +x ${HOME}/{.script,.bin}/* >> ${FILE_LOG} 2>&1
+chmod +x "${HOME}"/{.script,.bin}/* >> "${FILE_LOG}" 2>&1
 
 if [[ ${ERR_EXIT} -eq 1 ]]; then
 	echo -e "${red}"
@@ -139,6 +142,5 @@ else
 fi
 
 echo -e "${msg_text}!${reset} "
-cd - > /dev/null
+cd - > /dev/null || exit 1
 exit ${ERR_EXIT}
-

@@ -1,12 +1,6 @@
-# clear history
-#
-history -c
-rm $HOME/.bash_history 2> /dev/null
-echo -e "\nHistory cleared"
+#!/bin/bash
 
-sleep 0.5s
 clear
-
 
 # leaving message
 #
@@ -28,4 +22,3 @@ if [[ ${SHLVL} = 1 ]] ; then
 else
 	clear
 fi
-

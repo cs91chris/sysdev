@@ -2,8 +2,12 @@
 #
 # $@ compress archive list of various format
 #
-source ${BASH_LIB}/color.conf
-source ${BASH_LIB}/writelog.sh "extract"
+
+# shellcheck source=/dev/null
+source "${BASH_LIB}/color.conf"
+
+# shellcheck source=/dev/null
+source "${BASH_LIB}/writelog.sh" "extract"
 
 
 FILES=$@
@@ -14,14 +18,14 @@ function ERR_MSG() {
 #
 # $1 error message
 #
-	local message=$1
-	local err_exit=1
+	err_exit=1
+	local message="${1}"
 
 	if type WRITE_LOG &> /dev/null
 	then
-		WRITE_LOG ${ERROR} "${message}"
+		WRITE_LOG "${ERROR}" "${message}"
 	else
-		echo -e "${red}$message${reset}"
+		echo -e "${red}${message}${reset}"
 	fi
 }
 
@@ -31,14 +35,15 @@ function EXTRACT() {
 # $2 program that extracts
 # $3 options of $2
 #
-	local file=$1
-	local cmd=$2
-	local opt=$3
+	local mess
+	local file=${1}
+	local cmd=${2}
+	local opt=${3}
 
-	if [[ ${cmd} != "NONE" ]]
-	then
-		local mess=$(${cmd} ${opt} ${file} 2>&1)
+	if [[ ${cmd} != "NONE" ]]; then
+		mess=$(${cmd} "${opt}" "${file}" 2>&1)
 
+		# shellcheck disable=SC2181
 		if [[ $? -eq 0 ]]; then
 			echo -e "\t'${file}' ${green}extracted!${reset}"
 		else
@@ -62,36 +67,35 @@ case $1 in
 	;;
 esac
 
-for F in ${FILES}
+for file in ${FILES}
 do
     CMD="NONE"
 	OPT=""
 
-	if [[ -f ${F} ]] ; then
-		case ${F} in
-			*.Z) 		CMD=uncompress  ; 	OPT=		;;
-			*.7z)		CMD=7z 			; 	OPT=x		;;
-			*.gz)		CMD=gunzip 		; 	OPT=		;;
-			*.rar)		CMD=unrar 		; 	OPT=x		;;
-			*.zip)		CMD=unzip 		; 	OPT=		;;
-			*.bz2)		CMD=bunzip2 	; 	OPT=		;;
-			*.tar)		CMD=tar 		; 	OPT=xf		;;
-			*.tgz)		CMD=tar 		; 	OPT=xzf		;;
-			*.tbz2)		CMD=tar 		; 	OPT=xjf		;;
-			*.tar.xz)	CMD=tar 		; 	OPT=Jxf		;;
-			*.tar.bz2)	CMD=tar 		; 	OPT=xjf		;;
-			*.tar.gz)	CMD=tar 		; 	OPT=xzf		;;
+	if [[ -f ${file} ]] ; then
+		case ${file} in
+			*.tar.xz)	CMD="tar"        ; OPT="Jxf" ;;
+			*.tar.bz2)	CMD="tar"        ; OPT="xjf" ;;
+			*.tar.gz)	CMD="tar"        ; OPT="xzf" ;;
+			*.Z) 		CMD="uncompress" ; OPT=""    ;;
+			*.7z)		CMD="7z"         ; OPT="x"   ;;
+			*.gz)		CMD="gunzip"     ; OPT=""    ;;
+			*.rar)		CMD="unrar"      ; OPT="x"   ;;
+			*.zip)		CMD="unzip"      ; OPT=""    ;;
+			*.bz2)		CMD="bunzip2"    ; OPT=""    ;;
+			*.tar)		CMD="tar"        ; OPT="xf"  ;;
+			*.tgz)		CMD="tar"        ; OPT="xzf" ;;
+			*.tbz2)		CMD="tar"        ; OPT="xjf" ;;
 			*)
-				ERR_MSG "extension of '${F}' not supported"
+				ERR_MSG "extension of '${file}' not supported"
 				continue
 			;;
 		esac
 
-		EXTRACT ${F} ${CMD} ${OPT} &
+		EXTRACT "${file}" ${CMD} ${OPT} &
 	else
-		ERR_MSG "'${F}' is not a valid file!"
+		ERR_MSG "'${file}' is not a valid file!"
 	fi
 done
 
 exit ${err_exit}
-

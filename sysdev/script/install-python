@@ -27,10 +27,9 @@ apt install -y \
     libssl-dev
 
 
-curl --location --output ${ZIP_FILE} ${DOWNLOAD_URL}
-tar -xzf ${ZIP_FILE}
+curl --location --output "${ZIP_FILE}" "${DOWNLOAD_URL}"
+tar -xzf "${ZIP_FILE}"
 
-cd cpython-${VERSION}
-./configure --prefix=${PREFIX} --enable-optimizations ${OPTS}
+cd "cpython-${VERSION}"
+./configure --prefix="${PREFIX}" --enable-optimizations ${OPTS}
 make && make install
-

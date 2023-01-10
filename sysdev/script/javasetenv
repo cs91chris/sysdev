@@ -8,8 +8,7 @@ CLASSPATH=${CLASSPATH}:${HOME}/.develop/java/jar
 PATH=${JAVA_HOME}/bin:${PATH}
 
 
-if [ -d $JAVA_HOME ]
-then
+if [[ -d "${JAVA_HOME}" ]]; then
 	export JAVA_HOME JRE_HOME CLASSPATH PATH
 
 	echo -e "JAVA_HOME=${JAVA_HOME}"

@@ -1,8 +1,13 @@
+#!/bin/bash
+
 # enable color support of ls and grep
 #
-if [[ -x $(which dircolors 2> /dev/null) ]]
-then
-	test -r ${HOME}/.dircolors && eval "$(dircolors -b ${HOME}/.dircolors)" || eval "$(dircolors -b)"
+if [[ -x $(which dircolors 2> /dev/null) ]]; then
+	if [[ -r "${HOME}/.dircolors" ]]; then
+		eval "$(dircolors -b "${HOME}/.dircolors")"
+	else
+		eval "$(dircolors -b)"
+	fi
 
     alias dir='dir --color=auto'
     alias ls='ls --color=auto -F'
@@ -26,7 +31,7 @@ alias ping='ping -c5'
 alias funct='declare -F'
 alias functsearch='declare -F | grep'
 alias datetime='date +"%Y-%m-%d %H:%M:%S"'
-alias REF="source ${HOME}/.bash_profile"
+alias REF='source ${HOME}/.bash_profile'
 
 
 # interactive and verbose mode
@@ -40,7 +45,7 @@ alias mkdir='mkdir -vp'
 
 # more info alias
 #
-[ -x $(which pydf 2> /dev/null) ] && alias pydf='pydf -H'
+[ -x "$(which pydf 2> /dev/null)" ] && alias pydf='pydf -H'
 
 alias freeh='free -th'
 alias dft='df -Th | grep -v tmpfs'
@@ -56,7 +61,7 @@ alias user-list='cut -d: -f1 /etc/shadow | sort'
 
 # more ls aliases
 #
-[ -x $(which tree 2> /dev/null) ] && alias tree='tree -Csh'
+[ -x "$(which tree 2> /dev/null)" ] && alias tree='tree -Csh'
 
 alias l='ls -C'
 alias la='ls -A'
@@ -80,9 +85,9 @@ alias .opt='cd /opt'
 alias .tmp='cd /tmp'
 alias .www='cd /var/www'
 
-[ -d ${HOME}/.script ] && alias .script='cd ${HOME}/.script'
-[ -d ${HOME}/.develop ] && alias .develop='cd ${HOME}/.develop'
-[ -d ${HOME}/.bin ] && alias .bin='cd ${HOME}/.bin'
+[ -d "${HOME}/.script" ] && alias .script='cd ${HOME}/.script'
+[ -d "${HOME}/.develop" ] && alias .develop='cd ${HOME}/.develop'
+[ -d "${HOME}/.bin" ] && alias .bin='cd ${HOME}/.bin'
 
 
 # more ps alias
@@ -90,7 +95,7 @@ alias .www='cd /var/www'
 alias ps='ps --forest'
 alias psaux='ps auxf'
 alias psroot='ps | grep root'
-alias psuser="ps | grep ${USER}"
+alias psuser='ps | grep ${USER}'
 alias psearch='ps aux | grep'
 
 
@@ -124,7 +129,7 @@ fi
 
 # other aliases
 #
-[ -x $(which rsync 2> /dev/null) ] && alias backup='rsync -avuz'
+[ -x "$(which rsync 2> /dev/null)" ] && alias backup='rsync -avuz'
 
 if [[ -x $(which cupsd 2> /dev/null) && -x $(which elinks 2> /dev/null) ]] ; then
 	alias cups-config='elinks http://localhost:631'
