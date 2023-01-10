@@ -66,7 +66,7 @@ alias user-list='cut -d: -f1 /etc/shadow | sort'
 #
 alias l='lsd'
 alias la='lsd -A'
-alias ll='lsd lh'
+alias ll='lsd -lh'
 alias lla='lsd -Alh'
 alias lrt='lsd -lhrt'
 alias lrta='lsd -Alhrt'

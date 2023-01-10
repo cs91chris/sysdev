@@ -184,6 +184,11 @@ if [[ -x $(which mcfly 2> /dev/null) ]]; then
 fi
 
 
+if [[ -f ${HOME}/.bashrc_custom ]]; then
+    # shellcheck source=/dev/null
+    source "${HOME}/.bashrc_custom"
+fi
+
 # welcome message
 #
 clear
@@ -197,20 +202,25 @@ else
 fi
 echo -e "${txtrst}"
 
-if [[ -x $(which tmux 2> /dev/null) ]]; then
+if [[ -x "$(which tmux 2> /dev/null)" ]]; then
 	if [[ -z "${TMUX}" ]]; then
-		# restore tmux session or create new one
-		if tmux has-session 2>/dev/null ; then
-			echo -en "${txtred}WARN:${txtrst} Saved session of tmux found. Do you want attach to it? [Y/n]: "
-			read -r ANS
+		case "$(tty)" in
+			/dev/tty*)
+				if tmux has-session 2>/dev/null ; then
+					echo -e "${txtred}WARN:${txtrst} Saved session of tmux found."
+					read -r ANS -p "Do you want attach to it? [Y/n]: "
 
-			case ${ANS} in
-				n|N) ;;
-				*) exec tmux attach ;;
-			esac
-		else
-			exec tmux
-		fi
+					case ${ANS} in
+						n|N) ;;
+						*) exec tmux attach ;;
+					esac
+				else
+					exec tmux
+				fi
+			;;
+			/dev/pts*) ;;
+			*) ;;
+		esac
 	fi
 fi
 #
