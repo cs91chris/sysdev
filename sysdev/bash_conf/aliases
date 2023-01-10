@@ -52,6 +52,7 @@ alias dft='df -Th | grep -v tmpfs'
 alias cpuinfo='cat /proc/cpuinfo'
 alias meminfo='cat /proc/meminfo'
 alias osinfo='cat /proc/version'
+alias sysinfo='inxi -FzjJxy -c6'
 alias lastmsg='dmesg | tail'
 alias dirsize='du -sh'
 
@@ -63,12 +64,12 @@ alias user-list='cut -d: -f1 /etc/shadow | sort'
 #
 [ -x "$(which tree 2> /dev/null)" ] && alias tree='tree -Csh'
 
-alias l='ls -C'
-alias la='ls -A'
-alias ll='ls -Alh'
-alias lrt='ls -lhrt'
-alias lrs='ls -lrsSh'
-alias lld='ls -lv --group-directories-first'
+alias l='lsd'
+alias la='lsd -A'
+alias ll='lsd -Alh'
+alias lrt='lsd -lhrt'
+alias lrs='lsd -lhrsS'
+alias lld='lsd -Alh --group-directories-first'
 
 
 # more cd aliases

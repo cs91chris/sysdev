@@ -37,13 +37,78 @@ FONTS=(
 )
 
 ERR_EXIT=0
-TEMP_DIR=.sysdev.temp
+TEMP_DIR=".sysdev.temp"
 SYSDEV_DIR=$(dirname "${0}")
-FILE_LOG=${SYSDEV_DIR}/error.log
+FILE_LOG="${SYSDEV_DIR}/error.log"
 # shellcheck source=/dev/null
 source "${SYSDEV_DIR}/sysdev/develop/bash/color.conf"
 
 TOOLS="$(cat "${SYSDEV_DIR}/packages")"
+
+
+function install_dist_packages() {    
+    sudo apt update 2>> "${FILE_LOG}" && {
+        # shellcheck disable=SC2086
+        sudo apt install -y ${TOOLS} 2>> "${FILE_LOG}" || ERR_EXIT=1
+    } || ERR_EXIT=1
+}
+
+
+function install_nerd_fonts() {
+    echo "Downloading NerdFonts..."
+    for font in "${FONTS[@]}"; do
+        archive=${font}.zip
+        destination=${HOME}/.local/share/fonts/${font}
+        mkdir -p "${destination}"
+        curl -Lso "${archive}" "${NERD_FONTS_URL}/${archive}"
+        unzip -qo "${archive}" -d "${destination}"
+        rm -f "${archive}"
+    done
+}
+
+
+function install_tmux() {
+    curl -Lso tmux-${TMUX_VER}.tar.gz ${TMUX_URL} && {
+        sudo apt install libevent-dev libncurses-dev
+        tar -xzf tmux-${TMUX_VER}.tar.gz
+        (
+            cd tmux-${TMUX_VER}
+            ./configure && make
+            sudo make install
+        )
+        rm -rf tmux-*
+    } 2>> "${FILE_LOG}" || ERR_EXIT=1
+}
+
+
+function download_install_deb() {
+    local URL=${1}
+    local DEB=${2}
+
+    wget "${URL}" && {
+        sudo dpkg -i "${DEB}" ; rm "${DEB}"
+    } 2>> "${FILE_LOG}" || ERR_EXIT=1
+}
+
+
+function install_iredis() {
+    wget ${REPO_IREDIS} && {
+        tar -xzf iredis.tar.gz
+        IREDIS_DEST=${HOME}/.bin/iredis-cli
+        rm -rf "${IREDIS_DEST}" iredis.tar.gz
+        mkdir -p "${IREDIS_DEST}"
+        mv -f iredis lib/ "${IREDIS_DEST}" 
+        ln -sf "${IREDIS_DEST}/iredis" "${HOME}/.bin/iredis"
+    } 2>> "${FILE_LOG}" || ERR_EXIT=1
+}
+
+
+function install_mcfly() {
+    curl -Ls ${MCFLY_EP} | \
+        sudo sh -s -- --git cantino/mcfly --force --tag v${MCFLY_VER} \
+        2>> "${FILE_LOG}" || ERR_EXIT=1
+}
+
 
 case ${1} in
     h|-h|help|--help)
@@ -58,64 +123,20 @@ rm -rf ${TEMP_DIR}
 mkdir -p ${TEMP_DIR}
 cd ${TEMP_DIR} || exit 1
 
+install_dist_packages
+install_nerd_fonts
+install_tmux
+install_iredis
+install_mcfly
 
-sudo apt update 2>> "${FILE_LOG}" && {
-	for pkg in ${TOOLS}; do
-		sudo apt install "${pkg}" -y 2>> "${FILE_LOG}" || ERR_EXIT=1
-	done
-} || ERR_EXIT=1
-
-echo "downloading NerdFonts..."
-for font in "${FONTS[@]}"; do
-    archive=${font}.zip
-    destination=${HOME}/.local/share/fonts/${font}
-    mkdir -p "${destination}"
-    curl -Lso "${archive}" "${NERD_FONTS_URL}/${archive}"
-    unzip -qo "${archive}" -d "${destination}"
-    rm -f "${archive}"
-done
-
-curl -Ls --output tmux-${TMUX_VER}.tar.gz ${TMUX_URL} && {
-    sudo apt install libevent-dev libncurses-dev
-    tar -xzf tmux-${TMUX_VER}.tar.gz
-    (
-        cd tmux-${TMUX_VER}
-        ./configure && make
-        sudo make install
-    )
-    rm -rf tmux-*
-} 2>> "${FILE_LOG}" || ERR_EXIT=1
-
-wget ${REPO_BAT} && {
-    sudo dpkg -i ${BAT_DEB}
-    rm ${BAT_DEB}
-} 2>> "${FILE_LOG}" || ERR_EXIT=1
-
-wget ${REPO_LSD} && {
-    sudo dpkg -i ${LSD_DEB}
-    rm ${LSD_DEB}
-} 2>> "${FILE_LOG}" || ERR_EXIT=1
-
-wget ${REPO_DELTA} && {
-    sudo dpkg -i ${DELTA_DEB}
-    rm ${DELTA_DEB}
-} 2>> "${FILE_LOG}" || ERR_EXIT=1
-
-wget ${REPO_IREDIS} && {
-    tar -xzf iredis.tar.gz
-    IREDIS_DEST=${HOME}/.bin/iredis-cli
-    rm -rf "${IREDIS_DEST}" iredis.tar.gz
-    mkdir -p "${IREDIS_DEST}"
-    mv -f iredis lib/ "${IREDIS_DEST}" 
-    ln -sf "${IREDIS_DEST}/iredis" "${HOME}/.bin/iredis"
-} 2>> "${FILE_LOG}" || ERR_EXIT=1
-
-curl ${MCFLY_EP} | sudo sh -s -- --git cantino/mcfly --force --tag v${MCFLY_VER} 2>> "${FILE_LOG}" || ERR_EXIT=1
+download_install_deb ${REPO_BAT} ${BAT_DEB}
+download_install_deb ${REPO_LSD} ${LSD_DEB}
+download_install_deb ${REPO_DELTA} ${DELTA_DEB}
 
 if [[ ${ERR_EXIT} -ne 0 ]]; then
 	echo -e "${red}An error occurred! See ${FILE_LOG}${reset}"
 else
-    rm -rf "${TEMP_FILE}"
+    rm -rf "${TEMP_DIR}"
 fi
 
 cd - || exit 1

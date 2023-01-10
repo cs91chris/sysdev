@@ -105,9 +105,9 @@ esac
 
 # import all custom functions, aliases, variables, etc...
 if [[ -d ${HOME}/.bash_conf ]] ; then
-	for f in $(ls "${HOME}/.bash_conf"); do
+	for f in "${HOME}"/.bash_conf/*; do
 		# shellcheck source=/dev/null
-		[ -f "${HOME}/.bash_conf/${f}" ] && source "${HOME}/.bash_conf/${f}"
+		[ -f "${f}" ] && source "${f}"
 	done
 fi
 
@@ -139,6 +139,7 @@ if ! shopt -oq posix; then
 fi
 
 # set ctrl+l behavior to clear screen
+# shellcheck disable=SC1001
 bind -m vi-insert \C-l:clear-screen
 
 set -o noclobber	   # do not overwrite file on redirection

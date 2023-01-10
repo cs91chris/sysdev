@@ -25,9 +25,10 @@ function install_base {
 	mkdir -p "${HOME}"/{.log,.bin}
 	cd "${SYSDEV_DIR}/sysdev" || return
 
-	for x in $(ls); do
+	for x in *; do
 		[ -d "${HOME}/.${x}" ] && tmp="${x}/*" || tmp="${x}" 
-		cp --verbose --recursive "${tmp}" "${HOME}/.${x}" &>> "${FILE_LOG}" || ERR_EXIT=1
+		# shellcheck disable=SC2086
+		cp --verbose --recursive ${tmp} "${HOME}/.${x}" &>> "${FILE_LOG}" || ERR_EXIT=1
 	done
 	cd - || return
 
@@ -85,7 +86,7 @@ function install_lazy_git {
 	esac
 
 	if [[ -n "${REPO_LAZY_GIT}" ]]; then
-		rm -vrf "${HOME}"/.bin/lazygit* &>> "${FILE_LOG}"
+		rm -rf "${HOME}"/.bin/lazygit* 2>> "${FILE_LOG}"
 		wget -O "${HOME}/.bin/lazygit.${EXT}" "${REPO_LAZY_GIT}" 2>> "${FILE_LOG}" > /dev/null && {
 			(
 				cd "${HOME}"/.bin > /dev/null
