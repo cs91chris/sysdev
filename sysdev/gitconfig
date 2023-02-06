@@ -65,6 +65,11 @@
     co = checkout
     ls = ls-files
     tl = tag -ln
-    pom = push origin master
-    lg = log --graph --decorate --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --date=relative --abbrev-commit
 	ane = commit --amend --no-edit
+	sync = "fetch --all --prune"
+    wip = "!git add . && git commit -m 'WIP'"
+	pup = "!git push origin $(git rev-parse --abbrev-ref HEAD)"
+    pdown = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
+	contrib = shortlog --email --summary --numbered
+    lg = log --graph --decorate --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --date=relative --abbrev-commit
+    go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
