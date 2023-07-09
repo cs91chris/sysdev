@@ -46,6 +46,7 @@ supervisor
 tcpdump
 tree
 udisks2
+unzip
 uuid
 valgrind
 vim-nox
