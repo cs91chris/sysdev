@@ -14,24 +14,18 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'Raimondi/delimitMate'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'jamessan/vim-gnupg'
-Plugin 'kevinw/pyflakes-vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'mattn/emmet-vim'
-Plugin 'nvie/vim-flake8'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
+Plugin 'preservim/nerdcommenter'
+Plugin 'preservim/nerdtree'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'vimwiki/vimwiki'
 " always the last plugin
 Plugin 'ryanoasis/vim-devicons'
 
@@ -44,43 +38,6 @@ set laststatus=2
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#left_sep=' '
 let g:airline#extensions#tabline#left_alt_sep=' >> '
-
-" sintastic plugin settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_c_check_header = 1
-let g:syntastic_c_include_dirs = [$CFLAGS, 'include']
-let g:syntastic_python_flake8_args = ['-m', 'flake8']
-let g:syntastic_python_flake8_exec = 'python3'
-
-let g:SimpylFold_docstring_preview=1
-let python_highlight_all=1
-
-"python virtualenv support
-py3 << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-    base_dir = os.environ['VIRTUAL_ENV']
-    activate = os.path.join(base_dir, 'bin', 'activate')
-    exec(open(activate).read())
-EOF
-
-function Py2Check()
-    let g:syntastic_python_python_exec = 'python'
-endfunction
-
-function Py3Check()
-    let g:syntastic_python_python_exec = 'python3'
-endfunction
-
-call Py3Check() " default to python3"
 
 " vim options
 set autoindent

@@ -14,10 +14,10 @@ RANGER_CONF_DIR=${HOME}/.config/ranger
 VER_GIT_PROMPT="2.7.1"
 VER_VUNDLE="v0.10.2"
 VER_LAZY_GIT="0.36.0"
-VER_TMUX_CONF="5641d3b3f5f9c353c58dfcba4c265df055a05b6b"  # commit
+VER_TMUX_CONF="fd1bbb56148101f4b286ddafd98f2ac2dcd69cd8"  # commit
 
 REPO_VUNDLE="https://github.com/VundleVim/Vundle.vim.git"
-REPO_TMUX_CONF="https://github.com/gpakosz/.tmux.git"
+REPO_TMUX_CONF="https://github.com/gpakosz/.tmux"
 REPO_GIT_PROMPT="https://github.com/magicmonty/bash-git-prompt.git"
 REPO_LAZY_GIT="https://github.com/jesseduffield/lazygit/releases/download"
 REPO_RANGER_DEVICON="https://github.com/alexanderjeurissen/ranger_devicons"
@@ -25,14 +25,15 @@ REPO_RANGER_DEVICON="https://github.com/alexanderjeurissen/ranger_devicons"
 
 function install_base {
 	mkdir -p "${HOME}"/{.log,.bin}
-	cd "${SYSDEV_DIR}/sysdev" || return
+	cd "${SYSDEV_DIR}/sysdev" > /dev/null || return
 
+	echo -e "${orange}Installing${reset} configurations and scripts..."
 	for x in *; do
 		[ -d "${HOME}/.${x}" ] && tmp="${x}/*" || tmp="${x}" 
 		# shellcheck disable=SC2086
 		cp --verbose --recursive ${tmp} "${HOME}/.${x}" &>> "${FILE_LOG}" || ERR_EXIT=1
 	done
-	cd - || return
+	cd - > /dev/null || return
 
 	if [[ -x $(which ranger 2> /dev/null) ]]; then
 		ranger --copy-config=scope &>> "${FILE_LOG}" || ERR_EXIT=1
@@ -41,6 +42,7 @@ function install_base {
 
 
 function install_cheat {
+	echo -e "${orange}Installing cheat${reset}..."
 	curl -s "https://cheat.sh/:bash_completion" > "${HOME}/.bash_conf/cht_completion" 2>> "${FILE_LOG}" || ERR_EXIT=1
 	curl -s "https://cht.sh/:cht.sh" > "${HOME}/.script/cht" 2>> "${FILE_LOG}" || ERR_EXIT=1
 }
@@ -51,10 +53,10 @@ function install_tmux_conf {
 		echo -e "${orange}Installing tmux${reset} configuration..."
 
 		rm -vrf "${HOME}/.tmux" &>> "${FILE_LOG}" || ERR_EXIT=1
-		git clone ${REPO_TMUX_CONF} "${HOME}/.tmux" --depth 1 >> "${FILE_LOG}" 2>&1 && {
+		git clone ${REPO_TMUX_CONF} "${HOME}/.tmux" --depth 1 &>> "${FILE_LOG}" 2>&1 && {
 			(
-				cd "${HOME}/.tmux"
-				git checkout -b tmp ${VER_TMUX_CONF}
+				cd "${HOME}/.tmux" > /dev/null
+				git checkout ${VER_TMUX_CONF} &>> "${FILE_LOG}" 2>&1
 				cp .tmux.conf "${HOME}"
 				cp .tmux.conf.local "${HOME}"
 			)
@@ -64,12 +66,14 @@ function install_tmux_conf {
 
 
 function install_git_prompt {
+	echo -e "${orange}Installing bash-git-prompt${reset}..."
 	rm -vrf "${HOME}/.bash-git-prompt" &>> "${FILE_LOG}"
 	git clone ${REPO_GIT_PROMPT} --branch ${VER_GIT_PROMPT} "${HOME}/.bash-git-prompt" --depth 1 &>> "${FILE_LOG}" || ERR_EXIT=1
 }
 
 
 function install_lazy_git {
+	echo -e "${orange}Installing lazy git${reset}..."
 	case "$(cat /proc/version)" in
 		MINGW*)
 			REPO_LAZY_GIT="${REPO_LAZY_GIT}/v${VER_LAZY_GIT}/lazygit_${VER_LAZY_GIT}_Windows_x86_64.zip"
@@ -113,9 +117,12 @@ function install_vim_plugins {
 
 
 function install_ranger_devicon {
-	git clone --depth 1 "${REPO_RANGER_DEVICON}" "${RANGER_CONF_DIR}/plugins/ranger_devicons"
-	echo -e "\n# DevIcons Config" >> "${RANGER_CONF_DIR}/rc.conf"
-	echo "default_linemode devicons" >> "${RANGER_CONF_DIR}/rc.conf"
+	echo -e "${orange}Setting ranger${reset} devicons..."
+	rm -vrf "${RANGER_CONF_DIR}/plugins/ranger_devicons" &>> "${FILE_LOG}" || ERR_EXIT=1
+	git clone --depth 1 "${REPO_RANGER_DEVICON}" "${RANGER_CONF_DIR}/plugins/ranger_devicons" &>> "${FILE_LOG}" && {
+		echo -e "\n# DevIcons Config" >> "${RANGER_CONF_DIR}/rc.conf"
+		echo "default_linemode devicons" >> "${RANGER_CONF_DIR}/rc.conf"
+	} || ERR_EXIT=1
 }
 
 
@@ -133,7 +140,6 @@ case "${ANS}" in
 	*) exit 1 ;;
 esac
 
-echo -e "${orange}Installing${reset} configurations and scripts..."
 install_base
 install_cheat
 install_tmux_conf
