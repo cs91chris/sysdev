@@ -49,7 +49,7 @@ TOOLS="$(cat "${SYSDEV_DIR}/packages")"
 function install_dist_packages {    
     sudo apt update 2>> "${FILE_LOG}" && {
         # shellcheck disable=SC2086
-        sudo apt install -y ${TOOLS} 2>> "${FILE_LOG}" || ERR_EXIT=1
+        sudo apt install --ignore-missing -y ${TOOLS} 2>> "${FILE_LOG}" || ERR_EXIT=1
     } || ERR_EXIT=1
 }
 
